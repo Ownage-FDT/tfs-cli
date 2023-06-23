@@ -1,6 +1,6 @@
 import { expect, test } from '@oclif/test'
 
-describe('hello world', () => {
+describe('hello world', function () {
     test.stdout()
         .command(['hello:world'])
         .it('runs hello world cmd', (ctx) => {
