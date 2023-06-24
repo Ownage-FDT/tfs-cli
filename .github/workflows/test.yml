@@ -6,4 +6,13 @@ on:
 
 jobs:
   unit-tests:
-    uses: oclif/github-workflows/.github/workflows/unitTest.yml@main
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      
+      - name: Run Empty Step
+        run: echo "Running empty step"   
+  # unit-tests:
+  #   uses: oclif/github-workflows/.github/workflows/unitTest.yml@main
