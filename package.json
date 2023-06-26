@@ -20,7 +20,7 @@
   "scripts": {
     "commit": "git-cz",
     "prepare": "husky install",
-    "preinstall": "npx only-allow pnpm",
+    "preinstall": "npx only-allow yarn",
     "build": "shx rm -rf dist && tsc -b",
     "format": "prettier --write \"src/**/*.+(ts|js)\" \"test/**/*.+(ts|js)\"",
     "lint": "eslint . --ext .ts --fix",
@@ -61,7 +61,6 @@
     "lint-staged": "^13.2.2",
     "mocha": "^10.2.0",
     "oclif": "^3",
-    "pnpm": "^8.6.5",
     "prettier": "^2.8.8",
     "shx": "^0.3.4",
     "sinon": "^15.2.0",

@@ -6940,18 +6940,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pnpm@npm:^8.6.5":
-  version: 8.6.5
-  resolution: "pnpm@npm:8.6.5"
-  dependencies:
-    node-gyp: latest
-  bin:
-    pnpm: bin/pnpm.cjs
-    pnpx: bin/pnpx.cjs
-  checksum: eef28b6d78f4122fe0428d0a35abef6e963bb9a00280d3f130ce65fe6ac13ee8db91abb111c43e0e771dd2d2148c5b6974f268643048639b7444ae11450a0943
-  languageName: node
-  linkType: hard
-
 "postcss-selector-parser@npm:^6.0.10":
   version: 6.0.13
   resolution: "postcss-selector-parser@npm:6.0.13"
@@ -8230,7 +8218,6 @@ __metadata:
     lint-staged: ^13.2.2
     mocha: ^10.2.0
     oclif: ^3
-    pnpm: ^8.6.5
     prettier: ^2.8.8
     shx: ^0.3.4
     sinon: ^15.2.0
