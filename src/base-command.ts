@@ -4,6 +4,7 @@ import { UserConfigOptions } from './types'
 import * as path from 'node:path'
 import * as fs from 'fs-extra'
 import chalk from 'chalk'
+import { CommandError } from '@oclif/core/lib/interfaces'
 
 export type Args<T extends typeof Command> = Interfaces.InferredFlags<T['args']>
 export type Flags<T extends typeof Command> = Interfaces.InferredFlags<T['flags']>
@@ -73,15 +74,15 @@ export abstract class BaseCommand<T extends typeof Command> extends Command {
         return currentConfig[key]
     }
 
-    async catch(error: Error & { exitCode?: number }): Promise<any> {
+    async catch(error: CommandError): Promise<any> {
         if (error instanceof AxiosError) {
-            if (error.status === 401) {
+            if (error.response?.status == 401 || error.status == 401) {
                 this.error(chalk.red('Unauthorized. Please check your access token and try again.'))
             }
 
             this.error(chalk.red(error.response?.data?.message ?? error.message))
         }
 
-        this.error(chalk.red(error.message), { exit: error.exitCode ?? 1 })
+        this.error(chalk.red(error.message), { exit: error.exitCode })
     }
 }

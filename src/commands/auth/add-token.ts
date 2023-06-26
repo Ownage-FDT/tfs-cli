@@ -27,6 +27,7 @@ export default class AuthAddToken extends BaseCommand<typeof AuthAddToken> {
         })
 
         this.setConfigValue('accessToken', args.accessToken)
-        ux.action.stop(chalk.green(`Authenticated successfully as ${data.data.name}`))
+        ux.action.stop()
+        this.log(chalk.green(`Authenticated successfully as ${data.data.name}`))
     }
 }
