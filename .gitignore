@@ -45,3 +45,13 @@ lerna-debug.log*
 
 # Oclif generated files
 oclif.manifest.json
+
+
+# Yarn files
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
