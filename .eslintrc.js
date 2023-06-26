@@ -3,8 +3,7 @@ module.exports = {
         'plugin:@typescript-eslint/recommended',
         'plugin:prettier/recommended',
         'plugin:mocha/recommended',
-        'plugin:unicorn/recommended',
-        'plugin:prettier/recommended'
+        'plugin:unicorn/recommended'
     ],
 
     plugins: ['@typescript-eslint/eslint-plugin', 'mocha', 'unicorn'],
@@ -14,10 +13,6 @@ module.exports = {
     root: true,
     parser: '@typescript-eslint/parser',
     ignorePatterns: ['.eslintrc.js'],
-    globals: {
-        describe: true,
-        it: true
-    },
     rules: {
         '@typescript-eslint/interface-name-prefix': 'off',
         '@typescript-eslint/explicit-function-return-type': 'off',
@@ -26,6 +21,7 @@ module.exports = {
         'unicorn/prevent-abbreviations': 'off',
         'unicorn/no-null': 'off',
         'unicorn/prefer-module': 'warn',
-        "mocha/no-setup-in-describe": "off",
+        'unicorn/numeric-separators-style': 'off',
+        'mocha/no-setup-in-describe': 'off'
     }
 }
