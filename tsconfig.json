@@ -3,6 +3,7 @@
         "target": "es2019",
         "module": "commonjs",
         "strict": true,
+        "composite": true,
         "declaration": true,
         "importHelpers": true,
         "esModuleInterop": true,

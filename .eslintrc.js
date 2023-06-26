@@ -2,11 +2,11 @@ module.exports = {
     extends: [
         'plugin:@typescript-eslint/recommended',
         'plugin:prettier/recommended',
-        'plugin:unicorn/recommended',
-        'plugin:prettier/recommended'
+        'plugin:mocha/recommended',
+        'plugin:unicorn/recommended'
     ],
 
-    plugins: ['@typescript-eslint/eslint-plugin', 'unicorn'],
+    plugins: ['@typescript-eslint/eslint-plugin', 'mocha', 'unicorn'],
     env: {
         node: true
     },
@@ -21,6 +21,7 @@ module.exports = {
         'unicorn/prevent-abbreviations': 'off',
         'unicorn/no-null': 'off',
         'unicorn/prefer-module': 'warn',
-        'unicorn/numeric-separators-style': 'off'
+        'unicorn/numeric-separators-style': 'off',
+        'mocha/no-setup-in-describe': 'off'
     }
 }
