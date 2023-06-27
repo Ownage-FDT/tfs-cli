@@ -1,4 +1,3 @@
-import chalk from 'chalk'
 import { BaseCommand } from '../base-command'
 import { ApiResponse, File } from '../types'
 import { ux } from '@oclif/core'
