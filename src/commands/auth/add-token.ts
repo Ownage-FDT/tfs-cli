@@ -3,7 +3,7 @@ import { BaseCommand } from '../../base-command'
 import chalk from 'chalk'
 import { Account, ApiResponse } from '../../types'
 
-export default class AuthAddToken extends BaseCommand<typeof AuthAddToken> {
+export default class AddToken extends BaseCommand<typeof AddToken> {
     static description = 'Authenticate and store access token'
 
     static examples = ['<%= config.bin %> <%= command.id %> <access-token>']
@@ -17,7 +17,7 @@ export default class AuthAddToken extends BaseCommand<typeof AuthAddToken> {
     }
 
     public async run(): Promise<void> {
-        const { args } = await this.parse(AuthAddToken)
+        const { args } = await this.parse(AddToken)
         ux.action.start(chalk.blue('Authenticating'))
 
         const { data } = await this.client.get<ApiResponse<Account>>('/whoami', {

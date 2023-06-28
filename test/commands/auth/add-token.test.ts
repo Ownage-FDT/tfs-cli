@@ -4,6 +4,7 @@ import sinon from 'sinon'
 
 describe('auth:add-token', function () {
     const baseUrl = process.env.TFS_HOST_URL ?? 'http://localhost:3000'
+
     const testInstance = test.stub(ux.action, 'start', sinon.stub()).stub(ux.action, 'stop', sinon.stub())
 
     testInstance
