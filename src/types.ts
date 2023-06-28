@@ -14,7 +14,6 @@ export interface File extends Record<string, unknown> {
     size: number
     expiresAt: string
     createdAt: string
-    totalDownloads?: number
     lastDownloadedAt?: string
 }
 

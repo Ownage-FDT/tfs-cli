@@ -36,12 +36,9 @@ export default class List extends BaseCommand<typeof List> {
                     header: 'Expires At',
                     extended: true
                 },
-                totalDownloads: {
-                    header: 'Total Downloads',
-                    get: (row) => row.totalDownloads ?? 0
-                },
                 lastDownloadedAt: {
-                    header: 'Last Downloaded At'
+                    header: 'Last Downloaded At',
+                    get: (row) => row.lastDownloadedAt ?? null
                 }
             },
             {
