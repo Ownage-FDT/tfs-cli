@@ -28,6 +28,10 @@ export default class List extends BaseCommand<typeof List> {
                     header: 'Size',
                     get: (row) => `${row.size / 1000} Kb`
                 },
+                totalDownloads: {
+                    header: 'Total Downloads',
+                    get: (row) => row.totalDownloads ?? 0
+                },
                 createdAt: {
                     header: 'Created At',
                     extended: true

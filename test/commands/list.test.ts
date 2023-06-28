@@ -11,6 +11,7 @@ describe('list', function () {
             size: 1024,
             createdAt: '2023-06-21T10:00:00Z',
             expiresAt: '2023-06-22T10:00:00Z',
+            totalDownloads: 51,
             lastDownloadedAt: '2023-06-23T10:00:00Z'
         },
         {
@@ -19,6 +20,7 @@ describe('list', function () {
             size: 2048,
             createdAt: '2023-06-24T10:00:00Z',
             expiresAt: '2023-06-25T10:00:00Z',
+            totalDownloads: 101,
             lastDownloadedAt: '2023-06-26T10:00:00Z'
         }
     ]
@@ -35,6 +37,7 @@ describe('list', function () {
             expect(ctx.stdout).to.contain('610be8e6959dbad9c7e9e5e1')
             expect(ctx.stdout).to.contain('file1.txt')
             expect(ctx.stdout).to.contain('1.024 Kb')
+            expect(ctx.stdout).to.contain('51')
             expect(ctx.stdout).to.contain('2023-06-23T10:00:00Z')
             expect(ctx.stdout).to.not.contain('2023-06-21T10:00:00Z')
             expect(ctx.stdout).to.not.contain('2023-06-22T10:00:00Z')
@@ -43,6 +46,7 @@ describe('list', function () {
             expect(ctx.stdout).to.contain('610be8e6959dbad9c7e9e5e2')
             expect(ctx.stdout).to.contain('file2.txt')
             expect(ctx.stdout).to.contain('2.048 Kb')
+            expect(ctx.stdout).to.contain('101')
             expect(ctx.stdout).to.contain('2023-06-26T10:00:00Z')
             expect(ctx.stdout).to.not.contain('2023-06-24T10:00:00Z')
             expect(ctx.stdout).to.not.contain('2023-06-25T10:00:00Z')
