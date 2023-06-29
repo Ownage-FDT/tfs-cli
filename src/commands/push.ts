@@ -4,7 +4,6 @@ import * as fs from 'fs-extra'
 import { ApiResponse, File } from '../types'
 import chalk from 'chalk'
 import { AxiosProgressEvent } from 'axios'
-import { progress } from '@oclif/core/lib/cli-ux'
 
 export default class Push extends BaseCommand<typeof Push> {
     static description = 'Upload a file'
