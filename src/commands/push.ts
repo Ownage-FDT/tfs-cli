@@ -8,13 +8,13 @@ import { AxiosProgressEvent } from 'axios'
 export default class Push extends BaseCommand<typeof Push> {
     static description = 'Upload a file'
 
-    static examples = []
+    static examples = ['<%= config.bin %> <%= command.id %> /path/to/file']
 
     static args = {
         filePath: Args.string({
             name: 'filePath',
             required: true,
-            description: 'Absolute Path to the file to upload'
+            description: 'Absolute path to the file to upload'
         })
     }
 
