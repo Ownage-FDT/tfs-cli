@@ -27,27 +27,35 @@ export default class Push extends BaseCommand<typeof Push> {
         const formData = new FormData()
         formData.append('file', new Blob([fileData.buffer]), args.filePath)
 
-        const progressBar = ux.progress({
-            format: `Uploading file [{bar}] {percentage}% | ETA: {eta}s | {value}/{total} bytes`,
-            clearOnComplete: true,
-            barCompleteChar: '\u2588',
-            barIncompleteChar: '\u2591',
-            hideCursor: true
-        })
+        try {
+            const progressBar = ux.progress({
+                format: `Uploading file [{bar}] {percentage}% | ETA: {eta}s | {value}/{total} bytes`,
+                clearOnComplete: true,
+                barCompleteChar: '\u2588',
+                barIncompleteChar: '\u2591',
+                hideCursor: true
+            })
 
-        progressBar.start(fileStats.size, 0)
+            progressBar.start(fileStats.size, 0)
 
-        const { data } = await this.client.post<ApiResponse<File>>('/push', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            },
-            onUploadProgress: (progressEvent: AxiosProgressEvent) => {
-                progressBar.update(progressEvent.loaded, { total: progressEvent.total })
-            }
-        })
+            const { data } = await this.client.post<ApiResponse<File>>('/push', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
+                onUploadProgress: (progressEvent: AxiosProgressEvent) => {
+                    progressBar.update(progressEvent.loaded, { total: progressEvent.total })
+                }
+            })
 
-        progressBar.stop()
+            progressBar.stop()
 
-        this.log(chalk.green(`File uploaded successfully with ID ${data.data._id}`))
+            this.log(chalk.green(`File uploaded successfully with ID ${data.data._id}`))
+        } catch (error: any) {
+            this.error(
+                `An error occurred while uploading the file. Please try again later: ${
+                    error?.response?.data?.message ?? error?.message
+                }`
+            )
+        }
     }
 }
