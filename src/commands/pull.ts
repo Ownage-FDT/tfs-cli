@@ -38,10 +38,10 @@ export default class Pull extends BaseCommand<typeof Pull> {
         // get the file name from the response headers
         const contentDisposition = response.headers['content-disposition']
         const originalFileName = contentDisposition.split('filename=')[1].replaceAll('"', '')
-        const extension = path.extname(originalFileName)
+        const fileExtension = path.extname(originalFileName)
 
-        // get the filename from the flag or use the original filename without extension
-        const fileName = flags.name ? `${flags.name}${extension}` : originalFileName
+        // get the filename from the flag or use the original filename
+        const fileName = flags.name ? `${flags.name}${fileExtension}` : originalFileName
 
         // get the path to write the file to
         const outputPath = flags.output ?? process.cwd()
@@ -65,7 +65,7 @@ export default class Pull extends BaseCommand<typeof Pull> {
                     message: `Please enter a new file name or leave it empty to cancel:`
                 })
 
-                const newFileName = renameAnswer.fileName.trim() + extension
+                const newFileName = renameAnswer.fileName.trim()
 
                 if (newFileName === '') {
                     this.log(chalk.yellow('File download operation canceled.'))
@@ -73,7 +73,7 @@ export default class Pull extends BaseCommand<typeof Pull> {
                 }
 
                 // update the filePath with the new file name
-                filePath = path.resolve(outputPath, newFileName)
+                filePath = path.resolve(outputPath, newFileName + fileExtension)
             }
         }
 
