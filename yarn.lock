@@ -1228,13 +1228,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/inquirer@npm:^9.0.3":
-  version: 9.0.3
-  resolution: "@types/inquirer@npm:9.0.3"
+"@types/inquirer@npm:^8.0.0":
+  version: 8.2.6
+  resolution: "@types/inquirer@npm:8.2.6"
   dependencies:
     "@types/through": "*"
     rxjs: ^7.2.0
-  checksum: 729a0deefddf95434090d8f6adc120c6de4a023cefd63fb1c3b1d1cfd1abbef4caef87af47589cdbeb16177037e48a0ffc397c39e845d2b7b5dd820eb7b80862
+  checksum: d09c3b6bbfb1aff8bdb8fc938d43536be55dfb51af0c91d0105e3f7c5e3950c12618ac00e2e91f10b5abeba38f4b903289be1df5aa31f213b58c3cc675a19f81
   languageName: node
   linkType: hard
 
@@ -8225,7 +8225,7 @@ __metadata:
     "@oclif/test": ^2.3.25
     "@types/chai": ^4
     "@types/fs-extra": ^11.0.1
-    "@types/inquirer": ^9.0.3
+    "@types/inquirer": ^8.0.0
     "@types/mocha": ^10.0.1
     "@types/node": ^18.15.3
     "@types/sinon": ^10.0.15
