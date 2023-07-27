@@ -1,4 +1,4 @@
-import { Args, ux } from '@oclif/core'
+import { Args, Flags, ux } from '@oclif/core'
 import { BaseCommand } from '../base-command'
 import * as fs from 'fs-extra'
 import { ApiResponse, File } from '../types'
@@ -8,7 +8,10 @@ import { AxiosProgressEvent } from 'axios'
 export default class Push extends BaseCommand<typeof Push> {
     static description = 'Upload a file'
 
-    static examples = ['<%= config.bin %> <%= command.id %> /path/to/file']
+    static examples = [
+        '<%= config.bin %> <%= command.id %> /path/to/file',
+        '<%= config.bin %> <%= command.id %> /path/to/file --ttl 3600'
+    ]
 
     static args = {
         filePath: Args.string({
@@ -16,6 +19,10 @@ export default class Push extends BaseCommand<typeof Push> {
             required: true,
             description: 'Absolute path to the file to upload'
         })
+    }
+
+    static flags = {
+        ttl: Flags.string({ char: 't', description: 'Time to live for the file in seconds' })
     }
 
     public async run(): Promise<void> {
@@ -26,6 +33,10 @@ export default class Push extends BaseCommand<typeof Push> {
 
         const formData = new FormData()
         formData.append('file', new Blob([fileData.buffer]), args.filePath)
+
+        if (this.flags.ttl) {
+            formData.append('ttl', this.flags.ttl)
+        }
 
         try {
             const progressBar = ux.progress({
@@ -38,7 +49,9 @@ export default class Push extends BaseCommand<typeof Push> {
 
             progressBar.start(fileStats.size, 0)
 
-            const { data } = await this.client.post<ApiResponse<File>>('/push', formData, {
+            const {
+                data: { data }
+            } = await this.client.post<ApiResponse<File>>('/push', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 },
@@ -49,7 +62,13 @@ export default class Push extends BaseCommand<typeof Push> {
 
             progressBar.stop()
 
-            this.log(chalk.green(`File uploaded successfully with ID ${data.data._id}`))
+            if (this.flags.ttl) {
+                this.log(
+                    chalk.green(`File uploaded successfully with ID ${data._id} and will expire at ${data.expiresAt}`)
+                )
+            } else {
+                this.log(chalk.green(`File uploaded successfully with ID ${data._id}`))
+            }
         } catch (error: any) {
             this.error(
                 `An error occurred while uploading the file. Please try again later: ${
