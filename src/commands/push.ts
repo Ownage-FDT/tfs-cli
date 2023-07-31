@@ -50,9 +50,9 @@ export default class Push extends BaseCommand<typeof Push> {
             formData.append('ttl', this.flags.ttl)
         }
 
-        const encryptedFile = encryptFile(fileData, encryptionKey)
+        const encryptedFileData = encryptFile(fileData, encryptionKey)
 
-        formData.append('file', new Blob([new Uint8Array(encryptedFile)]), args.filePath)
+        formData.append('file', new Blob([new Uint8Array(encryptedFileData)]), args.filePath)
 
         try {
             const progressBar = ux.progress({
