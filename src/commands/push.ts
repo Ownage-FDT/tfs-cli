@@ -3,14 +3,16 @@ import { BaseCommand } from '../base-command'
 import * as fs from 'fs-extra'
 import { ApiResponse, File } from '../types'
 import chalk from 'chalk'
-import { AxiosProgressEvent } from 'axios'
+import { AxiosError, AxiosProgressEvent } from 'axios'
+import { encryptFile } from '../utils'
 
 export default class Push extends BaseCommand<typeof Push> {
     static description = 'Upload a file'
 
     static examples = [
         '<%= config.bin %> <%= command.id %> /path/to/file',
-        '<%= config.bin %> <%= command.id %> /path/to/file --ttl 3600'
+        '<%= config.bin %> <%= command.id %> /path/to/file --ttl 3600',
+        '<%= config.bin %> <%= command.id %> /path/to/file --ttl 3600 --key my-secret-key'
     ]
 
     static args = {
@@ -22,21 +24,35 @@ export default class Push extends BaseCommand<typeof Push> {
     }
 
     static flags = {
-        ttl: Flags.string({ char: 't', description: 'Time to live for the file in seconds' })
+        ttl: Flags.string({ char: 't', description: 'Time to live for the file in seconds' }),
+        key: Flags.string({ char: 'k', description: 'Encryption key to use for encrypting the file' })
     }
 
     public async run(): Promise<void> {
         const { args } = await this.parse(Push)
+        const defaultEncryptionKey = this.getConfigValue('encryptionKey')
 
-        const fileData = await fs.readFile(args.filePath)
-        const fileStats = await fs.stat(args.filePath)
+        if (!this.flags.key && !defaultEncryptionKey) {
+            this.error('Encryption key is required for encrypting the file.')
+        }
+
+        const encryptionKey = (this.flags.key ?? defaultEncryptionKey) as string
+
+        if (encryptionKey.length < 16) {
+            this.error('Encryption key must be at least 16 characters long.')
+        }
 
         const formData = new FormData()
-        formData.append('file', new Blob([fileData.buffer]), args.filePath)
+        const fileData = await fs.readFile(args.filePath)
+        const fileStats = await fs.stat(args.filePath)
 
         if (this.flags.ttl) {
             formData.append('ttl', this.flags.ttl)
         }
+
+        const encryptedFile = encryptFile(fileData, encryptionKey)
+
+        formData.append('file', new Blob([new Uint8Array(encryptedFile)]), args.filePath)
 
         try {
             const progressBar = ux.progress({
@@ -49,9 +65,7 @@ export default class Push extends BaseCommand<typeof Push> {
 
             progressBar.start(fileStats.size, 0)
 
-            const {
-                data: { data }
-            } = await this.client.post<ApiResponse<File>>('/push', formData, {
+            const { data: result } = await this.client.post<ApiResponse<File>>('/push', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 },
@@ -62,19 +76,21 @@ export default class Push extends BaseCommand<typeof Push> {
 
             progressBar.stop()
 
-            if (this.flags.ttl) {
-                this.log(
-                    chalk.green(`File uploaded successfully with ID ${data._id} and will expire at ${data.expiresAt}`)
-                )
-            } else {
-                this.log(chalk.green(`File uploaded successfully with ID ${data._id}`))
+            this.log(chalk.green('File uploaded successfully'))
+            this.log(`File ID: ${chalk.blue(result.data._id)}`)
+
+            if (result.data.expiresAt) {
+                this.log(`File Expiration: ${chalk.blue(result.data.expiresAt)}`)
             }
+
+            this.log(`File Encryption Key: ${chalk.blue(encryptionKey)}`)
         } catch (error: any) {
-            this.error(
-                `An error occurred while uploading the file. Please try again later: ${
-                    error?.response?.data?.message ?? error?.message
-                }`
-            )
+            if (error instanceof AxiosError) {
+                this.error(`Cannot upload the file: ${error.response?.data?.message ?? error.message}`)
+                return
+            }
+
+            this.error(`Cannot upload the file: ${error.message}`)
         }
     }
 }
