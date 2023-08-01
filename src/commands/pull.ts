@@ -39,7 +39,7 @@ export default class Pull extends BaseCommand<typeof Pull> {
         const defaultEncryptionKey = this.getConfigValue('encryptionKey')
 
         if (!this.flags.key && !defaultEncryptionKey) {
-            this.error('Encryption key is required for encrypting the file.')
+            this.error('Encryption key is required for decrypting the file.')
         }
 
         const encryptionKey = (this.flags.key ?? defaultEncryptionKey) as string
