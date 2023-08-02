@@ -1,6 +1,6 @@
 import chalk from 'chalk'
-import { BaseCommand } from '../../base-command'
-import { Account, ApiResponse } from '../../types'
+import { BaseCommand } from '../base-command'
+import { Account, ApiResponse } from '../types'
 
 export default class Whoami extends BaseCommand<typeof Whoami> {
     static description = 'Shows the currently authenticated user information'

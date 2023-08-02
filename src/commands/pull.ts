@@ -4,6 +4,7 @@ import * as fs from 'fs-extra'
 import chalk from 'chalk'
 import * as path from 'node:path'
 import inquirer from 'inquirer'
+import { decryptFile } from '../utils'
 
 export default class Pull extends BaseCommand<typeof Pull> {
     static description = 'Download a file by its ID'
@@ -12,13 +13,15 @@ export default class Pull extends BaseCommand<typeof Pull> {
         '<%= config.bin %> <%= command.id %> <file-id>',
         '<%= config.bin %> <%= command.id %> <file-id> --output /home/user/downloads',
         '<%= config.bin %> <%= command.id %> <file-id> --output /home/user/downloads --name my-file',
+        '<%= config.bin %> <%= command.id %> <file-id> --output /home/user/downloads --key my-secret-key',
         '<%= config.bin %> <%= command.id %> <file-id> --output /home/user/downloads --name my-file --force'
     ]
 
     static flags = {
+        name: Flags.string({ char: 'n', description: 'Override the filename of the downloaded file' }),
         force: Flags.boolean({ char: 'f', description: 'Force overwrite of existing file' }),
         output: Flags.string({ char: 'o', description: 'Absolute path to the output directory' }),
-        name: Flags.string({ char: 'n', description: 'Override the filename of the downloaded file' })
+        key: Flags.string({ char: 'k', description: 'Encryption key to use for decrypting the file' })
     }
 
     static args = {
@@ -31,6 +34,19 @@ export default class Pull extends BaseCommand<typeof Pull> {
 
     public async run(): Promise<void> {
         const { args, flags } = await this.parse(Pull)
+
+        // validate the encryption key
+        const defaultEncryptionKey = this.getConfigValue('encryptionKey')
+
+        if (!this.flags.key && !defaultEncryptionKey) {
+            this.error('Encryption key is required for decrypting the file.')
+        }
+
+        const encryptionKey = (this.flags.key ?? defaultEncryptionKey) as string
+
+        if (encryptionKey.length < 16) {
+            this.error('Encryption key must be at least 16 characters long.')
+        }
 
         // get the file from the server
         const response = await this.client.get(`/pull/${args.fileId}`, { responseType: 'arraybuffer' })
@@ -77,8 +93,10 @@ export default class Pull extends BaseCommand<typeof Pull> {
             }
         }
 
+        const decryptedFileData = decryptFile(response.data, encryptionKey)
+
         // write the file to the path
-        await fs.writeFile(filePath, response.data)
+        await fs.writeFile(filePath, decryptedFileData)
 
         this.log(chalk.green(`File downloaded successfully to ${filePath}`))
     }

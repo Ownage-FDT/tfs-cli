@@ -1,10 +1,10 @@
 import { Args, ux } from '@oclif/core'
-import { BaseCommand } from '../../base-command'
+import { BaseCommand } from '../../../base-command'
 import chalk from 'chalk'
-import { Account, ApiResponse } from '../../types'
+import { Account, ApiResponse } from '../../../types'
 
-export default class AddToken extends BaseCommand<typeof AddToken> {
-    static description = 'Authenticate and store access token'
+export default class ConfigSetAuthToken extends BaseCommand<typeof ConfigSetAuthToken> {
+    static description = 'Authenticate and store an access token.'
 
     static examples = ['<%= config.bin %> <%= command.id %> <access-token>']
 
@@ -17,7 +17,7 @@ export default class AddToken extends BaseCommand<typeof AddToken> {
     }
 
     public async run(): Promise<void> {
-        const { args } = await this.parse(AddToken)
+        const { args } = await this.parse(ConfigSetAuthToken)
         ux.action.start(chalk.blue('Authenticating'))
 
         const { data } = await this.client.get<ApiResponse<Account>>('/whoami', {

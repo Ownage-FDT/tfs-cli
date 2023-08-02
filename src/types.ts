@@ -1,5 +1,6 @@
 export interface UserConfigOptions {
     accessToken?: string
+    encryptionKey?: string
 }
 
 export interface Account {
