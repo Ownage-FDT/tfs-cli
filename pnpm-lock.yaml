@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -26,8 +26,8 @@ devDependencies:
     specifier: ^17.5.0
     version: 17.5.0(commitizen@4.3.0)(inquirer@8.2.5)
   '@oclif/test':
-    specifier: ^2.3.23
-    version: 2.3.23(@types/node@16.18.36)(typescript@5.1.3)
+    specifier: ^2.4.2
+    version: 2.4.2(@types/node@16.18.36)(typescript@5.1.3)
   '@types/chai':
     specifier: ^4
     version: 4.0.0
@@ -979,6 +979,47 @@ packages:
       wrap-ansi: 7.0.0
     dev: false
 
+  /@oclif/core@2.11.7(@types/node@16.18.36)(typescript@5.1.3):
+    resolution: {integrity: sha512-0jbHePVekndUTd+Wee0+pnCpRhuHJrKiG9OtMqf4JSBCxp5Q8V+ACf8QKN4gNH9ppbGORfnTIYtXWh60+DcIiw==}
+    engines: {node: '>=14.0.0'}
+    dependencies:
+      '@types/cli-progress': 3.11.0
+      ansi-escapes: 4.3.2
+      ansi-styles: 4.3.0
+      cardinal: 2.1.1
+      chalk: 4.1.2
+      clean-stack: 3.0.1
+      cli-progress: 3.12.0
+      debug: 4.3.4(supports-color@8.1.1)
+      ejs: 3.1.9
+      fs-extra: 9.1.0
+      get-package-type: 0.1.0
+      globby: 11.1.0
+      hyperlinker: 1.0.0
+      indent-string: 4.0.0
+      is-wsl: 2.2.0
+      js-yaml: 3.14.1
+      natural-orderby: 2.0.3
+      object-treeify: 1.1.33
+      password-prompt: 1.1.2
+      semver: 7.5.3
+      slice-ansi: 4.0.0
+      string-width: 4.2.3
+      strip-ansi: 6.0.1
+      supports-color: 8.1.1
+      supports-hyperlinks: 2.3.0
+      ts-node: 10.9.1(@types/node@16.18.36)(typescript@5.1.3)
+      tslib: 2.5.3
+      widest-line: 3.1.0
+      wordwrap: 1.0.0
+      wrap-ansi: 7.0.0
+    transitivePeerDependencies:
+      - '@swc/core'
+      - '@swc/wasm'
+      - '@types/node'
+      - typescript
+    dev: true
+
   /@oclif/core@2.8.7(@types/node@16.18.36)(typescript@5.1.3):
     resolution: {integrity: sha512-WTZUFgANYGyHQOmGc2YsczEdqdlG2/ZEfqksHnuYbz3egozpka/R9LrFwNfWPZETi9ydzcjDWwJKUGQmJG3ixA==}
     engines: {node: '>=14.0.0'}
@@ -1151,12 +1192,12 @@ packages:
     engines: {node: '>=12.0.0'}
     deprecated: Deprecated in favor of @oclif/core
 
-  /@oclif/test@2.3.23(@types/node@16.18.36)(typescript@5.1.3):
-    resolution: {integrity: sha512-SEbVaE6KxA6+pwDdgcogy2CLu+GdR0p5yAbIFN0LeakeQvdjaUGdaz0vX/VN7+QaKr08jmjhHO5VpF2iaRuVZg==}
+  /@oclif/test@2.4.2(@types/node@16.18.36)(typescript@5.1.3):
+    resolution: {integrity: sha512-1LUFLBmaHLymTygLhzN6yT/ZVUKrpqR+cPv4xg79H8kXwrjFe6XlZ/9FzV+KywLQaI/c1+pWsOicO8hB8Et8lQ==}
     engines: {node: '>=12.0.0'}
     dependencies:
-      '@oclif/core': 2.8.7(@types/node@16.18.36)(typescript@5.1.3)
-      fancy-test: 2.0.27
+      '@oclif/core': 2.11.7(@types/node@16.18.36)(typescript@5.1.3)
+      fancy-test: 2.0.33
     transitivePeerDependencies:
       - '@swc/core'
       - '@swc/wasm'
@@ -3048,8 +3089,8 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /fancy-test@2.0.27:
-    resolution: {integrity: sha512-NUhkIpeHc4ebvkGLhQmlwpd9hd/ytOXTEmX2dFJ0e5VL61Ds7/RUHUmdSRY27VWil+uAuWSU8q6mUymrkxHC8Q==}
+  /fancy-test@2.0.33:
+    resolution: {integrity: sha512-Bu8rNOyF0CxnF5KygWstRMRVX8m0EVsEQ9nqV6xjKvpJwsLLfiDeLTQgEEqFfVlBn3eJo7YFvkwzxLkJn+KD2A==}
     engines: {node: '>=12.0.0'}
     dependencies:
       '@types/chai': 4.0.0
@@ -3058,7 +3099,7 @@ packages:
       '@types/sinon': 10.0.15
       lodash: 4.17.21
       mock-stdin: 1.0.0
-      nock: 13.3.1
+      nock: 13.3.2
       stdout-stderr: 0.1.13
     transitivePeerDependencies:
       - supports-color
@@ -4722,8 +4763,8 @@ packages:
   /nice-try@1.0.5:
     resolution: {integrity: sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==}
 
-  /nock@13.3.1:
-    resolution: {integrity: sha512-vHnopocZuI93p2ccivFyGuUfzjq2fxNyNurp7816mlT5V5HF4SzXu8lvLrVzBbNqzs+ODooZ6OksuSUNM7Njkw==}
+  /nock@13.3.2:
+    resolution: {integrity: sha512-CwbljitiWJhF1gL83NbanhoKs1l23TDlRioNraPTZrzZIEooPemrHRj5m0FZCPkB1ecdYCSWWGcHysJgX/ngnQ==}
     engines: {node: '>= 10.13'}
     dependencies:
       debug: 4.3.4(supports-color@8.1.1)
