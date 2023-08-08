@@ -7,7 +7,7 @@ import inquirer from 'inquirer'
 import { decryptFile } from '../utils'
 
 export default class Pull extends BaseCommand<typeof Pull> {
-    static description = 'Download a file by its ID'
+    static description = 'Pull or download a file from the server.'
 
     static examples = [
         '<%= config.bin %> <%= command.id %> <file-id>',
@@ -18,17 +18,17 @@ export default class Pull extends BaseCommand<typeof Pull> {
     ]
 
     static flags = {
-        name: Flags.string({ char: 'n', description: 'Override the filename of the downloaded file' }),
-        force: Flags.boolean({ char: 'f', description: 'Force overwrite of existing file' }),
-        output: Flags.string({ char: 'o', description: 'Absolute path to the output directory' }),
-        key: Flags.string({ char: 'k', description: 'Encryption key to use for decrypting the file' })
+        name: Flags.string({ char: 'n', description: 'The name of the file to save as.' }),
+        force: Flags.boolean({ char: 'f', description: 'Force overwrite of existing file.' }),
+        output: Flags.string({ char: 'o', description: 'The absolute path to save the file to.' }),
+        key: Flags.string({ char: 'k', description: 'The key to use for decrypting the file.' })
     }
 
     static args = {
         fileId: Args.string({
             name: 'fileId',
             required: true,
-            description: 'ID of the file to download'
+            description: 'The ID of the file to download.'
         })
     }
 
@@ -98,6 +98,6 @@ export default class Pull extends BaseCommand<typeof Pull> {
         // write the file to the path
         await fs.writeFile(filePath, decryptedFileData)
 
-        this.log(chalk.green(`File downloaded successfully to ${filePath}`))
+        this.log(chalk.green(`File downloaded successfully to ${filePath}.`))
     }
 }

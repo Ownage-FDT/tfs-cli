@@ -81,7 +81,7 @@
       "@oclif/plugin-help",
       "@oclif/plugin-update"
     ],
-    "topicSeparator": ":",
+    "topicSeparator": " ",
     "topics": {
       "config": {
         "description": "Manage the configuration for tfs"

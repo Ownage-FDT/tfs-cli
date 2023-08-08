@@ -1,90 +1,240 @@
-oclif-hello-world
+TFS CLI
 =================
 
-oclif example Hello World CLI
+Share files seamlessly with your without leaving your terminal
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![CircleCI](https://circleci.com/gh/oclif/hello-world/tree/main.svg?style=shield)](https://circleci.com/gh/oclif/hello-world/tree/main)
-[![GitHub license](https://img.shields.io/github/license/oclif/hello-world)](https://github.com/oclif/hello-world/blob/main/LICENSE)
+[![Version](https://img.shields.io/npm/v/@ownage-fdt/tfs-cli)](https://npmjs.org/package/@ownage-fdt/tfs-cli)
+[![GitHub license](https://img.shields.io/github/license/Ownage-FDT/tfs-cli)](https://github.com/Ownage-FDT/tfs-cli/blob/main/LICENSE)
+![GitHub Actions](https://github.com/Ownage-FDT/tfs-cli/actions/workflows/test.yml/badge.svg)
 
-<!-- toc -->
-* [Usage](#usage)
-* [Commands](#commands)
-<!-- tocstop -->
-# Usage
-<!-- usage -->
-```sh-session
-$ npm install -g @ownage/tfs
-$ tfs COMMAND
-running command...
-$ tfs (--version)
-@ownage/tfs/0.0.0 linux-x64 node-v18.15.0
-$ tfs --help [COMMAND]
+# Table of Contents
+
+- [TFS CLI](#tfs-cli)
+- [Table of Contents](#table-of-contents)
+- [Installation](#installation)
+- [Commands](#commands)
+  - [`tfs config list`](#tfs-config-list)
+  - [`tfs config set`](#tfs-config-set)
+  - [`tfs config set auth-token`](#tfs-config-set-auth-token)
+  - [`tfs config set encryption-key`](#tfs-config-set-encryption-key)
+  - [`tfs list`](#tfs-list)
+  - [`tfs push`](#tfs-push)
+  - [`tfs pull`](#tfs-pull)
+  - [`tfs remove`](#tfs-remove)
+  - [`tfs update`](#tfs-update)
+  - [`tfs help [COMMANDS]`](#tfs-help-commands)
+- [Contributing](#contributing)
+- [Credits](#credits)
+- [License](#license)
+
+
+# Installation
+
+You can install the package via npm:
+
+```bash
+npm install -g @ownage-fdt/tfs-cli
+```
+
+After installation, running `tfs` on your terminal should display a similar o utput to the one below:
+
+```bash
+VERSION
+  @ownage-fdt/tfs-cli/1.0.0 linux-x64 node-v18.15.0
+
 USAGE
   $ tfs COMMAND
 ...
 ```
-<!-- usagestop -->
+
 # Commands
-<!-- commands -->
-* [`tfs hello PERSON`](#tfs-hello-person)
-* [`tfs hello world`](#tfs-hello-world)
-* [`tfs help [COMMANDS]`](#tfs-help-commands)
-* [`tfs plugins`](#tfs-plugins)
-* [`tfs plugins:install PLUGIN...`](#tfs-pluginsinstall-plugin)
-* [`tfs plugins:inspect PLUGIN...`](#tfs-pluginsinspect-plugin)
-* [`tfs plugins:install PLUGIN...`](#tfs-pluginsinstall-plugin-1)
-* [`tfs plugins:link PLUGIN`](#tfs-pluginslink-plugin)
-* [`tfs plugins:uninstall PLUGIN...`](#tfs-pluginsuninstall-plugin)
-* [`tfs plugins:uninstall PLUGIN...`](#tfs-pluginsuninstall-plugin-1)
-* [`tfs plugins:uninstall PLUGIN...`](#tfs-pluginsuninstall-plugin-2)
-* [`tfs plugins update`](#tfs-plugins-update)
+The following commands are available:
 
-## `tfs hello PERSON`
+## `tfs config list`
+List the configuration values
 
-Say hello
-
-```
+```bash
 USAGE
-  $ tfs hello PERSON -f <value>
+  $ tfs config list
+
+EXAMPLES
+  $ tfs config list
+```
+
+## `tfs config set`
+
+Set a configuration value for tfs
+
+```bash
+USAGE
+  $ tfs config set COMMAND
+
+COMMANDS
+  config set auth-token      Authenticate and store an access token.
+  config set encryption-key  Set the encryption key to use for encrypting and decrypting files.
+
+EXAMPLES
+  $ tfs config set auth-token <auth-token>
+  $ tfs config set encryption-key <encryption-key>
+```
+
+## `tfs config set auth-token`
+
+Authenticate and store an access token.
+
+```bash
+USAGE
+  $ tfs config set auth-token <auth-token>
 
 ARGUMENTS
-  PERSON  Person to say hello to
+  <auth-token>  The access token to use for authenticating requests.
+
+EXAMPLES
+  $ tfs config set auth-token <auth-token>
+```
+
+## `tfs config set encryption-key`
+
+Set the encryption key to use for encrypting and decrypting files.
+
+```bash
+USAGE
+  $ tfs config set encryption-key <encryption-key>
+
+ARGUMENTS
+  <encryption-key>  The encryption key to use for encrypting and decrypting files.
+
+EXAMPLES
+  $ tfs config set encryption-key <encryption-key>
+```
+
+## `tfs list`
+
+List all files associated with your account.
+
+```bash
+USAGE
+  $ tfs list [--columns <value> | -x] [--sort <value>] [--filter <value>] [--output csv|json|yaml |  | [--csv | --no-truncate]]
+    [--no-header | ]
 
 FLAGS
-  -f, --from=<value>  (required) Who is saying hello
-
-DESCRIPTION
-  Say hello
+  -x, --extended     show extra columns
+  --columns=<value>  only show provided columns (comma-separated)
+  --csv              output is csv format [alias: --output=csv]
+  --filter=<value>   filter property by partial string matching, ex: name=foo
+  --no-header        hide table header from output
+  --no-truncate      do not truncate output to fit screen
+  --output=<option>  output in a more machine friendly format <options: csv|json|yaml>
+  --sort=<value>     property to sort by (prepend '-' for descending)
 
 EXAMPLES
-  $ oex hello friend --from oclif
-  hello friend from oclif! (./src/commands/hello/index.ts)
+  $ tfs list
+
+  $ tfs list --output json
+  
+  $ tfs list --columns name,size
 ```
 
-_See code: [dist/commands/hello/index.ts](https://github.com/Ownage-FDT/tfs-cli/blob/v0.0.0/dist/commands/hello/index.ts)_
+## `tfs push`
 
-## `tfs hello world`
+Push or upload a file to the server.
 
-Say hello world
-
-```
+```bash
 USAGE
-  $ tfs hello world
+  $ tfs push FILEPATH [-t <value>] [-k <value>]
 
-DESCRIPTION
-  Say hello world
+ARGUMENTS
+  FILEPATH           The absolute path to the file to upload.
+
+FLAGS
+  -k, --key=<value>  The key to use for encrypting the file.
+  -t, --ttl=<value>  The time to live for the file in seconds.
 
 EXAMPLES
-  $ tfs hello world
-  hello world! (./src/commands/hello/world.ts)
+  $ tfs push /path/to/file
+
+  $ tfs push /path/to/file --ttl 3600
+
+  $ tfs push /path/to/file --ttl 3600 --key my-secret-key
+```
+
+## `tfs pull`
+
+Pull or download a file from the server.
+
+```bash
+USAGE
+  $ tfs pull FILEID [-n <value>] [-f] [-o <value>] [-k <value>]
+
+ARGUMENTS
+  FILEID  The ID of the file to download.
+
+FLAGS
+  -f, --force           Force overwrite of existing file.
+  -k, --key=<value>     The key to use for decrypting the file.
+  -n, --name=<value>    The name of the file to save as.
+  -o, --output=<value>  The absolute path to save the file to.
+
+EXAMPLES
+  $ tfs pull <file-id>
+
+  $ tfs pull <file-id> --output /home/user/downloads
+
+  $ tfs pull <file-id> --output /home/user/downloads --name my-file
+
+  $ tfs pull <file-id> --output /home/user/downloads --key my-secret-key
+
+  $ tfs pull <file-id> --output /home/user/downloads --name my-file --force
+
+```
+
+## `tfs remove`
+
+Remove or delete a file from the server.
+
+```bash
+USAGE
+  $ tfs remove FILEID
+
+ARGUMENTS
+  FILEID  The ID of the file to remove.
+
+EXAMPLES
+  $ tfs remove <fileId>
+```
+
+## `tfs update`
+
+Update the tfs CLI.
+
+```bash
+
+```bash
+USAGE
+  $ tfs update [CHANNEL] [-a] [-v <value> | -i] [--force]
+
+FLAGS
+  -a, --available        Install a specific version.
+  -i, --interactive      Interactively select version to install. This is ignored if a channel is provided.
+  -v, --version=<value>  Install a specific version.
+  --force                Force a re-download of the requested version.
+
+EXAMPLES
+  $ tfs update stable
+
+  $ tfs update --version 1.0.0
+
+  $ tfs update --interactive
+
+  $ tfs update --available
 ```
 
 ## `tfs help [COMMANDS]`
 
-Display help for tfs.
+Display help information for tfs.
 
-```
+```bash
 USAGE
   $ tfs help [COMMANDS] [-n]
 
@@ -93,243 +243,16 @@ ARGUMENTS
 
 FLAGS
   -n, --nested-commands  Include all nested commands in the output.
-
-DESCRIPTION
-  Display help for tfs.
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.2.9/src/commands/help.ts)_
+# Contributing
 
-## `tfs plugins`
+Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
-List installed plugins.
 
-```
-USAGE
-  $ tfs plugins [--core]
+# Credits
+-   [Olayemi Olatayo](https://github.com/iamolayemi)
+-   [All Contributors](../../contributors)
 
-FLAGS
-  --core  Show core plugins.
-
-DESCRIPTION
-  List installed plugins.
-
-EXAMPLES
-  $ tfs plugins
-```
-
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.4.7/src/commands/plugins/index.ts)_
-
-## `tfs plugins:install PLUGIN...`
-
-Installs a plugin into the CLI.
-
-```
-USAGE
-  $ tfs plugins:install PLUGIN...
-
-ARGUMENTS
-  PLUGIN  Plugin to install.
-
-FLAGS
-  -f, --force    Run yarn install with force flag.
-  -h, --help     Show CLI help.
-  -v, --verbose
-
-DESCRIPTION
-  Installs a plugin into the CLI.
-  Can be installed from npm or a git url.
-
-  Installation of a user-installed plugin will override a core plugin.
-
-  e.g. If you have a core plugin that has a 'hello' command, installing a user-installed plugin with a 'hello' command
-  will override the core plugin implementation. This is useful if a user needs to update core plugin functionality in
-  the CLI without the need to patch and update the whole CLI.
-
-
-ALIASES
-  $ tfs plugins add
-
-EXAMPLES
-  $ tfs plugins:install myplugin 
-
-  $ tfs plugins:install https://github.com/someuser/someplugin
-
-  $ tfs plugins:install someuser/someplugin
-```
-
-## `tfs plugins:inspect PLUGIN...`
-
-Displays installation properties of a plugin.
-
-```
-USAGE
-  $ tfs plugins:inspect PLUGIN...
-
-ARGUMENTS
-  PLUGIN  [default: .] Plugin to inspect.
-
-FLAGS
-  -h, --help     Show CLI help.
-  -v, --verbose
-
-GLOBAL FLAGS
-  --json  Format output as json.
-
-DESCRIPTION
-  Displays installation properties of a plugin.
-
-EXAMPLES
-  $ tfs plugins:inspect myplugin
-```
-
-## `tfs plugins:install PLUGIN...`
-
-Installs a plugin into the CLI.
-
-```
-USAGE
-  $ tfs plugins:install PLUGIN...
-
-ARGUMENTS
-  PLUGIN  Plugin to install.
-
-FLAGS
-  -f, --force    Run yarn install with force flag.
-  -h, --help     Show CLI help.
-  -v, --verbose
-
-DESCRIPTION
-  Installs a plugin into the CLI.
-  Can be installed from npm or a git url.
-
-  Installation of a user-installed plugin will override a core plugin.
-
-  e.g. If you have a core plugin that has a 'hello' command, installing a user-installed plugin with a 'hello' command
-  will override the core plugin implementation. This is useful if a user needs to update core plugin functionality in
-  the CLI without the need to patch and update the whole CLI.
-
-
-ALIASES
-  $ tfs plugins add
-
-EXAMPLES
-  $ tfs plugins:install myplugin 
-
-  $ tfs plugins:install https://github.com/someuser/someplugin
-
-  $ tfs plugins:install someuser/someplugin
-```
-
-## `tfs plugins:link PLUGIN`
-
-Links a plugin into the CLI for development.
-
-```
-USAGE
-  $ tfs plugins:link PLUGIN
-
-ARGUMENTS
-  PATH  [default: .] path to plugin
-
-FLAGS
-  -h, --help     Show CLI help.
-  -v, --verbose
-
-DESCRIPTION
-  Links a plugin into the CLI for development.
-  Installation of a linked plugin will override a user-installed or core plugin.
-
-  e.g. If you have a user-installed or core plugin that has a 'hello' command, installing a linked plugin with a 'hello'
-  command will override the user-installed or core plugin implementation. This is useful for development work.
-
-
-EXAMPLES
-  $ tfs plugins:link myplugin
-```
-
-## `tfs plugins:uninstall PLUGIN...`
-
-Removes a plugin from the CLI.
-
-```
-USAGE
-  $ tfs plugins:uninstall PLUGIN...
-
-ARGUMENTS
-  PLUGIN  plugin to uninstall
-
-FLAGS
-  -h, --help     Show CLI help.
-  -v, --verbose
-
-DESCRIPTION
-  Removes a plugin from the CLI.
-
-ALIASES
-  $ tfs plugins unlink
-  $ tfs plugins remove
-```
-
-## `tfs plugins:uninstall PLUGIN...`
-
-Removes a plugin from the CLI.
-
-```
-USAGE
-  $ tfs plugins:uninstall PLUGIN...
-
-ARGUMENTS
-  PLUGIN  plugin to uninstall
-
-FLAGS
-  -h, --help     Show CLI help.
-  -v, --verbose
-
-DESCRIPTION
-  Removes a plugin from the CLI.
-
-ALIASES
-  $ tfs plugins unlink
-  $ tfs plugins remove
-```
-
-## `tfs plugins:uninstall PLUGIN...`
-
-Removes a plugin from the CLI.
-
-```
-USAGE
-  $ tfs plugins:uninstall PLUGIN...
-
-ARGUMENTS
-  PLUGIN  plugin to uninstall
-
-FLAGS
-  -h, --help     Show CLI help.
-  -v, --verbose
-
-DESCRIPTION
-  Removes a plugin from the CLI.
-
-ALIASES
-  $ tfs plugins unlink
-  $ tfs plugins remove
-```
-
-## `tfs plugins update`
-
-Update installed plugins.
-
-```
-USAGE
-  $ tfs plugins update [-h] [-v]
-
-FLAGS
-  -h, --help     Show CLI help.
-  -v, --verbose
-
-DESCRIPTION
-  Update installed plugins.
-```
-<!-- commandsstop -->
+# License
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.

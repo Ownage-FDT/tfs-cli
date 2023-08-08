@@ -3,7 +3,7 @@ import { ApiResponse, File } from '../types'
 import { ux } from '@oclif/core'
 
 export default class List extends BaseCommand<typeof List> {
-    static description = 'List all the files'
+    static description = 'List all files associated with your account.'
 
     static examples = ['<%= config.bin %> <%= command.id %>']
 
