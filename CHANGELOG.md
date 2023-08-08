@@ -1,3 +1,3 @@
 # Changelog
 
-All notable changes to `approvedeny-sdk-nodejs` will be documented in this file
+All notable changes to `@ownage-fdt/tfs-cli` will be documented in this file
