@@ -3,7 +3,7 @@ import { BaseCommand } from '../base-command'
 import chalk from 'chalk'
 
 export default class Remove extends BaseCommand<typeof Remove> {
-    static description = 'Remove a file'
+    static description = 'Remove or delete a file from the server.'
 
     static examples = ['<%= config.bin %> <%= command.id %> <fileId>']
 
@@ -11,7 +11,7 @@ export default class Remove extends BaseCommand<typeof Remove> {
         fileId: Args.string({
             name: 'fileId',
             required: true,
-            description: 'ID of the file to remove'
+            description: 'The ID of the file to remove.'
         })
     }
 

@@ -7,7 +7,7 @@ import { AxiosError, AxiosProgressEvent } from 'axios'
 import { encryptFile } from '../utils'
 
 export default class Push extends BaseCommand<typeof Push> {
-    static description = 'Upload a file'
+    static description = 'Push or upload a file to the server.'
 
     static examples = [
         '<%= config.bin %> <%= command.id %> /path/to/file',
@@ -19,13 +19,13 @@ export default class Push extends BaseCommand<typeof Push> {
         filePath: Args.string({
             name: 'filePath',
             required: true,
-            description: 'Absolute path to the file to upload'
+            description: 'The absolute path to the file to upload.'
         })
     }
 
     static flags = {
-        ttl: Flags.string({ char: 't', description: 'Time to live for the file in seconds' }),
-        key: Flags.string({ char: 'k', description: 'Encryption key to use for encrypting the file' })
+        ttl: Flags.string({ char: 't', description: 'The time to live for the file in seconds.' }),
+        key: Flags.string({ char: 'k', description: 'The key to use for encrypting the file.' })
     }
 
     public async run(): Promise<void> {
