@@ -43,7 +43,7 @@
     "@oclif/test": "^2.3.23",
     "@types/chai": "^4",
     "@types/mocha": "^10.0.1",
-    "@types/node": "^16.18.36",
+    "@types/node": "^16.18.50",
     "chai": "^4",
     "commitizen": "^4.3.0",
     "eslint": "^7.32.0",
