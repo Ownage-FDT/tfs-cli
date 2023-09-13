@@ -1232,10 +1232,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^18.15.3":
-  version: 18.16.18
-  resolution: "@types/node@npm:18.16.18"
-  checksum: d32d8a0a04cd3f5ecb361bcb42f3a07623881ac90d680e06bf626defb3c663a94860d11690babe607cfe67265eceeb8a59ba5fe40c0e49f5a1b01e0088640469
+"@types/node@npm:^18.17.15":
+  version: 18.17.15
+  resolution: "@types/node@npm:18.17.15"
+  checksum: eed11d4398ccdb999a4c65658ee75de621a4ad57aece48ed2fb8803b1e2711fadf58d8aefbdb0a447d69cf3cba602ca32fe0fc92077575950a796e1dc13baa0f
   languageName: node
   linkType: hard
 
@@ -7753,7 +7753,7 @@ __metadata:
     "@types/fs-extra": ^11.0.1
     "@types/inquirer": ^8.0.0
     "@types/mocha": ^10.0.1
-    "@types/node": ^18.15.3
+    "@types/node": ^18.17.15
     "@types/sinon": ^10.0.15
     "@typescript-eslint/eslint-plugin": ^5.60.0
     "@typescript-eslint/parser": ^5.60.0
