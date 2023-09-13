@@ -4,7 +4,6 @@ import { UserConfigOptions } from './types'
 import * as path from 'node:path'
 import * as fs from 'fs-extra'
 import chalk from 'chalk'
-import { CommandError } from '@oclif/core/lib/interfaces'
 
 export type Args<T extends typeof Command> = Interfaces.InferredFlags<T['args']>
 export type Flags<T extends typeof Command> = Interfaces.InferredFlags<T['flags']>
@@ -58,6 +57,14 @@ export abstract class BaseCommand<T extends typeof Command> extends Command {
             return config
         })
 
+        // handle any errors that occur during the request
+        client.interceptors.response.use(
+            (response) => response,
+            (error: AxiosError<{ message: string }>) => {
+                throw error
+            }
+        )
+
         return client
     }
 
@@ -73,15 +80,18 @@ export abstract class BaseCommand<T extends typeof Command> extends Command {
         return currentConfig[key]
     }
 
-    async catch(error: CommandError): Promise<any> {
+    protected async catch(error: any): Promise<any> {
         if (error instanceof AxiosError) {
-            if (error.response?.status == 401 || error.status == 401) {
-                this.error(chalk.red('Unauthorized. Please check your access token and try again.'))
+            const status = error.response?.status ?? error.status
+            const message = error.response?.data?.message ?? error.message
+
+            if (status === 401) {
+                return super.catch(new Error(chalk.red('Unauthorized. Please check your access token and try again.')))
             }
 
-            this.error(chalk.red(error.response?.data?.message ?? error.message))
+            return super.catch(new Error(chalk.red(message)))
         }
 
-        this.error(chalk.red(error.message), { exit: error.exitCode })
+        return super.catch(new Error(chalk.red(error.message)))
     }
 }

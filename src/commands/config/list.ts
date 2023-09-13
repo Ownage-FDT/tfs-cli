@@ -8,7 +8,7 @@ export default class ConfigList extends BaseCommand<typeof ConfigList> {
     static examples = ['<%= config.bin %> <%= command.id %>']
 
     public async run(): Promise<void> {
-        const configFilePath = path.join(this.config.home, `.${this.config.name}rc`)
+        const configFilePath = path.join(this.config.home, `.tfsrc`)
 
         const currentConfig = fs.readJSONSync(configFilePath)
 
