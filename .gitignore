@@ -55,3 +55,6 @@ oclif.manifest.json
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+
+tsconfig.tsbuildinfo

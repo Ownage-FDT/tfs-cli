@@ -1,7 +1,7 @@
 import { expect, test } from '@oclif/test'
 
 describe('whoami', function () {
-    const baseUrl = process.env.TFS_HOST_URL ?? 'http://localhost:3000'
+    const baseUrl = 'https://api.trytfs.com'
 
     test.stdout()
         .nock(baseUrl, (client) => client.get('/whoami').reply(200, { data: { name: 'Test User' } }))
