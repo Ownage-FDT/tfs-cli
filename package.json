@@ -23,7 +23,7 @@
     "commit": "git-cz",
     "prepare": "husky install",
     "preinstall": "npx only-allow yarn",
-    "build": "shx rm -rf dist && tsc -b",
+    "build": "shx rm -rf dist && tsc --build --force",
     "format": "prettier --write \"src/**/*.+(ts|js)\" \"test/**/*.+(ts|js)\"",
     "lint": "eslint . --ext .ts --fix",
     "postpack": "shx rm -f oclif.manifest.json",
@@ -55,7 +55,7 @@
     "@types/fs-extra": "^11.0.1",
     "@types/inquirer": "^8.0.0",
     "@types/mocha": "^10.0.1",
-    "@types/node": "^20.6.0",
+    "@types/node": "18.17.1",
     "@types/sinon": "^10.0.16",
     "@typescript-eslint/eslint-plugin": "^6.7.0",
     "@typescript-eslint/parser": "^6.7.0",
@@ -112,8 +112,9 @@
     }
   },
   "engines": {
-    "node": ">=16.20.0"
+    "node": ">=18.17.1"
   },
+
   "bugs": "https://github.com/Ownage-FDT/tfs-cli/issues",
   "types": "dist/index.d.ts",
   "config": {
@@ -126,6 +127,5 @@
       "prettier --write --ignore-unknown",
       "eslint --cache --fix"
     ]
-  },
-  "packageManager": "yarn@1.22.19"
+  }
 }
