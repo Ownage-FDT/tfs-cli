@@ -12,7 +12,7 @@ export type Flags<T extends typeof Command> = Interfaces.InferredFlags<T['flags'
 export abstract class BaseCommand<T extends typeof Command> extends Command {
     protected args!: Args<T>
     protected flags!: Flags<T>
-    private _configFilePath: string = path.join(this.config.home, `.${this.config.name}rc`)
+    private _configFilePath: string = path.join(this.config.home, `.tfsrc`)
 
     public async init(): Promise<void> {
         await super.init()
@@ -37,8 +37,7 @@ export abstract class BaseCommand<T extends typeof Command> extends Command {
 
     private initiateClient(): AxiosInstance {
         const client = axios.create({
-            // TODO: use the host url from the config
-            baseURL: process.env.TFS_HOST_URL ?? 'http://localhost:3000',
+            baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://api.trytfs.com',
             headers: {
                 Accept: 'application/json',
                 'User-Agent': this.config.userAgent

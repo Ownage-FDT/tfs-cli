@@ -209,8 +209,6 @@ EXAMPLES
 Update the tfs CLI.
 
 ```bash
-
-```bash
 USAGE
   $ tfs update [CHANNEL] [-a] [-v <value> | -i] [--force]
 
