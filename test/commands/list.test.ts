@@ -2,7 +2,7 @@ import { expect, test } from '@oclif/test'
 import { File } from '../../src/types'
 
 describe('list', function () {
-    const baseUrl = process.env.TFS_HOST_URL ?? 'http://localhost:3000'
+    const baseUrl = 'https://api.trytfs.com'
 
     const sampleResponse: File[] = [
         {

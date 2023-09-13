@@ -3,7 +3,7 @@ import { ux } from '@oclif/core'
 import sinon from 'sinon'
 
 describe('config:set:auth-token', function () {
-    const baseUrl = process.env.TFS_HOST_URL ?? 'http://localhost:3000'
+    const baseUrl = 'https://api.trytfs.com'
 
     const testInstance = test.stub(ux.action, 'start', sinon.stub()).stub(ux.action, 'stop', sinon.stub())
 

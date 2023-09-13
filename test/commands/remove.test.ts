@@ -1,7 +1,7 @@
 import { expect, test } from '@oclif/test'
 
 describe('remove', function () {
-    const baseUrl = process.env.TFS_HOST_URL ?? 'http://localhost:3000'
+    const baseUrl = 'https://api.trytfs.com'
     const fileId = '610be8e6959dbad9c7e9e5e1'
 
     test.stdout()
