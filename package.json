@@ -9,7 +9,6 @@
   "keywords": [
     "tfs"
   ],
-  "private": "false",
   "homepage": "https://github.com/Ownage-FDT/tfs-cli",
   "license": "MIT",
   "main": "dist/index.js",
