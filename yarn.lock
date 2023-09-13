@@ -791,6 +791,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@oclif/plugin-autocomplete@npm:^2.3.8":
+  version: 2.3.8
+  resolution: "@oclif/plugin-autocomplete@npm:2.3.8"
+  dependencies:
+    "@oclif/core": ^2.15.0
+    chalk: ^4.1.0
+    debug: ^4.3.4
+  checksum: 5c15ae7ac2304b8ab09a6c13e9aca52435c7639648e3bb8f6fa5d38987b07e33b4aab850ce61242c50d41cf80510ac93643da0dde6807b629b43d1ea808fba68
+  languageName: node
+  linkType: hard
+
 "@oclif/plugin-help@npm:^5, @oclif/plugin-help@npm:^5.1.19":
   version: 5.2.10
   resolution: "@oclif/plugin-help@npm:5.2.10"
@@ -808,6 +819,17 @@ __metadata:
     "@oclif/core": ^2.8.7
     fast-levenshtein: ^3.0.0
   checksum: d4a70d01c120cb3728be78cd3e4560a83545c12707f7756a9860fe1c6febc399d18505c7a854518f90987a0e4e70c1f3f1f529e9c3b6a96510ba32495c449d28
+  languageName: node
+  linkType: hard
+
+"@oclif/plugin-not-found@npm:^2.4.1":
+  version: 2.4.1
+  resolution: "@oclif/plugin-not-found@npm:2.4.1"
+  dependencies:
+    "@oclif/core": ^2.15.0
+    chalk: ^4
+    fast-levenshtein: ^3.0.0
+  checksum: 7be4e98aeec1cb5127c3bc3c9c89747374c128e677f5457b53972d3abac579b385efdc10fed610345ef792ba9506ac98fa2fb706627e6728a197da276797df1d
   languageName: node
   linkType: hard
 
@@ -843,6 +865,20 @@ __metadata:
     lodash: ^4.17.21
     semver: ^7.5.3
   checksum: 93001cc9d74beffb1eb23602bd0b83f5242a5b11feb4e7c1e45aa9b208f26bc144ff076be007db31bd1de637c627a3bd3799d7686e7af0b1d9a29e6b3398211d
+  languageName: node
+  linkType: hard
+
+"@oclif/plugin-warn-if-update-available@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@oclif/plugin-warn-if-update-available@npm:2.1.0"
+  dependencies:
+    "@oclif/core": ^2.15.0
+    chalk: ^4.1.0
+    debug: ^4.1.0
+    http-call: ^5.2.2
+    lodash.template: ^4.5.0
+    semver: ^7.5.4
+  checksum: 4fc4d307c16311e87f5630759fbc5ab2f67b71f4e2ad7ddfa2cc7bdc9cc24c6e85d961d803165e2081366ae1517b37790406ba52e5cfd946eb7afc88e698413f
   languageName: node
   linkType: hard
 
@@ -986,6 +1022,57 @@ __metadata:
   checksum: fd6f75e0b19b90d1a3d244d2b0c323ed8f2f05e474a281f60a321986683548ef2e0ec2b3a946aa9405d6092e055344455f69f58957c60f58368c8bdda5b7d2ab
   languageName: node
   linkType: hard
+
+"@ownage-fdt/tfs-cli@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@ownage-fdt/tfs-cli@workspace:."
+  dependencies:
+    "@commitlint/cli": ^17.6.6
+    "@commitlint/config-conventional": ^17.6.6
+    "@commitlint/cz-commitlint": ^17.5.0
+    "@oclif/core": ^2.15.0
+    "@oclif/plugin-autocomplete": ^2.3.8
+    "@oclif/plugin-help": ^5
+    "@oclif/plugin-not-found": ^2.4.1
+    "@oclif/plugin-update": ^3.1.28
+    "@oclif/plugin-warn-if-update-available": ^2.1.0
+    "@oclif/test": ^2.5.4
+    "@types/chai": ^4
+    "@types/crypto-js": ^4.1.1
+    "@types/fs-extra": ^11.0.1
+    "@types/inquirer": ^8.0.0
+    "@types/mocha": ^10.0.1
+    "@types/node": ^18.17.15
+    "@types/sinon": ^10.0.15
+    "@typescript-eslint/eslint-plugin": ^5.60.0
+    "@typescript-eslint/parser": ^5.60.0
+    axios: ^1.4.0
+    chai: ^4.3.7
+    chalk: ^4.1.2
+    commitizen: ^4.3.0
+    crypto-js: ^4.1.1
+    eslint: ^8.43.0
+    eslint-config-prettier: ^8.8.0
+    eslint-plugin-mocha: ^10.1.0
+    eslint-plugin-prettier: ^4.2.1
+    eslint-plugin-unicorn: ^47.0.0
+    fs-extra: ^11.1.1
+    husky: ^8.0.3
+    inquirer: ^8.0.0
+    lint-staged: ^13.3.0
+    mocha: ^10.2.0
+    mockfs: ^0.1.5
+    oclif: ^3
+    prettier: ^2.8.8
+    shx: ^0.3.4
+    sinon: ^15.2.0
+    ts-node: ^10.9.1
+    tslib: ^2.5.3
+    typescript: ^5.1.3
+  bin:
+    tfs: ./bin/run
+  languageName: unknown
+  linkType: soft
 
 "@pkgjs/parseargs@npm:^0.11.0":
   version: 0.11.0
@@ -2190,7 +2277,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:^4.0.0, chalk@npm:^4.0.2, chalk@npm:^4.1.0, chalk@npm:^4.1.1, chalk@npm:^4.1.2":
+"chalk@npm:^4, chalk@npm:^4.0.0, chalk@npm:^4.0.2, chalk@npm:^4.1.0, chalk@npm:^4.1.1, chalk@npm:^4.1.2":
   version: 4.1.2
   resolution: "chalk@npm:4.1.2"
   dependencies:
@@ -4992,6 +5079,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash._reinterpolate@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "lodash._reinterpolate@npm:3.0.0"
+  checksum: 06d2d5f33169604fa5e9f27b6067ed9fb85d51a84202a656901e5ffb63b426781a601508466f039c720af111b0c685d12f1a5c14ff8df5d5f27e491e562784b2
+  languageName: node
+  linkType: hard
+
 "lodash.camelcase@npm:^4.3.0":
   version: 4.3.0
   resolution: "lodash.camelcase@npm:4.3.0"
@@ -5059,6 +5153,25 @@ __metadata:
   version: 4.4.0
   resolution: "lodash.startcase@npm:4.4.0"
   checksum: c03a4a784aca653845fe09d0ef67c902b6e49288dc45f542a4ab345a9c406a6dc194c774423fa313ee7b06283950301c1221dd2a1d8ecb2dac8dfbb9ed5606b5
+  languageName: node
+  linkType: hard
+
+"lodash.template@npm:^4.5.0":
+  version: 4.5.0
+  resolution: "lodash.template@npm:4.5.0"
+  dependencies:
+    lodash._reinterpolate: ^3.0.0
+    lodash.templatesettings: ^4.0.0
+  checksum: ca64e5f07b6646c9d3dbc0fe3aaa995cb227c4918abd1cef7a9024cd9c924f2fa389a0ec4296aa6634667e029bc81d4bbdb8efbfde11df76d66085e6c529b450
+  languageName: node
+  linkType: hard
+
+"lodash.templatesettings@npm:^4.0.0":
+  version: 4.2.0
+  resolution: "lodash.templatesettings@npm:4.2.0"
+  dependencies:
+    lodash._reinterpolate: ^3.0.0
+  checksum: 863e025478b092997e11a04e9d9e735875eeff1ffcd6c61742aa8272e3c2cddc89ce795eb9726c4e74cef5991f722897ff37df7738a125895f23fc7d12a7bb59
   languageName: node
   linkType: hard
 
@@ -7775,54 +7888,6 @@ __metadata:
   checksum: d2abd5c962760046aa85d9ca542bd8bdb451370fc0a5e5f807aa80dd2f50175ec10d5ce9d28ae96968aaf6a1b1bea254cf4715f24852d0dcf29c6a60af7f793c
   languageName: node
   linkType: hard
-
-"tfs@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "tfs@workspace:."
-  dependencies:
-    "@commitlint/cli": ^17.6.6
-    "@commitlint/config-conventional": ^17.6.6
-    "@commitlint/cz-commitlint": ^17.5.0
-    "@oclif/core": ^2.15.0
-    "@oclif/plugin-help": ^5
-    "@oclif/plugin-update": ^3.1.28
-    "@oclif/test": ^2.5.4
-    "@types/chai": ^4
-    "@types/crypto-js": ^4.1.1
-    "@types/fs-extra": ^11.0.1
-    "@types/inquirer": ^8.0.0
-    "@types/mocha": ^10.0.1
-    "@types/node": ^18.17.15
-    "@types/sinon": ^10.0.15
-    "@typescript-eslint/eslint-plugin": ^5.60.0
-    "@typescript-eslint/parser": ^5.60.0
-    axios: ^1.4.0
-    chai: ^4.3.7
-    chalk: ^4.1.2
-    commitizen: ^4.3.0
-    crypto-js: ^4.1.1
-    eslint: ^8.43.0
-    eslint-config-prettier: ^8.8.0
-    eslint-plugin-mocha: ^10.1.0
-    eslint-plugin-prettier: ^4.2.1
-    eslint-plugin-unicorn: ^47.0.0
-    fs-extra: ^11.1.1
-    husky: ^8.0.3
-    inquirer: ^8.0.0
-    lint-staged: ^13.3.0
-    mocha: ^10.2.0
-    mockfs: ^0.1.5
-    oclif: ^3
-    prettier: ^2.8.8
-    shx: ^0.3.4
-    sinon: ^15.2.0
-    ts-node: ^10.9.1
-    tslib: ^2.5.3
-    typescript: ^5.1.3
-  bin:
-    tfs: ./bin/run
-  languageName: unknown
-  linkType: soft
 
 "through2@npm:^4.0.0":
   version: 4.0.2

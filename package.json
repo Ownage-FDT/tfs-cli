@@ -1,9 +1,11 @@
 {
-  "name": "tfs",
+  "name": "@ownage-fdt/tfs-cli",
   "version": "0.0.0",
   "description": "Share files without leaving your terminal",
   "author": "Olatayo Olayemi <olatayo.olayemi.peter@gmail.com>",
-  "bin": "./bin/run",
+  "bin": {
+    "tfs": "./bin/run"
+  },
   "keywords": [
     "tfs"
   ],
@@ -32,8 +34,11 @@
   },
   "dependencies": {
     "@oclif/core": "^2.15.0",
+    "@oclif/plugin-autocomplete": "^2.3.8",
     "@oclif/plugin-help": "^5",
+    "@oclif/plugin-not-found": "^2.4.1",
     "@oclif/plugin-update": "^3.1.28",
+    "@oclif/plugin-warn-if-update-available": "^2.1.0",
     "axios": "^1.4.0",
     "chalk": "^4.1.2",
     "crypto-js": "^4.1.1",
@@ -76,10 +81,17 @@
   "oclif": {
     "bin": "tfs",
     "dirname": "tfs",
+    "scope": "ownage-fdt",
     "commands": "./dist/commands",
     "plugins": [
       "@oclif/plugin-help",
-      "@oclif/plugin-update"
+      "@oclif/plugin-update",
+      "@oclif/plugin-autocomplete",
+      "@oclif/plugin-not-found",
+      "@oclif/plugin-warn-if-update-available"
+    ],
+    "binAlias": [
+      "tfs"
     ],
     "topicSeparator": " ",
     "topics": {
