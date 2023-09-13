@@ -1,6 +1,6 @@
 {
   "name": "tfs",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Share files without leaving your terminal",
   "author": "Olatayo Olayemi <olatayo.olayemi.peter@gmail.com>",
   "bin": "./bin/run",
