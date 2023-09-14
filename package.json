@@ -17,7 +17,11 @@
     "/bin",
     "/dist",
     "/npm-shrinkwrap.json",
-    "/oclif.manifest.json"
+    "/oclif.manifest.json",
+    "CHANGELOG.md",
+    "LICENSE.md",
+    "README.md",
+    ".npmrc"
   ],
   "scripts": {
     "commit": "git-cz",
@@ -112,7 +116,7 @@
     }
   },
   "engines": {
-    "node": ">=18.17.1"
+    "node": ">=18.x"
   },
   "bugs": "https://github.com/Ownage-FDT/tfs-cli/issues",
   "types": "dist/index.d.ts",
