@@ -1,6 +1,6 @@
 {
   "name": "@ownage-fdt/tfs-cli",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Share files without leaving your terminal",
   "author": "Olatayo Olayemi <olatayo.olayemi.peter@gmail.com>",
   "bin": {
