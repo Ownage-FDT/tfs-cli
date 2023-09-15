@@ -108,15 +108,20 @@
     },
     "update": {
       "s3": {
-        "xz": true,
         "bucket": "tfs-store",
         "folder": "media/cli",
-        "host": "https://tfs-store.sgp1.digitaloceanspaces.com"
+        "host": "https://sgp1.digitaloceanspaces.com"
       }
+    },
+    "macos": {
+      "identifier": "com.trytfs.cli"
+    },
+    "windows": {
+      "name": "TFS CLI"
     }
   },
   "engines": {
-    "node": ">=18.x"
+    "node": ">=18.17.1"
   },
   "bugs": "https://github.com/Ownage-FDT/tfs-cli/issues",
   "types": "dist/index.d.ts",
