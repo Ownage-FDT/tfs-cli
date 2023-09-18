@@ -763,13 +763,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@oclif/test@npm:^2.5.4":
-  version: 2.5.4
-  resolution: "@oclif/test@npm:2.5.4"
+"@oclif/test@npm:^2.5.5":
+  version: 2.5.5
+  resolution: "@oclif/test@npm:2.5.5"
   dependencies:
     "@oclif/core": ^2.15.0
-    fancy-test: ^2.0.38
-  checksum: 68f603e5cc845ce19e330e861c6235be836ecc365d599ac314e7e9a9aaf42d859e996b8f1e5dcb5bc413b25fe6c0609465f8b825e2ddd745ef72631bbbbbd6d4
+    fancy-test: ^2.0.41
+  checksum: a5cee4e95446c9aa396d525846f81a256b70d5aeec813fc36ce83d3e169172547cbc198dbb167e76d4972214d1f48539024aad88d692741d547845b6cf1538df
   languageName: node
   linkType: hard
 
@@ -917,7 +917,7 @@ __metadata:
     "@oclif/plugin-not-found": ^2.4.1
     "@oclif/plugin-update": ^3.2.3
     "@oclif/plugin-warn-if-update-available": ^2.1.0
-    "@oclif/test": ^2.5.4
+    "@oclif/test": ^2.5.5
     "@types/chai": ^4
     "@types/crypto-js": ^4.1.2
     "@types/fs-extra": ^11.0.1
@@ -3347,9 +3347,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fancy-test@npm:^2.0.38":
-  version: 2.0.41
-  resolution: "fancy-test@npm:2.0.41"
+"fancy-test@npm:^2.0.41":
+  version: 2.0.42
+  resolution: "fancy-test@npm:2.0.42"
   dependencies:
     "@types/chai": "*"
     "@types/lodash": "*"
@@ -3359,7 +3359,7 @@ __metadata:
     mock-stdin: ^1.0.0
     nock: ^13.3.3
     stdout-stderr: ^0.1.9
-  checksum: c73806ba8bb1d14e8c5dd5effc06041ed5f041d3479f19d01851b7d59e9fa35936116963ceb46b0ddc1fb723878be46e4fcb9591a06e5ae236482ab4c8718907
+  checksum: 48f802bcb70da9abbe1a8b136aef1912ea9346c16d4bb653f99c54d5d9c318831397f7f88ce3aee3960fb3a9f9a479032bc56e7e494390993cb9925be8b6d37a
   languageName: node
   linkType: hard
 
@@ -7898,11 +7898,11 @@ __metadata:
 
 "typescript@patch:typescript@^4.6.4 || ^5.0.0#~builtin<compat/typescript>, typescript@patch:typescript@^5.2.2#~builtin<compat/typescript>":
   version: 5.2.2
-  resolution: "typescript@patch:typescript@npm%3A5.2.2#~builtin<compat/typescript>::version=5.2.2&hash=14eedb"
+  resolution: "typescript@patch:typescript@npm%3A5.2.2#~builtin<compat/typescript>::version=5.2.2&hash=f3b441"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 07106822b4305de3f22835cbba949a2b35451cad50888759b6818421290ff95d522b38ef7919e70fb381c5fe9c1c643d7dea22c8b31652a717ddbd57b7f4d554
+  checksum: 0f4da2f15e6f1245e49db15801dbee52f2bbfb267e1c39225afdab5afee1a72839cd86000e65ee9d7e4dfaff12239d28beaf5ee431357fcced15fb08583d72ca
   languageName: node
   linkType: hard
 
