@@ -1,4 +1,3 @@
-/* eslint-disable unicorn/prefer-string-replace-all */
 import { Args, Flags } from '@oclif/core'
 import { BaseCommand } from '../base-command'
 import * as fs from 'fs-extra'
@@ -55,7 +54,7 @@ export default class Pull extends BaseCommand<typeof Pull> {
         // get the file name from the response headers
         const contentDisposition = response.headers['content-disposition']
 
-        const originalFileName = contentDisposition.split('filename=')[1].replace(/"/g, '')
+        const originalFileName = contentDisposition.split('filename=')[1].replaceAll('"', '')
         const fileExtension = path.extname(originalFileName)
 
         // get the filename from the flag or use the original filename
