@@ -53,6 +53,7 @@ export default class Pull extends BaseCommand<typeof Pull> {
 
         // get the file name from the response headers
         const contentDisposition = response.headers['content-disposition']
+
         const originalFileName = contentDisposition.split('filename=')[1].replaceAll('"', '')
         const fileExtension = path.extname(originalFileName)
 

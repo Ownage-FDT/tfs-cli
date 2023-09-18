@@ -5,6 +5,7 @@ import { ApiResponse, File } from '../types'
 import chalk from 'chalk'
 import { AxiosError, AxiosProgressEvent } from 'axios'
 import { encryptFile } from '../utils'
+import FormData from 'form-data'
 
 export default class Push extends BaseCommand<typeof Push> {
     static description = 'Push or upload a file to the server.'
@@ -52,7 +53,7 @@ export default class Push extends BaseCommand<typeof Push> {
 
         const encryptedFileData = encryptFile(fileData, encryptionKey)
 
-        formData.append('file', new Blob([new Uint8Array(encryptedFileData)]), args.filePath)
+        formData.append('file', Buffer.from(new Uint8Array(encryptedFileData)), args.filePath)
 
         try {
             const progressBar = ux.progress({
