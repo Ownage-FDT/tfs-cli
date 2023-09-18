@@ -109,7 +109,7 @@
     "update": {
       "s3": {
         "bucket": "tfs-store",
-        "folder": "media/cli",
+        "folder": "assets/cli",
         "host": "https://sgp1.digitaloceanspaces.com"
       }
     },
