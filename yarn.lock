@@ -920,7 +920,7 @@ __metadata:
     "@oclif/test": ^2.5.4
     "@types/chai": ^4
     "@types/crypto-js": ^4.1.2
-    "@types/fs-extra": ^11.0.1
+    "@types/fs-extra": ^11.0.3
     "@types/inquirer": ^8.0.0
     "@types/mocha": ^10.0.1
     "@types/node": 18.17.1
@@ -1176,13 +1176,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/fs-extra@npm:^11.0.1":
-  version: 11.0.1
-  resolution: "@types/fs-extra@npm:11.0.1"
+"@types/fs-extra@npm:^11.0.3":
+  version: 11.0.3
+  resolution: "@types/fs-extra@npm:11.0.3"
   dependencies:
     "@types/jsonfile": "*"
     "@types/node": "*"
-  checksum: 3e930346e5d84f419deb8ced1c582beef8cb20d0bd8a0eb145a37d75bab0572a1895f0e48a0d681d386b3a58b9a992b2d2acecc464bcaec2548f53ea00718651
+  checksum: f196bc216906e7016a6c9c549dbe204fe7e1e87515c7e961f741309e25f8e2f8c268dba3dbf0ca7f3ddab5911d39888472f8624ac0c11a461f1b2d05377e38fa
   languageName: node
   linkType: hard
 
@@ -7899,11 +7899,11 @@ __metadata:
 
 "typescript@patch:typescript@^4.6.4 || ^5.0.0#~builtin<compat/typescript>, typescript@patch:typescript@^5.2.2#~builtin<compat/typescript>":
   version: 5.2.2
-  resolution: "typescript@patch:typescript@npm%3A5.2.2#~builtin<compat/typescript>::version=5.2.2&hash=14eedb"
+  resolution: "typescript@patch:typescript@npm%3A5.2.2#~builtin<compat/typescript>::version=5.2.2&hash=f3b441"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 07106822b4305de3f22835cbba949a2b35451cad50888759b6818421290ff95d522b38ef7919e70fb381c5fe9c1c643d7dea22c8b31652a717ddbd57b7f4d554
+  checksum: 0f4da2f15e6f1245e49db15801dbee52f2bbfb267e1c39225afdab5afee1a72839cd86000e65ee9d7e4dfaff12239d28beaf5ee431357fcced15fb08583d72ca
   languageName: node
   linkType: hard
 
