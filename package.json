@@ -25,8 +25,7 @@
   ],
   "scripts": {
     "commit": "git-cz",
-    "prepare": "husky install",
-    "preinstall": "npx only-allow yarn",
+    "prepare": "node -e \"if (process.env.NODE_ENV !== 'production'){process.exit(1)} \" || husky install",
     "build": "shx rm -rf dist && tsc --build --force",
     "format": "prettier --write \"src/**/*.+(ts|js)\" \"test/**/*.+(ts|js)\"",
     "lint": "eslint . --ext .ts --fix",
