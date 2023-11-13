@@ -1,7 +1,7 @@
 TFS CLI
 =================
 
-Share files seamlessly with your without leaving your terminal
+Share files seamlessly without leaving your terminal
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/@ownage-fdt/tfs-cli)](https://npmjs.org/package/@ownage-fdt/tfs-cli)
@@ -31,13 +31,13 @@ Share files seamlessly with your without leaving your terminal
 
 # Installation
 
-You can install the package via npm:
+Install TFS CLI globally via npm:
 
 ```bash
 npm install -g @ownage-fdt/tfs-cli
 ```
 
-After installation, running `tfs` on your terminal should display a similar o utput to the one below:
+After installation, running `tfs` in your terminal should display output similar to the following:
 
 ```bash
 VERSION
@@ -52,7 +52,7 @@ USAGE
 The following commands are available:
 
 ## `tfs config list`
-List the configuration values
+List the current configuration values
 
 ```bash
 USAGE
