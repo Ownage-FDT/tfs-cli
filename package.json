@@ -1,8 +1,8 @@
 {
   "name": "@ownage-fdt/tfs-cli",
   "version": "0.10.0",
-  "description": "Share files without leaving your terminal",
-  "author": "Olatayo Olayemi <olatayo.olayemi.peter@gmail.com>",
+  "description": "Share files seamlessly without leaving your terminal",
+  "author": "Ownage FDT <support@ownagefiditech.com>",
   "bin": {
     "tfs": "./bin/run"
   },
