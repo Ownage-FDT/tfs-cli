@@ -1,10 +1,11 @@
-import { Args, Flags } from '@oclif/core'
+import { Args, Flags, ux } from '@oclif/core'
 import { BaseCommand } from '../base-command'
 import * as fs from 'fs-extra'
 import chalk from 'chalk'
 import * as path from 'node:path'
 import inquirer from 'inquirer'
 import { decryptFile } from '../utils'
+import { AxiosProgressEvent } from 'axios'
 
 export default class Pull extends BaseCommand<typeof Pull> {
     static description = 'Pull or download a file from the server.'
@@ -48,8 +49,24 @@ export default class Pull extends BaseCommand<typeof Pull> {
             this.error('Encryption key must be at least 16 characters long.')
         }
 
+        const progressBar = ux.progress({
+            format: `Downloading file [{bar}] {percentage}% | ETA: {eta}s | {value}/{total} bytes`,
+            clearOnComplete: true,
+            barCompleteChar: '\u2588',
+            barIncompleteChar: '\u2591',
+            hideCursor: true
+        })
+
         // get the file from the server
-        const response = await this.client.get(`/pull/${args.fileId}`, { responseType: 'arraybuffer' })
+        const response = await this.client.get(`/pull/${args.fileId}`, {
+            responseType: 'arraybuffer',
+            onDownloadProgress: (progressEvent: AxiosProgressEvent) => {
+                progressBar.start(progressEvent.total ?? 0, 0)
+                progressBar.update(progressEvent.loaded)
+            }
+        })
+
+        progressBar.stop()
 
         // get the file name from the response headers
         const contentDisposition = response.headers['content-disposition']
@@ -99,6 +116,6 @@ export default class Pull extends BaseCommand<typeof Pull> {
         // write the file to the path
         await fs.writeFile(filePath, decryptedFileData)
 
-        this.log(chalk.green(`File downloaded successfully to ${filePath}.`))
+        this.log(chalk.green(`\nFile downloaded successfully to ${filePath}.`))
     }
 }
