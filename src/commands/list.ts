@@ -1,5 +1,6 @@
+import chalk from 'chalk'
 import { BaseCommand } from '../base-command'
-import { ApiResponse, File } from '../types'
+import { ApiResponse, File, ListFilesResponse } from '../types'
 import { ux } from '@oclif/core'
 
 export default class List extends BaseCommand<typeof List> {
@@ -13,10 +14,10 @@ export default class List extends BaseCommand<typeof List> {
 
     public async run(): Promise<void> {
         const { flags } = await this.parse(List)
-        const { data } = await this.client.get<ApiResponse<File[]>>('/list')
+        const { data } = await this.client.get<ApiResponse<ListFilesResponse>>('/list')
 
         ux.table<File>(
-            data.data,
+            data.data.items,
             {
                 _id: {
                     header: 'ID'
@@ -50,5 +51,11 @@ export default class List extends BaseCommand<typeof List> {
                 ...flags
             }
         )
+
+        if (data.data.meta.hasMore) {
+            this.log('\n')
+            this.log(chalk.yellow('The TFS CLI is limited to 20 files. Please visit the TFS dashboard to see more: '))
+            ux.url(chalk.blue('https://trytfs.com/dashboard/files'), 'https://trytfs.com/dashboard/files')
+        }
     }
 }
