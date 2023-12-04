@@ -83,7 +83,7 @@ tfs pull /path/to/file --key my-secret-key
 
 # Documentation
 
-You'll find the documentation on [https://trytfs.com/docs](https://trytfs.com/docs).
+For detailed list of available commands. Your can checkout our documentation on [https://trytfs.com/docs](https://trytfs.com/docs).
 
 Find yourself stuck using the tool? Found a bug? Do you have general questions or suggestions for improvement? Feel free to [open an issue on GitHub](https://github.com/Ownage-FDT/tfs-cli/issues/new)
 
