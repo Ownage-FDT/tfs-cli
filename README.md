@@ -1,29 +1,26 @@
 TFS CLI
 =================
 
-Share files seamlessly without leaving your terminal
+TFS CLI is a command-line interface designed to simplify file sharing directly from your terminal. With TFS CLI, you can effortlessly upload, download, and manage files without leaving the command line.
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/@ownage-fdt/tfs-cli)](https://npmjs.org/package/@ownage-fdt/tfs-cli)
 [![GitHub license](https://img.shields.io/github/license/Ownage-FDT/tfs-cli)](https://github.com/Ownage-FDT/tfs-cli/blob/main/LICENSE)
 ![GitHub Actions](https://github.com/Ownage-FDT/tfs-cli/actions/workflows/test.yml/badge.svg)
 
+
 # Table of Contents
 
 - [TFS CLI](#tfs-cli)
 - [Table of Contents](#table-of-contents)
 - [Installation](#installation)
-- [Commands](#commands)
-  - [`tfs config list`](#tfs-config-list)
-  - [`tfs config set`](#tfs-config-set)
-  - [`tfs config set auth-token`](#tfs-config-set-auth-token)
-  - [`tfs config set encryption-key`](#tfs-config-set-encryption-key)
-  - [`tfs list`](#tfs-list)
-  - [`tfs push`](#tfs-push)
-  - [`tfs pull`](#tfs-pull)
-  - [`tfs remove`](#tfs-remove)
-  - [`tfs update`](#tfs-update)
-  - [`tfs help [COMMANDS]`](#tfs-help-commands)
+- [Configuration](#configuration)
+  - [Authentication Token](#authentication-token)
+  - [Encryption Key (Optional)](#encryption-key-optional)
+- [Usage Examples](#usage-examples)
+  - [Pushing a File](#pushing-a-file)
+  - [Pulling a File](#pulling-a-file)
+- [Documentation](#documentation)
 - [Contributing](#contributing)
 - [Credits](#credits)
 - [License](#license)
@@ -48,205 +45,51 @@ USAGE
 ...
 ```
 
-# Commands
-The following commands are available:
+# Configuration
+TFS CLI provides powerful configuration options to tailor the tool to your needs. Let's delve into the tfs config set commands:
 
-## `tfs config list`
-List the current configuration values
-
-```bash
-USAGE
-  $ tfs config list
-
-EXAMPLES
-  $ tfs config list
-```
-
-## `tfs config set`
-
-Set a configuration value for tfs
+## Authentication Token
+Authentication tokens are used to authenticate requests to the TFS API. Use the following command to set an authentication token:
 
 ```bash
-USAGE
-  $ tfs config set COMMAND
-
-COMMANDS
-  config set auth-token      Authenticate and store an access token.
-  config set encryption-key  Set the encryption key to use for encrypting and decrypting files.
-
-EXAMPLES
-  $ tfs config set auth-token <auth-token>
-  $ tfs config set encryption-key <encryption-key>
+tfs config set auth-token <auth-token>
 ```
 
-## `tfs config set auth-token`
+You can obtain an authentication token from the [TFS Dashboard](https://trytfs.com/dashboard/get-started/auth-token).
 
-Authenticate and store an access token.
+## Encryption Key (Optional)
+An optional global encryption key can be set to encrypt and decrypt files. This key is used to encrypt files when uploading and decrypt files when downloading when the key is not provided per command. Use the following command to set an encryption key:
 
 ```bash
-USAGE
-  $ tfs config set auth-token <auth-token>
-
-ARGUMENTS
-  <auth-token>  The access token to use for authenticating requests.
-
-EXAMPLES
-  $ tfs config set auth-token <auth-token>
+tfs config set encryption-key <encryption-key>
 ```
 
-## `tfs config set encryption-key`
+# Usage Examples
+To help you make the most of TFS CLI, here are some detailed usage examples for key commands:
 
-Set the encryption key to use for encrypting and decrypting files.
+## Pushing a File
+Easily upload a file to the server with the tfs push command. For example, to upload a file with a specified time to live and encryption key:
 
 ```bash
-USAGE
-  $ tfs config set encryption-key <encryption-key>
-
-ARGUMENTS
-  <encryption-key>  The encryption key to use for encrypting and decrypting files.
-
-EXAMPLES
-  $ tfs config set encryption-key <encryption-key>
+tfs push /path/to/file --ttl 3600 --key my-secret-key
 ```
 
-## `tfs list`
-
-List all files associated with your account.
+## Pulling a File
+Easily download a file from the server with the tfs pull command. For example, to download a file with a specified encryption key:
 
 ```bash
-USAGE
-  $ tfs list [--columns <value> | -x] [--sort <value>] [--filter <value>] [--output csv|json|yaml |  | [--csv | --no-truncate]]
-    [--no-header | ]
-
-FLAGS
-  -x, --extended     show extra columns
-  --columns=<value>  only show provided columns (comma-separated)
-  --csv              output is csv format [alias: --output=csv]
-  --filter=<value>   filter property by partial string matching, ex: name=foo
-  --no-header        hide table header from output
-  --no-truncate      do not truncate output to fit screen
-  --output=<option>  output in a more machine friendly format <options: csv|json|yaml>
-  --sort=<value>     property to sort by (prepend '-' for descending)
-
-EXAMPLES
-  $ tfs list
-
-  $ tfs list --output json
-  
-  $ tfs list --columns name,size
+tfs pull /path/to/file --key my-secret-key
 ```
 
-## `tfs push`
+# Documentation
 
-Push or upload a file to the server.
+You'll find the documentation on [https://trytfs.com/docs](https://trytfs.com/docs).
 
-```bash
-USAGE
-  $ tfs push FILEPATH [-t <value>] [-k <value>]
-
-ARGUMENTS
-  FILEPATH           The absolute path to the file to upload.
-
-FLAGS
-  -k, --key=<value>  The key to use for encrypting the file.
-  -t, --ttl=<value>  The time to live for the file in seconds.
-
-EXAMPLES
-  $ tfs push /path/to/file
-
-  $ tfs push /path/to/file --ttl 3600
-
-  $ tfs push /path/to/file --ttl 3600 --key my-secret-key
-```
-
-## `tfs pull`
-
-Pull or download a file from the server.
-
-```bash
-USAGE
-  $ tfs pull FILEID [-n <value>] [-f] [-o <value>] [-k <value>]
-
-ARGUMENTS
-  FILEID  The ID of the file to download.
-
-FLAGS
-  -f, --force           Force overwrite of existing file.
-  -k, --key=<value>     The key to use for decrypting the file.
-  -n, --name=<value>    The name of the file to save as.
-  -o, --output=<value>  The absolute path to save the file to.
-
-EXAMPLES
-  $ tfs pull <file-id>
-
-  $ tfs pull <file-id> --output /home/user/downloads
-
-  $ tfs pull <file-id> --output /home/user/downloads --name my-file
-
-  $ tfs pull <file-id> --output /home/user/downloads --key my-secret-key
-
-  $ tfs pull <file-id> --output /home/user/downloads --name my-file --force
-
-```
-
-## `tfs remove`
-
-Remove or delete a file from the server.
-
-```bash
-USAGE
-  $ tfs remove FILEID
-
-ARGUMENTS
-  FILEID  The ID of the file to remove.
-
-EXAMPLES
-  $ tfs remove <fileId>
-```
-
-## `tfs update`
-
-Update the tfs CLI.
-
-```bash
-USAGE
-  $ tfs update [CHANNEL] [-a] [-v <value> | -i] [--force]
-
-FLAGS
-  -a, --available        Install a specific version.
-  -i, --interactive      Interactively select version to install. This is ignored if a channel is provided.
-  -v, --version=<value>  Install a specific version.
-  --force                Force a re-download of the requested version.
-
-EXAMPLES
-  $ tfs update stable
-
-  $ tfs update --version 1.0.0
-
-  $ tfs update --interactive
-
-  $ tfs update --available
-```
-
-## `tfs help [COMMANDS]`
-
-Display help information for tfs.
-
-```bash
-USAGE
-  $ tfs help [COMMANDS] [-n]
-
-ARGUMENTS
-  COMMANDS  Command to show help for.
-
-FLAGS
-  -n, --nested-commands  Include all nested commands in the output.
-```
+Find yourself stuck using the tool? Found a bug? Do you have general questions or suggestions for improvement? Feel free to [open an issue on GitHub](https://github.com/Ownage-FDT/tfs-cli/issues/new)
 
 # Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-
 
 # Credits
 -   [Olayemi Olatayo](https://github.com/iamolayemi)
