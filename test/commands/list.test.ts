@@ -28,7 +28,12 @@ describe('list', function () {
     test.stdout()
         .nock(baseUrl, (client) =>
             client.get('/list').reply(200, {
-                data: sampleResponse
+                data: {
+                    items: sampleResponse,
+                    meta: {
+                        hasMore: false
+                    }
+                }
             })
         )
         .command(['list'])
@@ -55,7 +60,12 @@ describe('list', function () {
     test.stdout()
         .nock(baseUrl, (client) =>
             client.get('/list').reply(200, {
-                data: sampleResponse
+                data: {
+                    items: sampleResponse,
+                    meta: {
+                        hasMore: true
+                    }
+                }
             })
         )
         .command(['list', '--extended'])

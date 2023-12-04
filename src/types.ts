@@ -19,6 +19,13 @@ export interface File extends Record<string, unknown> {
     lastDownloadedAt?: string
 }
 
+export interface ListFilesResponse {
+    items: File[]
+    meta: {
+        hasMore: boolean
+    }
+}
+
 export interface ApiResponse<T> {
     status: 'error' | 'success'
     message: string

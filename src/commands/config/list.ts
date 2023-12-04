@@ -1,6 +1,7 @@
 import { BaseCommand } from '../../base-command'
 import path from 'node:path'
 import fs from 'fs-extra'
+import { ux } from '@oclif/core'
 
 export default class ConfigList extends BaseCommand<typeof ConfigList> {
     static description = 'List the configuration values'
@@ -12,6 +13,24 @@ export default class ConfigList extends BaseCommand<typeof ConfigList> {
 
         const currentConfig = fs.readJSONSync(configFilePath)
 
-        this.log(JSON.stringify(currentConfig, null, 4))
+        const configEntries = Object.entries(currentConfig).map(([key, value]) => ({
+            key,
+            value
+        }))
+
+        ux.table(
+            configEntries,
+            {
+                key: {
+                    header: 'Key'
+                },
+                value: {
+                    header: 'Value'
+                }
+            },
+            {
+                printLine: this.log.bind(this)
+            }
+        )
     }
 }
