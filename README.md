@@ -58,7 +58,7 @@ tfs config set auth-token <auth-token>
 You can obtain an authentication token from the [TFS Dashboard](https://trytfs.com/dashboard/get-started/auth-token).
 
 ## Encryption Key (Optional)
-An optional global encryption key can be set to encrypt and decrypt files. This key is used to encrypt files when uploading and decrypt files when downloading when the key is not provided per command. Use the following command to set an encryption key:
+You can set a global encryption key optionally. This key is utilized for encrypting files during upload and decrypting them during download when no specific key is provided for each command. Execute the command below to set an encryption key:
 
 ```bash
 tfs config set encryption-key <encryption-key>
@@ -68,22 +68,22 @@ tfs config set encryption-key <encryption-key>
 To help you make the most of TFS CLI, here are some detailed usage examples for key commands:
 
 ## Pushing a File
-Easily upload a file to the server with the tfs push command. For example, to upload a file with a specified time to live and encryption key:
+Easily upload a file to the server with the `tfs push` command. For example, to upload a file with a specified time to live and encryption key:
 
 ```bash
 tfs push /path/to/file --ttl 3600 --key my-secret-key
 ```
 
 ## Pulling a File
-Easily download a file from the server with the tfs pull command. For example, to download a file with a specified encryption key:
+Easily download a file from the server with the `tfs pull` command. For example, to download a file with a specified encryption key:
 
 ```bash
-tfs pull /path/to/file --key my-secret-key
+tfs pull /path/to/file --key my-encryption-key
 ```
 
 # Documentation
 
-For detailed list of available commands. Your can checkout our documentation on [https://trytfs.com/docs](https://trytfs.com/docs).
+For detailed list of available commands. Your can checkout our documentation on [https://trytfs.com/documentation](https://trytfs.com/documentation).
 
 Find yourself stuck using the tool? Found a bug? Do you have general questions or suggestions for improvement? Feel free to [open an issue on GitHub](https://github.com/Ownage-FDT/tfs-cli/issues/new)
 
