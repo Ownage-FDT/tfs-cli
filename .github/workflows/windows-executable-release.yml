@@ -40,7 +40,8 @@ jobs:
               uses: actions/checkout@v4
             - name: Install System Dependencies and Build
               run: |
-                  apt-get install nsis p7zip-full
+                  sudo apt-get update
+                  sudo apt-get install nsis p7zip-full
                   npx oclif pack:win
             - name: Upload Artifact
               uses: actions/upload-artifact@v3
