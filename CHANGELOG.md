@@ -1,3 +1,12 @@
+# Changelog
+
+## [1.0.1](https://github.com/Ownage-FDT/tfs-cli/compare/v1.0.0...v1.0.1) (2023-12-08)
+
+
+### Bug Fixes
+
+* failing test from deps update ([e009526](https://github.com/Ownage-FDT/tfs-cli/commit/e009526dd7c4f0e9724f542cbe64adab08f9ab76))
+
 # 1.0.0 (2023-12-08)
 
 
