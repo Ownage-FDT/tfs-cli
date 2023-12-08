@@ -1,8 +1,9 @@
 name: tests
 on:
     push:
-        branches: [main]
+        branches-ignore: [main]
     pull_request:
+    workflow_call:
 
 jobs:
     test:
@@ -21,7 +22,7 @@ jobs:
               with:
                   node-version: ${{ matrix.node_version }}
                   cache: yarn
-            - name: Install Node Dependencies
+            - name: Install Dependencies
               run: yarn install --network-timeout 600000
             - name: Run Unit Tests
               run: yarn test
