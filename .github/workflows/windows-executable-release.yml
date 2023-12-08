@@ -37,7 +37,7 @@ jobs:
             - name: Get Latest Tag
               id: get-tag
               run: |
-                echo "TAG_NAME=$(git fetch --prune && git describe --tags $(git rev-list --tags --max-count=1) | cut -c 2-)
+                  echo "TAG_NAME=$(git fetch --prune && git describe --tags $(git rev-list --tags --max-count=1) | cut -c 2-)" >> $GITHUB_OUTPUT
             - name: Install Homebrew Dependencies
               run: brew install nsis
             - name: Install Node Dependencies
