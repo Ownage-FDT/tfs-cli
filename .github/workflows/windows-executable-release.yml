@@ -39,6 +39,9 @@ jobs:
         needs: [get-tag, get-sha]
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_S3_ENDPOINT: ${{ secrets.AWS_S3_ENDPOINT }}
 
         steps:
             - name: Checkout the Repository
@@ -70,3 +73,22 @@ jobs:
                     ${{ needs.get-tag.outputs.TAG_NAME }} \
                     dist/win32/${{env.CLI_NAME}}-${{ needs.get-tag.outputs.TAG_NAME }}-${{ needs.get-sha.outputs.SHORT_SHA }}-x86.exe \
                     --name ${{env.CLI_NAME}}-${{ needs.get-tag.outputs.TAG_NAME }}-x86.exe
+
+    notify-complete-fail:
+        if: ${{ failure() || cancelled() }}
+        needs: [pack-windows-executable]
+        name: Notify Release Failed
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout the Repository
+              uses: actions/checkout@v4
+            - name: Slack Notification
+              uses: rtCamp/action-slack-notify@v2
+              env:
+                  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+                  SLACK_COLOR: '#ff3333'
+                  SLACK_USERNAME: CLI Release Bot
+                  SLACK_ICON_EMOJI: ':ship:'
+                  SLACK_TITLE: 'TFS ClI'
+                  SLACK_MESSAGE: 'Windows Executable Release Failed'
+                  MSG_MINIMAL: actions url
