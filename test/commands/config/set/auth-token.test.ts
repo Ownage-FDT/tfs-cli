@@ -5,9 +5,8 @@ import sinon from 'sinon'
 describe('config:set:auth-token', function () {
     const baseUrl = 'https://api.trytfs.com'
 
-    const testInstance = test.stub(ux.action, 'start', sinon.stub()).stub(ux.action, 'stop', sinon.stub())
-
-    testInstance
+    test.stub(ux.action, 'start', sinon.stub())
+        .stub(ux.action, 'stop', sinon.stub())
         .stdout()
         .nock(baseUrl, (client) =>
             client.get('/whoami').reply(200, {
@@ -19,10 +18,9 @@ describe('config:set:auth-token', function () {
             expect(ctx.stdout).to.contain('Authenticated successfully as Test User')
         })
 
-    testInstance
+    test.nock(baseUrl, (client) => client.get('/whoami').reply(401))
         .stdout()
-        .nock(baseUrl, (client) => client.get('/whoami').reply(401))
-        .command(['config:set:auth-token', 'invalid-test-token'])
+        .command(['config:set:auth-token', 'invalid-test-token-123'])
         .catch((error) =>
             expect(error.message).to.contain('Unauthorized. Please check your access token and try again.')
         )
