@@ -1,0 +1,24 @@
+name: Create Test Release
+
+on:
+    workflow_dispatch:
+
+env:
+    HUSKY: 0
+
+jobs:
+    test-release:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: Create Test Release
+              run: |
+                  echo "Test Release"
+
+    tarballs-releass:
+        needs: [test-release]
+        uses: ./.github/workflows/tarballs-release.yml
+
+    executatble-release:
+        needs: [test-release]
+        uses: ./.github/workflows/executable-release.yml

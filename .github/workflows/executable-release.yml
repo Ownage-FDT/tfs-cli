@@ -1,0 +1,13 @@
+name: Platform Executable Release
+
+on:
+    workflow_call:
+
+jobs:
+    windows-executable-release:
+        name: Create Windows Executable Release
+        uses: ./.github/workflows/windows-executable-release.yml
+
+    # debian-executatble-release:
+    #     name: Create Debian Executable Release
+    #     uses: ./.github/workflows/debian-executable-release.yml

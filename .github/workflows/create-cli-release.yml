@@ -34,13 +34,20 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_TOKEN }}
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-    # npm-release:
-    #     needs: [release]
-    #     uses: ./.github/workflows/npm-release.yml
+    npm-release:
+        name: NPM Release
+        needs: [release]
+        uses: ./.github/workflows/npm-release.yml
 
-      # executatble-release:
-      #   needs: [release]
-      #   uses: ./.github/workflows/executatble-release.yml
+    tarballs-release:
+        name: Tarballs Release
+        needs: [release]
+        uses: ./.github/workflows/tarballs-release.yml
+
+    executable-release:
+        name: Executable Release
+        needs: [release]
+        uses: ./.github/workflows/executable-release.yml
 
     notify-complete-success:
         if: ${{ success() }}

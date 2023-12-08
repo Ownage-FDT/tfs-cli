@@ -5,9 +5,9 @@ on:
         inputs:
             cli_name:
                 type: string
+                required: true
                 description: 'The name of the CLI'
                 default: 'tfs'
-                required: false
 
 jobs:
     windows-executable-release:
