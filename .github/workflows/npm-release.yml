@@ -31,7 +31,8 @@ jobs:
         name: Notify Release Failed
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
+            - name: Checkout The Repository
+              uses: actions/checkout@v4
             - name: Slack Notification
               uses: rtCamp/action-slack-notify@v2
               env:

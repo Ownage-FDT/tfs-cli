@@ -15,6 +15,10 @@ jobs:
     release:
         runs-on: ubuntu-latest
         needs: [test]
+        permissions:
+            contents: write
+            pull-requests: write
+            issues: write
         steps:
             - name: Checkout The Repository
               uses: actions/checkout@v4
@@ -25,10 +29,29 @@ jobs:
             - name: Install Dependencies
               run: yarn install --network-timeout 600000
             - name: Semantic Release
-              run: npx semantic-release 
+              run: npx semantic-release
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+    notify-complete-success:
+        if: ${{ success() }}
+        needs: [release]
+        name: Notify Release Success
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout The Repository
+              uses: actions/checkout@v4
+            - name: Slack Notification
+              uses: rtCamp/action-slack-notify@v2
+              env:
+                  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+                  SLACK_COLOR: '#36a64f'
+                  SLACK_USERNAME: CLI Release Bot
+                  SLACK_ICON_EMOJI: ':ship:'
+                  SLACK_TITLE: 'TFS ClI'
+                  SLACK_MESSAGE: 'CLI Release Workflow Completed Successfully'
+                  SLACK_FOOTER: Posted automatically using GitHub Actions
 
     notify-complete-fail:
         if: ${{ failure() || cancelled() }}
@@ -36,7 +59,8 @@ jobs:
         name: Notify Release Failed
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
+            - name: Checkout The Repository
+              uses: actions/checkout@v4
             - name: Slack Notification
               uses: rtCamp/action-slack-notify@v2
               env:
