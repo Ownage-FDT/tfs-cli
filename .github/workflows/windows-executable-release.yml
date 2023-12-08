@@ -38,14 +38,29 @@ jobs:
         steps:
             - name: Checkout The Repository
               uses: actions/checkout@v4
-            - name: Install System Dependencies and Build
-              run: |
-                  sudo apt-get update
-                  sudo apt-get install nsis p7zip-full
-                  npx oclif pack:win
-            - name: Upload Artifact
+            - name: Set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: lts/*
+                  cache: yarn
+            - name: Set up Homebrew
+              id: set-up-homebrew
+              uses: Homebrew/actions/setup-homebrew@master
+            - name: Install Homebrew Dependencies
+              run: brew install nsis
+            - name: Install Node Dependencies
+              run: yarn install --network-timeout 600000
+            - name: Pack Windows Executable
+              run: yarn pack:win
+            - name: Upload Artifact (x64)
               uses: actions/upload-artifact@v3
               with:
-                  name: ${{env.CLI_NAME}}-${{ needs.get-tag.outputs.TAG_NAME }}.exe
+                  name: ${{env.CLI_NAME}}-${{ needs.get-tag.outputs.TAG_NAME }}-x64.exe
+                  path: dist/win32/${{env.CLI_NAME}}-v${{ needs.get-tag.outputs.TAG_NAME }}-${{ needs.get-sha.outputs.SHORT_SHA }}-x64.exe
+                  retention-days: 3
+            - name: Upload Artifact (x86)
+              uses: actions/upload-artifact@v3
+              with:
+                  name: ${{env.CLI_NAME}}-${{ needs.get-tag.outputs.TAG_NAME }}-x86.exe
                   path: dist/win32/${{env.CLI_NAME}}-v${{ needs.get-tag.outputs.TAG_NAME }}-${{ needs.get-sha.outputs.SHORT_SHA }}-x86.exe
-                  retention-days: 7
+                  retention-days: 3

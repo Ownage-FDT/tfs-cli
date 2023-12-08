@@ -16,7 +16,7 @@ jobs:
                   registry-url: 'https://registry.npmjs.org'
                   scope: '@ownage-fdt'
                   cache: yarn
-            - name: Install Dependencies
+            - name: Install Node Dependencies
               run: yarn install --network-timeout 600000
             - name: Build The Package
               run: yarn build
