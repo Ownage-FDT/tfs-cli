@@ -34,15 +34,14 @@ jobs:
             - name: Get Latest Tag
               id: get-tag
               run: |
-                  git fetch --prune --unshallow
-                  echo "TAG_NAME=$(git fetch --prune --unshallow && git describe --tags $(git rev-list --tags --max-count=1) | cut -c 2-)" >> $GITHUB_OUTPUT
+                  echo "TAG_NAME=$(git fetch --prune && git describe --tags $(git rev-list --tags --max-count=1) | cut -c 2-)" >> $GITHUB_OUTPUT
             - name: Install Node Dependencies
               run: yarn install --network-timeout 600000
             - name: Pack Tarballs
               run: yarn pack:tarballs
             - name: Upload Artifacts to S3 Release Channel
               run: yarn upload:tarballs
-            - name: Promote Windows Release on S3
+            - name: Promote Tarballs Release on S3
               run: yarn promote --version ${{ steps.get-tag.outputs.TAG_NAME }} --sha ${{ steps.get-sha.outputs.SHORT_SHA }} --no-xz
 
     notify-complete-fail:
