@@ -21,7 +21,9 @@ jobs:
     tarballs-releass:
         needs: [test-release]
         uses: ./.github/workflows/tarballs-release.yml
+        secrets: inherit
 
     executatble-release:
         needs: [test-release]
         uses: ./.github/workflows/executable-release.yml
+        secrets: inherit
