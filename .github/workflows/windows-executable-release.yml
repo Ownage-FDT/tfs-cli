@@ -68,11 +68,13 @@ jobs:
                     ${{ needs.get-tag.outputs.TAG_NAME }} \
                     dist/win32/${{env.CLI_NAME}}-${{ needs.get-tag.outputs.TAG_NAME }}-${{ needs.get-sha.outputs.SHORT_SHA }}-x64.exe \
                     --name ${{env.CLI_NAME}}-${{ needs.get-tag.outputs.TAG_NAME }}-x64.exe
+                    --clobber \
 
                   gh release upload \
                     ${{ needs.get-tag.outputs.TAG_NAME }} \
                     dist/win32/${{env.CLI_NAME}}-${{ needs.get-tag.outputs.TAG_NAME }}-${{ needs.get-sha.outputs.SHORT_SHA }}-x86.exe \
                     --name ${{env.CLI_NAME}}-${{ needs.get-tag.outputs.TAG_NAME }}-x86.exe
+                    --clobber \
 
     notify-complete-fail:
         if: ${{ failure() || cancelled() }}
