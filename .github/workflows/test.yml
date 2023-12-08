@@ -9,7 +9,7 @@ jobs:
     test:
         strategy:
             matrix:
-                os: ['ubuntu-latest', 'windows-latest']
+                os: ['ubuntu-latest', 'windows-latest', 'macos-latest']
                 node_version: [lts/-1, lts/*, latest]
             fail-fast: false
         name: Test on ${{ matrix.os }} with Node.js ${{ matrix.node_version }}
