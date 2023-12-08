@@ -120,9 +120,8 @@
     },
     "update": {
       "s3": {
-        "bucket": "tfs-store",
-        "folder": "assets/cli",
-        "host": "https://sgp1.digitaloceanspaces.com"
+        "bucket": "tfs-cli-assets",
+        "host": "https://nyc3.digitaloceanspaces.com"
       }
     },
     "macos": {

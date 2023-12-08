@@ -38,6 +38,10 @@ jobs:
     #     needs: [release]
     #     uses: ./.github/workflows/npm-release.yml
 
+      # executatble-release:
+      #   needs: [release]
+      #   uses: ./.github/workflows/executatble-release.yml
+
     notify-complete-success:
         if: ${{ success() }}
         needs: [release]
