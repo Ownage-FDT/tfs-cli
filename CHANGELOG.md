@@ -26,7 +26,3 @@
 * initial commit ([0f32d64](https://github.com/Ownage-FDT/tfs-cli/commit/0f32d64865b376bd003d0336f5a5c0d2301f26ac))
 * remove file command ([189a95f](https://github.com/Ownage-FDT/tfs-cli/commit/189a95fbf732c07ad033ef2735ef283e4c8bef41))
 * upload file command ([569afe4](https://github.com/Ownage-FDT/tfs-cli/commit/569afe49bdfb70eeaeb825628fc03a196d5a4769))
-
-# Changelog
-
-All notable changes to `@ownage-fdt/tfs-cli` will be documented in this file
