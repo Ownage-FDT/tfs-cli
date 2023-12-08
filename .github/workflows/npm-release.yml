@@ -7,7 +7,7 @@ jobs:
     npm-build-release:
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout The Repository
+            - name: Checkout the Repository
               uses: actions/checkout@v4
             - name: Setup Node.js
               uses: actions/setup-node@v4
@@ -31,7 +31,7 @@ jobs:
         name: Notify Release Failed
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout The Repository
+            - name: Checkout the Repository
               uses: actions/checkout@v4
             - name: Slack Notification
               uses: rtCamp/action-slack-notify@v2
