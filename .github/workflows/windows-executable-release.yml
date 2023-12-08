@@ -33,8 +33,8 @@ jobs:
         outputs:
             TAG_NAME: ${{ steps.get-tag.outputs.TAG_NAME }}
 
-    pack-windows-executable:
-        name: Pack Windows Executable
+    windows-executable-release:
+        name: Release Windows Executable
         runs-on: ubuntu-latest
         needs: [get-tag, get-sha]
         env:
@@ -62,23 +62,28 @@ jobs:
               run: yarn pack:win
             - name: Upload Artifacts to S3 Release Channel
               run: yarn upload:win
-            - name: Upload Artifact to Github Release Channel
-              run: |
-                  gh release upload \
-                    ${{ needs.get-tag.outputs.TAG_NAME }} \
-                    dist/win32/${{env.CLI_NAME}}-${{ needs.get-tag.outputs.TAG_NAME }}-${{ needs.get-sha.outputs.SHORT_SHA }}-x64.exe \
-                    --name ${{env.CLI_NAME}}-${{ needs.get-tag.outputs.TAG_NAME }}-x64.exe
-                    --clobber \
-
-                  gh release upload \
-                    ${{ needs.get-tag.outputs.TAG_NAME }} \
-                    dist/win32/${{env.CLI_NAME}}-${{ needs.get-tag.outputs.TAG_NAME }}-${{ needs.get-sha.outputs.SHORT_SHA }}-x86.exe \
-                    --name ${{env.CLI_NAME}}-${{ needs.get-tag.outputs.TAG_NAME }}-x86.exe
-                    --clobber \
+            - name: Upload Artifacts to Github Release Channel (x64)
+              uses: svenstaro/upload-release-action@v2
+              with:
+                  repo_token: ${{ secrets.GITHUB_TOKEN }}
+                  file: |
+                      dist/win32/${{env.CLI_NAME}}-${{ needs.get-tag.outputs.TAG_NAME }}-${{ needs.get-sha.outputs.SHORT_SHA }}-x64.exe
+                  tag: ${{ needs.get-tag.outputs.TAG_NAME }}
+                  asset_name: ${{env.CLI_NAME}}-${{ needs.get-tag.outputs.TAG_NAME }}-x64.exe
+                  overwrite: true
+            - name: Upload Artifacts to Github Release Channel (x86)
+              uses: svenstaro/upload-release-action@v2
+              with:
+                  repo_token: ${{ secrets.GITHUB_TOKEN }}
+                  file: |
+                      dist/win32/${{env.CLI_NAME}}-${{ needs.get-tag.outputs.TAG_NAME }}-${{ needs.get-sha.outputs.SHORT_SHA }}-x86.exe
+                  tag: ${{ needs.get-tag.outputs.TAG_NAME }}
+                  asset_name: ${{env.CLI_NAME}}-${{ needs.get-tag.outputs.TAG_NAME }}-x86.exe
+                  overwrite: true
 
     notify-complete-fail:
         if: ${{ failure() || cancelled() }}
-        needs: [pack-windows-executable]
+        needs: [windows-executable-release]
         name: Notify Release Failed
         runs-on: ubuntu-latest
         steps:
