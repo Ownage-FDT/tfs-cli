@@ -2,11 +2,9 @@ name: Create CLI Release
 
 on:
     workflow_dispatch:
-        inputs:
-            version:
-                description: 'Version to release'
-                required: true
-                default: '1.0.0'
+
+env:
+    HUSKY: 0
 
 jobs:
     test:
