@@ -44,7 +44,7 @@ jobs:
             - name: Install Node Dependencies
               run: yarn install --network-timeout 600000
             - name: Pack Windows Executable
-              run: yarn pack:win --defender-exclusion unchecked
+              run: yarn pack:win
             - name: Upload Artifacts to S3 Release Channel
               run: yarn upload:win
             - name: Upload Artifacts to Github Release Channel (x64)

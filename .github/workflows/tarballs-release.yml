@@ -43,7 +43,7 @@ jobs:
             - name: Upload Artifacts to S3 Release Channel
               run: yarn upload:tarballs
             - name: Promote Windows Release on S3
-              run: yarn promote:tarballs --version ${{ steps.get-tag.outputs.TAG_NAME }} --sha ${{ steps.get-sha.outputs.SHORT_SHA }}
+              run: yarn promote --version ${{ steps.get-tag.outputs.TAG_NAME }} --sha ${{ steps.get-sha.outputs.SHORT_SHA }} --no-xz
 
     notify-complete-fail:
         if: ${{ failure() || cancelled() }}
