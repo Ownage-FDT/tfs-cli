@@ -65,7 +65,7 @@ jobs:
                   asset_name: ${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.TAG_NAME }}-x86.exe
                   overwrite: true
             - name: Promote Windows Release on S3
-              run: yarn promote:win --version ${{ steps.get-tag.outputs.TAG_NAME }} --sha ${{ steps.get-sha.outputs.SHORT_SHA }}
+              run: yarn promote --version ${{ steps.get-tag.outputs.TAG_NAME }} --sha ${{ steps.get-sha.outputs.SHORT_SHA }} --win
 
     notify-complete-fail:
         if: ${{ failure() || cancelled() }}
