@@ -1,0 +1,50 @@
+name: Windows Executable Release
+
+on:
+    workflow_dispatch:
+
+env:
+    CLI_NAME: 'tfs'
+
+jobs:
+    get-sha:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout The Repository
+              uses: actions/checkout@v4
+            - name: Get Latest SHA
+              id: get-sha
+              run: |
+                  echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+        outputs:
+            SHORT_SHA: ${{ steps.get-sha.outputs.SHORT_SHA }}
+
+    get-tag:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout The Repository
+              uses: actions/checkout@v4
+            - name: Get Latest Tag
+              id: get-tag
+              run: |
+                  git fetch --prune --unshallow
+                  echo "TAG_NAME=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_OUTPUT
+        outputs:
+            TAG_NAME: ${{ steps.get-tag.outputs.TAG_NAME }}
+
+    pack-windows-release:
+        runs-on: ubuntu-latest
+        needs: [get-tag, get-sha]
+        steps:
+            - name: Checkout The Repository
+              uses: actions/checkout@v4
+            - name: Install System Dependencies and Build
+              run: |
+                  apt install nsis p7zip-full
+                  npx oclif pack:win
+            - name: Upload Artifact
+              uses: actions/upload-artifact@v3
+              with:
+                  name: ${{env.CLI_NAME}}-${{ needs.get-tag.outputs.TAG_NAME }}.exe
+                  path: dist/win32/${{env.CLI_NAME}}-v${{ needs.get-tag.outputs.TAG_NAME }}-${{ needs.get-sha.outputs.SHORT_SHA }}-x86.exe
+                  retention-days: 7
