@@ -49,25 +49,34 @@ jobs:
               run: yarn pack:deb
             - name: Upload Binaries to S3 Release Channel
               run: yarn upload:deb
-            # - name: Upload Binaries to Github Release Channel (x64)
-            #   uses: svenstaro/upload-release-action@v2
-            #   with:
-            #       repo_token: ${{ secrets.GITHUB_TOKEN }}
-            #       file: |
-            #           dist/win32/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.TAG_NAME }}-${{ steps.get-sha.outputs.SHORT_SHA }}-x64.exe
-            #       tag: v${{ steps.get-tag.outputs.TAG_NAME }}
-            #       asset_name: ${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.TAG_NAME }}-x64.exe
-            #       overwrite: true
-            # - name: Upload Binaries to Github Release Channel (x86)
-            #   uses: svenstaro/upload-release-action@v2
-            #   with:
-            #       repo_token: ${{ secrets.GITHUB_TOKEN }}
-            #       file: |
-            #           dist/win32/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.TAG_NAME }}-${{ steps.get-sha.outputs.SHORT_SHA }}-x86.exe
-            #       tag: v${{ steps.get-tag.outputs.TAG_NAME }}
-            #       asset_name: ${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.TAG_NAME }}-x86.exe
-            #       overwrite: true
-    
+            - name: Upload Binaries to Github Release Channel (arm64)
+              uses: svenstaro/upload-release-action@v2
+              with:
+                  repo_token: ${{ secrets.GITHUB_TOKEN }}
+                  file: |
+                      dist/deb/${{ inputs.cli_name }}_${{ steps.get-tag.outputs.TAG_NAME }}.${{ steps.get-sha.outputs.SHORT_SHA }}-1_arm64.deb
+                  tag: v${{ steps.get-tag.outputs.TAG_NAME }}
+                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.TAG_NAME }}_arm64.deb
+                  overwrite: true
+            - name: Upload Binaries to Github Release Channel (armel)
+              uses: svenstaro/upload-release-action@v2
+              with:
+                  repo_token: ${{ secrets.GITHUB_TOKEN }}
+                  file: |
+                      dist/deb/${{ inputs.cli_name }}_${{ steps.get-tag.outputs.TAG_NAME }}.${{ steps.get-sha.outputs.SHORT_SHA }}-1_armel.deb
+                  tag: v${{ steps.get-tag.outputs.TAG_NAME }}
+                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.TAG_NAME }}_armel.deb
+                  overwrite: true
+            - name: Upload Binaries to Github Release Channel (amd64)
+              uses: svenstaro/upload-release-action@v2
+              with:
+                  repo_token: ${{ secrets.GITHUB_TOKEN }}
+                  file: |
+                      dist/deb/${{ inputs.cli_name }}_${{ steps.get-tag.outputs.TAG_NAME }}.${{ steps.get-sha.outputs.SHORT_SHA }}-1_amd64.deb
+                  tag: v${{ steps.get-tag.outputs.TAG_NAME }}
+                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.TAG_NAME }}_amd64.deb
+                  overwrite: true
+
     notify-complete-fail:
         if: ${{ failure() || cancelled() }}
         needs: [pack-debian-executable]

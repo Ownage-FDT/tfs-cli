@@ -52,7 +52,7 @@ jobs:
                   file: |
                       dist/win32/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.TAG_NAME }}-${{ steps.get-sha.outputs.SHORT_SHA }}-x64.exe
                   tag: v${{ steps.get-tag.outputs.TAG_NAME }}
-                  asset_name: ${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.TAG_NAME }}-x64.exe
+                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.TAG_NAME }}_x64.exe
                   overwrite: true
             - name: Upload Binaries to Github Release Channel (x86)
               uses: svenstaro/upload-release-action@v2
@@ -61,7 +61,7 @@ jobs:
                   file: |
                       dist/win32/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.TAG_NAME }}-${{ steps.get-sha.outputs.SHORT_SHA }}-x86.exe
                   tag: v${{ steps.get-tag.outputs.TAG_NAME }}
-                  asset_name: ${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.TAG_NAME }}-x86.exe
+                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.TAG_NAME }}_x86.exe
                   overwrite: true
 
     notify-complete-fail:
