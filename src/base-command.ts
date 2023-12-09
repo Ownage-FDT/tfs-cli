@@ -40,7 +40,8 @@ export abstract class BaseCommand<T extends typeof Command> extends Command {
             headers: {
                 Accept: 'application/json',
                 'User-Agent': this.config.userAgent
-            }
+            },
+            timeout: 60000
         })
 
         // add an interceptor to add the access token to the request headers
