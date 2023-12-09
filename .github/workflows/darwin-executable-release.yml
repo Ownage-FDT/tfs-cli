@@ -1,4 +1,4 @@
-name: Tarballs Release
+name: Darwin Executable Release
 
 on:
     workflow_call:
@@ -9,10 +9,18 @@ on:
                 default: 'tfs'
                 required: false
 
+    workflow_dispatch:
+        inputs:
+            cli_name:
+                type: string
+                description: 'The name of the CLI'
+                default: 'tfs'
+                required: false
+
 jobs:
-    tarballs-release:
-        name: Release Tarballs
-        runs-on: ubuntu-latest
+    release-darwin-executable:
+        name: Release Darwin Executable
+        runs-on: macos-latest
         permissions:
             contents: write
         env:
@@ -36,16 +44,32 @@ jobs:
               run: echo "TAG_NAME=$(git fetch --prune && git describe --tags $(git rev-list --tags --max-count=1) | cut -c 2-)" >> $GITHUB_OUTPUT
             - name: Install Node Dependencies
               run: yarn install --network-timeout 600000
-            - name: Pack Tarballs
-              run: yarn pack:tarballs
-            - name: Upload Tarballs to S3 Release Channel
-              run: yarn upload:tarballs
-            - name: Promote Tarballs Release on S3
-              run: yarn promote --version ${{ steps.get-tag.outputs.TAG_NAME }} --sha ${{ steps.get-sha.outputs.SHORT_SHA }} --no-xz
+            - name: Pack MacOS Executable
+              run: yarn pack:macos
+            - name: Upload Binaries to S3 Release Channel
+              run: yarn upload:macos
+            - name: Upload Binaries to Github Release Channel (arm64)
+              uses: svenstaro/upload-release-action@v2
+              with:
+                  repo_token: ${{ secrets.GITHUB_TOKEN }}
+                  file: |
+                      dist/macos/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.TAG_NAME }}-${{ steps.get-sha.outputs.SHORT_SHA }}-arm64.pkg
+                  tag: v${{ steps.get-tag.outputs.TAG_NAME }}
+                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.TAG_NAME }}_arm64.pkg
+                  overwrite: true
+            - name: Upload Binaries to Github Release Channel (x64)
+              uses: svenstaro/upload-release-action@v2
+              with:
+                  repo_token: ${{ secrets.GITHUB_TOKEN }}
+                  file: |
+                      dist/macos/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.TAG_NAME }}-${{ steps.get-sha.outputs.SHORT_SHA }}-x64.pkg
+                  tag: v${{ steps.get-tag.outputs.TAG_NAME }}
+                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.TAG_NAME }}_x64.pkg
+                  overwrite: true
 
     notify-complete-fail:
         if: ${{ failure() || cancelled() }}
-        needs: [tarballs-release]
+        needs: [release-darwin-executable]
         name: Notify Release Failed
         runs-on: ubuntu-latest
         steps:
@@ -59,5 +83,5 @@ jobs:
                   SLACK_USERNAME: CLI Release Bot
                   SLACK_ICON_EMOJI: ':ship:'
                   SLACK_TITLE: 'TFS CLI'
-                  SLACK_MESSAGE: 'Tarballs Release Failed'
+                  SLACK_MESSAGE: 'Darwin Executable Release Failed'
                   MSG_MINIMAL: actions url

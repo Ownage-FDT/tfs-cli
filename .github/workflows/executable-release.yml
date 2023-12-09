@@ -13,3 +13,8 @@ jobs:
         name: Create Debian Executable Release
         uses: ./.github/workflows/debian-executable-release.yml
         secrets: inherit
+
+    darwin-executable-release:
+        name: Create Darwin Executable Release
+        uses: ./.github/workflows/darwin-executable-release.yml
+        secrets: inherit
