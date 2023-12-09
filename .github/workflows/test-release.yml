@@ -24,6 +24,6 @@ jobs:
         secrets: inherit
 
     executatble-release:
-        needs: [test-release]
+        needs: [tarballs-releass]
         uses: ./.github/workflows/executable-release.yml
         secrets: inherit
