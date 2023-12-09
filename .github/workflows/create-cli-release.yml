@@ -51,12 +51,12 @@ jobs:
         needs: [release]
         uses: ./.github/workflows/executable-release.yml
         secrets: inherit
-       
-      promote-s3-releases:
-          needs: [tarballs-release, executatble-release]
-          uses: ./.github/workflows/promote-s3-releases.yml
-          secrets: inherit
-  
+
+    promote-s3-releases:
+        needs: [tarballs-release, executable-release]
+        uses: ./.github/workflows/promote-s3-releases.yml
+        secrets: inherit
+
     notify-complete-success:
         if: ${{ success() }}
         needs: [release]

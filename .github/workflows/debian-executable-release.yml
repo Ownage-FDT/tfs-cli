@@ -5,16 +5,17 @@ on:
         inputs:
             cli_name:
                 type: string
-                required: false
                 description: 'The name of the CLI'
                 default: 'tfs'
+                required: false
+
     workflow_dispatch:
         inputs:
             cli_name:
                 type: string
-                required: false
                 description: 'The name of the CLI'
                 default: 'tfs'
+                required: false
 
 jobs:
     debian-executable-release:
