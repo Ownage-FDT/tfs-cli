@@ -59,7 +59,7 @@ jobs:
 
     notify-complete-success:
         if: ${{ success() }}
-        needs: [release]
+        needs: [release, promote-s3-releases]
         name: Notify Release Success
         runs-on: ubuntu-latest
         steps:
@@ -78,7 +78,7 @@ jobs:
 
     notify-complete-fail:
         if: ${{ failure() || cancelled() }}
-        needs: [release]
+        needs: [release, promote-s3-releases]
         name: Notify Release Failed
         runs-on: ubuntu-latest
         steps:

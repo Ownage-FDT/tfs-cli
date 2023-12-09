@@ -8,15 +8,7 @@ on:
                 description: 'The name of the CLI'
                 default: 'tfs'
                 required: false
-
-    workflow_dispatch:
-        inputs:
-            cli_name:
-                type: string
-                description: 'The name of the CLI'
-                default: 'tfs'
-                required: false
-
+                
 jobs:
     release-darwin-executable:
         name: Release Darwin Executable
