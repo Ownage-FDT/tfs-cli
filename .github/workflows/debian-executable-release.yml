@@ -29,6 +29,7 @@ jobs:
             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             AWS_S3_ENDPOINT: ${{ secrets.AWS_S3_ENDPOINT }}
             TFS_DEB_KEY: ${{ secrets.TFS_DEB_KEY }}
+            GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
         steps:
             - name: Checkout the Repository
               uses: actions/checkout@v4
@@ -45,6 +46,8 @@ jobs:
               run: echo "TAG_NAME=$(git fetch --prune && git describe --tags $(git rev-list --tags --max-count=1) | cut -c 2-)" >> $GITHUB_OUTPUT
             - name: Install Node Dependencies
               run: yarn install --network-timeout 600000
+            - name: Import GPG Key
+              run: echo "$GPG_PRIVATE_KEY" | gpg --import
             - name: Pack Debian Executable
               run: yarn pack:deb
             - name: Upload Binaries to S3 Release Channel
