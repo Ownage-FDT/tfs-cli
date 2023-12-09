@@ -1,0 +1,59 @@
+name: Promote S3 Release Channel
+
+on:
+    workflow_call:
+        inputs:
+            channel:
+                description: 'S3 Release Channel'
+                required: false
+                default: 'stable'
+                type: string
+
+jobs:
+    promote-s3-release-channel:
+        name: Promote S3 Release Channel
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_S3_ENDPOINT: ${{ secrets.AWS_S3_ENDPOINT }}
+        steps:
+            - name: Checkout the Repository
+              uses: actions/checkout@v4
+            - name: Set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: lts/*
+                  cache: yarn
+            - name: Get Latest SHA
+              id: get-sha
+              run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+            - name: Get Latest Tag
+              id: get-tag
+              run: echo "TAG_NAME=$(git fetch --prune && git describe --tags $(git rev-list --tags --max-count=1) | cut -c 2-)" >> $GITHUB_OUTPUT
+            - name: Install Node Dependencies
+              run: yarn install --network-timeout 600000
+            - name: Promote Releases on S3
+              run: yarn promote --channel ${{ inputs.channel }} --version ${{ steps.get-tag.outputs.TAG_NAME }} --sha ${{ steps.get-sha.outputs.SHORT_SHA }} --no-xz --win --deb --macos
+
+    notify-complete-fail:
+        if: ${{ failure() || cancelled() }}
+        needs: [promote-s3-release-channel]
+        name: Notify Release Failed
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout the Repository
+              uses: actions/checkout@v4
+            - name: Slack Notification
+              uses: rtCamp/action-slack-notify@v2
+              env:
+                  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+                  SLACK_COLOR: '#ff3333'
+                  SLACK_USERNAME: CLI Release Bot
+                  SLACK_ICON_EMOJI: ':ship:'
+                  SLACK_TITLE: 'TFS ClI'
+                  SLACK_MESSAGE: 'Promotion of ${{ inputs.channel }} channel on S3 failed.'
+                  MSG_MINIMAL: actions url

@@ -1,17 +1,24 @@
-name: Windows Executable Release
+name: Debian Executable Release
 
 on:
     workflow_call:
         inputs:
             cli_name:
                 type: string
-                required: true
+                required: false
+                description: 'The name of the CLI'
+                default: 'tfs'
+    workflow_dispatch:
+        inputs:
+            cli_name:
+                type: string
+                required: false
                 description: 'The name of the CLI'
                 default: 'tfs'
 
 jobs:
-    windows-executable-release:
-        name: Release Windows Executable
+    debian-executable-release:
+        name: Release Debian Executable
         runs-on: ubuntu-latest
         permissions:
             contents: write
@@ -28,9 +35,6 @@ jobs:
               with:
                   node-version: lts/*
                   cache: yarn
-            - name: Set up Homebrew
-              id: set-up-homebrew
-              uses: Homebrew/actions/setup-homebrew@master
             - name: Get Latest SHA
               id: get-sha
               run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
@@ -39,38 +43,34 @@ jobs:
               run: |
                   git fetch --prune --unshallow
                   echo "TAG_NAME=$(git fetch --prune --unshallow && git describe --tags $(git rev-list --tags --max-count=1) | cut -c 2-)" >> $GITHUB_OUTPUT
-            - name: Install Homebrew Dependencies
-              run: brew install nsis
             - name: Install Node Dependencies
               run: yarn install --network-timeout 600000
-            - name: Pack Windows Executable
-              run: yarn pack:win --defender-exclusion unchecked
-            - name: Upload Artifacts to S3 Release Channel
-              run: yarn upload:win
-            - name: Upload Artifacts to Github Release Channel (x64)
-              uses: svenstaro/upload-release-action@v2
-              with:
-                  repo_token: ${{ secrets.GITHUB_TOKEN }}
-                  file: |
-                      dist/win32/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.TAG_NAME }}-${{ steps.get-sha.outputs.SHORT_SHA }}-x64.exe
-                  tag: v${{ steps.get-tag.outputs.TAG_NAME }}
-                  asset_name: ${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.TAG_NAME }}-x64.exe
-                  overwrite: true
-            - name: Upload Artifacts to Github Release Channel (x86)
-              uses: svenstaro/upload-release-action@v2
-              with:
-                  repo_token: ${{ secrets.GITHUB_TOKEN }}
-                  file: |
-                      dist/win32/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.TAG_NAME }}-${{ steps.get-sha.outputs.SHORT_SHA }}-x86.exe
-                  tag: v${{ steps.get-tag.outputs.TAG_NAME }}
-                  asset_name: ${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.TAG_NAME }}-x86.exe
-                  overwrite: true
-            - name: Promote Windows Release on S3
-              run: yarn promote:win --version ${{ steps.get-tag.outputs.TAG_NAME }} --sha ${{ steps.get-sha.outputs.SHORT_SHA }}
+            - name: Pack Debian Executable
+              run: yarn pack:deb
+            # - name: Upload Artifacts to S3 Release Channel
+            #   run: yarn upload:deb
+            # - name: Upload Artifacts to Github Release Channel (x64)
+            #   uses: svenstaro/upload-release-action@v2
+            #   with:
+            #       repo_token: ${{ secrets.GITHUB_TOKEN }}
+            #       file: |
+            #           dist/win32/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.TAG_NAME }}-${{ steps.get-sha.outputs.SHORT_SHA }}-x64.exe
+            #       tag: v${{ steps.get-tag.outputs.TAG_NAME }}
+            #       asset_name: ${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.TAG_NAME }}-x64.exe
+            #       overwrite: true
+            # - name: Upload Artifacts to Github Release Channel (x86)
+            #   uses: svenstaro/upload-release-action@v2
+            #   with:
+            #       repo_token: ${{ secrets.GITHUB_TOKEN }}
+            #       file: |
+            #           dist/win32/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.TAG_NAME }}-${{ steps.get-sha.outputs.SHORT_SHA }}-x86.exe
+            #       tag: v${{ steps.get-tag.outputs.TAG_NAME }}
+            #       asset_name: ${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.TAG_NAME }}-x86.exe
+            #       overwrite: true
 
     notify-complete-fail:
         if: ${{ failure() || cancelled() }}
-        needs: [windows-executable-release]
+        needs: [debian-executable-release]
         name: Notify Release Failed
         runs-on: ubuntu-latest
         steps:
@@ -84,5 +84,5 @@ jobs:
                   SLACK_USERNAME: CLI Release Bot
                   SLACK_ICON_EMOJI: ':ship:'
                   SLACK_TITLE: 'TFS ClI'
-                  SLACK_MESSAGE: 'Windows Executable Release Failed'
+                  SLACK_MESSAGE: 'Debian Executable Release Failed'
                   MSG_MINIMAL: actions url
