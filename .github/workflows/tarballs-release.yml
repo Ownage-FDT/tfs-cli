@@ -2,50 +2,54 @@ name: Tarballs Release
 
 on:
     workflow_call:
-        inputs:
-            cli_name:
-                type: string
-                description: 'The name of the CLI'
-                default: 'tfs'
-                required: false
+    workflow_dispatch:
 
 jobs:
-    tarballs-release:
-        name: Release Tarballs
+    pack-tarballs:
+        name: Pack Tarballs
         runs-on: ubuntu-latest
-        permissions:
-            contents: write
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: lts/*
+                  cache: yarn
+            - name: Install Node Dependencies
+              run: yarn install --network-timeout 600000
+            - name: Build and Pack Tarballs
+              run: yarn pack:tarballs
+            - uses: actions/upload-artifact@v3
+              with:
+                  name: packed-tarballs
+                  path: dist
+                  retention-days: 3
+
+    upload-tarballs:
+        name: Upload Tarballs
+        needs: [pack-tarballs]
+        runs-on: ubuntu-latest
         env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             AWS_S3_ENDPOINT: ${{ secrets.AWS_S3_ENDPOINT }}
         steps:
-            - name: Checkout the Repository
-              uses: actions/checkout@v4
-            - name: Set up Node.js
-              uses: actions/setup-node@v4
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
               with:
                   node-version: lts/*
                   cache: yarn
-            - name: Get Latest SHA
-              id: get-sha
-              run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-            - name: Get Latest Tag
-              id: get-tag
-              run: echo "TAG_NAME=$(git fetch --prune && git describe --tags $(git rev-list --tags --max-count=1) | cut -c 2-)" >> $GITHUB_OUTPUT
+            - uses: actions/download-artifact@v3
+              with:
+                  name: packed-tarballs
+                  path: /dist
             - name: Install Node Dependencies
               run: yarn install --network-timeout 600000
-            - name: Pack Tarballs
-              run: yarn pack:tarballs
-            - name: Upload Tarballs to S3 Release Channel
+            - name: Upload Tarballs
               run: yarn upload:tarballs
-            - name: Promote Tarballs Release on S3
-              run: yarn promote --version ${{ steps.get-tag.outputs.TAG_NAME }} --sha ${{ steps.get-sha.outputs.SHORT_SHA }} --no-xz
 
     notify-complete-fail:
         if: ${{ failure() || cancelled() }}
-        needs: [tarballs-release]
+        needs: [upload-tarballs]
         name: Notify Release Failed
         runs-on: ubuntu-latest
         steps:

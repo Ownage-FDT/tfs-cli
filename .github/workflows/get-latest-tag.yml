@@ -1,0 +1,14 @@
+name: Get Latest Tag
+
+on:
+    workflow_call:
+
+jobs:
+    get-latest-tag:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - id: get-latest-tag
+              run: echo "TAG_NAME=$(git fetch --prune && git describe --tags $(git rev-list --tags --max-count=1) | cut -c 2-)" >> $GITHUB_OUTPUT
+        outputs:
+            SHORT_SHA: ${{ steps.get-latest-tag.outputs.TAG_NAME }}
