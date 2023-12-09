@@ -21,7 +21,9 @@ jobs:
             - uses: actions/upload-artifact@v3
               with:
                   name: packed-tarballs
-                  path: dist/*.tar.gz
+                  path: |
+                      dist/*.tar.gz
+                      dist/*-buildmanifest
                   retention-days: 3
 
     upload-tarballs:
