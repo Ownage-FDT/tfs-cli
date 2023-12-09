@@ -43,9 +43,9 @@ jobs:
               run: yarn install --network-timeout 600000
             - name: Pack Windows Executable
               run: yarn pack:win
-            - name: Upload Artifacts to S3 Release Channel
+            - name: Upload Binaries to S3 Release Channel
               run: yarn upload:win
-            - name: Upload Artifacts to Github Release Channel (x64)
+            - name: Upload Binaries to Github Release Channel (x64)
               uses: svenstaro/upload-release-action@v2
               with:
                   repo_token: ${{ secrets.GITHUB_TOKEN }}
@@ -54,7 +54,7 @@ jobs:
                   tag: v${{ steps.get-tag.outputs.TAG_NAME }}
                   asset_name: ${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.TAG_NAME }}-x64.exe
                   overwrite: true
-            - name: Upload Artifacts to Github Release Channel (x86)
+            - name: Upload Binaries to Github Release Channel (x86)
               uses: svenstaro/upload-release-action@v2
               with:
                   repo_token: ${{ secrets.GITHUB_TOKEN }}

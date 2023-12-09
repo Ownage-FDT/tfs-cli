@@ -18,7 +18,7 @@ on:
                 required: false
 
 jobs:
-    debian-executable-release:
+    pack-debian-executable:
         name: Release Debian Executable
         runs-on: ubuntu-latest
         permissions:
@@ -48,30 +48,10 @@ jobs:
               run: yarn install --network-timeout 600000
             - name: Pack Debian Executable
               run: yarn pack:deb
-            # - name: Upload Artifacts to S3 Release Channel
-            #   run: yarn upload:deb
-            # - name: Upload Artifacts to Github Release Channel (x64)
-            #   uses: svenstaro/upload-release-action@v2
-            #   with:
-            #       repo_token: ${{ secrets.GITHUB_TOKEN }}
-            #       file: |
-            #           dist/win32/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.TAG_NAME }}-${{ steps.get-sha.outputs.SHORT_SHA }}-x64.exe
-            #       tag: v${{ steps.get-tag.outputs.TAG_NAME }}
-            #       asset_name: ${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.TAG_NAME }}-x64.exe
-            #       overwrite: true
-            # - name: Upload Artifacts to Github Release Channel (x86)
-            #   uses: svenstaro/upload-release-action@v2
-            #   with:
-            #       repo_token: ${{ secrets.GITHUB_TOKEN }}
-            #       file: |
-            #           dist/win32/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.TAG_NAME }}-${{ steps.get-sha.outputs.SHORT_SHA }}-x86.exe
-            #       tag: v${{ steps.get-tag.outputs.TAG_NAME }}
-            #       asset_name: ${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.TAG_NAME }}-x86.exe
-            #       overwrite: true
 
     notify-complete-fail:
         if: ${{ failure() || cancelled() }}
-        needs: [debian-executable-release]
+        needs: [pack-debian-executable]
         name: Notify Release Failed
         runs-on: ubuntu-latest
         steps:

@@ -38,7 +38,7 @@ jobs:
               run: yarn install --network-timeout 600000
             - name: Pack Tarballs
               run: yarn pack:tarballs
-            - name: Upload Artifacts to S3 Release Channel
+            - name: Upload Tarballs to S3 Release Channel
               run: yarn upload:tarballs
             - name: Promote Tarballs Release on S3
               run: yarn promote --version ${{ steps.get-tag.outputs.TAG_NAME }} --sha ${{ steps.get-sha.outputs.SHORT_SHA }} --no-xz
