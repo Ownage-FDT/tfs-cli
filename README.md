@@ -6,7 +6,7 @@ TFS CLI is a command-line interface designed to simplify file sharing directly f
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/@ownage-fdt/tfs-cli)](https://npmjs.org/package/@ownage-fdt/tfs-cli)
 [![GitHub license](https://img.shields.io/github/license/Ownage-FDT/tfs-cli)](https://github.com/Ownage-FDT/tfs-cli/blob/main/LICENSE)
-![GitHub Actions](https://github.com/Ownage-FDT/tfs-cli/actions/workflows/test.yml/badge.svg)
+![GitHub Actions](https://github.com/Ownage-FDT/tfs-cli/actions/workflows/unit-test.yml/badge.svg)
 
 
 # Table of Contents
