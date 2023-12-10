@@ -2,7 +2,7 @@ name: Create CLI Release
 
 on:
     release:
-        types: [published, prereleased]
+        types: [released]
 env:
     HUSKY: 0
 
@@ -12,15 +12,20 @@ permissions:
     issues: write
 
 jobs:
+    npm-release:
+        name: NPM Release
+        uses: ./.github/workflows/npm-release.yml
+        secrets: inherit
+
     tarballs-release:
         name: Tarballs Release
         uses: ./.github/workflows/tarballs-release.yml
         secrets: inherit
 
-    package-manager-release:
-        name: Package Manager Release
+    homebrew-release:
+        name: Homebrew Release
         needs: [tarballs-release]
-        uses: ./.github/workflows/package-manager-release.yml
+        uses: ./.github/workflows/homebrew-release.yml
         secrets: inherit
 
     executable-release:
@@ -36,7 +41,7 @@ jobs:
 
     notify-complete-success:
         if: ${{ success() }}
-        needs: [package-manager-release, promote-s3-releases]
+        needs: [npm-release, homebrew-release, promote-s3-releases]
         name: Notify Release Success
         runs-on: ubuntu-latest
         steps:
@@ -55,7 +60,7 @@ jobs:
 
     notify-complete-fail:
         if: ${{ failure() || cancelled() }}
-        needs: [package-manager-release, promote-s3-releases]
+        needs: [npm-release, homebrew-release, promote-s3-releases]
         name: Notify Release Failed
         runs-on: ubuntu-latest
         steps:
