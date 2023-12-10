@@ -82,7 +82,7 @@ jobs:
 
     notify-complete-fail:
         if: ${{ failure() || cancelled() }}
-        needs: [release, promote-s3-releases]
+        needs: [release, package-manager-release, promote-s3-releases]
         name: Notify Release Failed
         runs-on: ubuntu-latest
         steps:

@@ -1,7 +1,7 @@
 name: Platform Executable Release
 
 on:
-    workflow_dispatch:
+    workflow_call:
 
 permissions:
     contents: write
