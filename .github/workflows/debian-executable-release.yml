@@ -91,15 +91,21 @@ jobs:
               run: |
                   sudo apt-get update
                   sudo apt-get install -y awscli
-            - name: Get Bucket Name
-              id: get-bucket-name
-              run: echo "bucket-name=$(cat package.json | jq -r '.oclif.update.s3.bucket')" >> $GITHUB_OUTPUT
+            - name: Get Bucket Information
+              id: get-bucket-info
+              run: |
+                  echo "name=$(cat package.json | jq -r '.oclif.update.s3.bucket')" >> $GITHUB_OUTPUT
+                  echo "host=$(cat package.json | jq -r '.oclif.update.s3.host')" >> $GITHUB_OUTPUT
             - name: Install Node Dependencies
               run: yarn install --network-timeout 600000
             - name: Upload Binaries to S3
               run: |
                   yarn upload:deb
-                  aws s3 cp --content-type text/plain /home/runner/work/tfs-cli/tfs-cli/dist/deb/release.key s3://${{ steps.get-bucket-name.outputs.bucket-name}}/channels/stable/apt/release.key
+                  aws s3 cp \
+                    --content-type text/plain \
+                    /home/runner/work/tfs-cli/tfs-cli/dist/deb/release.key \
+                    s3://${{ steps.get-bucket-info.outputs.name }}/channels/stable/apt/release.key \
+                    --endpoint-url ${{ steps.get-bucket-info.outputs.host }}
 
     upload-debian-executable-github:
         name: Upload Debian Executable to Github
