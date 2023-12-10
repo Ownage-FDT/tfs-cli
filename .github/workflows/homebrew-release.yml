@@ -21,6 +21,7 @@ jobs:
             - name: Invoke HomeBrew Release Script
               run: node .github/scripts/homebrew-release.js
               env:
+                  GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
                   GITHUB_SHORT_SHA: ${{ steps.get-sha.outputs.sha-short }}
 
     notify-complete-fail:

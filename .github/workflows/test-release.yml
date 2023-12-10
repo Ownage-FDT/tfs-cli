@@ -18,14 +18,16 @@ jobs:
               run: |
                   echo "Test Release"
 
-    # tarballs-release:
-    #     needs: [test-release]
-    #     uses: ./.github/workflows/tarballs-release.yml
-    #     secrets: inherit
-
-    executatble-release:
+    tarballs-release:
+        name: Tarballs Release
         needs: [test-release]
-        uses: ./.github/workflows/executable-release.yml
+        uses: ./.github/workflows/tarballs-release.yml
+        secrets: inherit
+
+    package-manager-release:
+        name: Package Manager Release
+        needs: [test-release]
+        uses: ./.github/workflows/package-manager-release.yml
         secrets: inherit
 
     # promote-s3-releases:
