@@ -38,8 +38,7 @@ jobs:
             - uses: actions/upload-artifact@v3
               with:
                   name: packed-windows-executable
-                  path: |
-                      dist/win32/*.exe
+                  path: dist/win32
                   retention-days: 3
 
     upload-windows-executable:
@@ -76,28 +75,22 @@ jobs:
             contents: write
         steps:
             - uses: actions/checkout@v4
-            - uses: actions/setup-node@v4
-              with:
-                  node-version: lts/*
-                  cache: yarn
             - uses: actions/download-artifact@v3
               with:
                   name: packed-windows-executable
-                  path: dist
+                  path: dist/win32
             - name: List all the downloaded files (for debugging)
               run: ls -R
-              working-directory: dist
+              working-directory: dist/win32
             - uses: ./.github/actions/get-latest-sha
               id: get-sha
             - uses: ./.github/actions/get-latest-tag
               id: get-tag
-            - name: Install Node Dependencies
-              run: yarn install --network-timeout 600000
             - name: Upload Binaries to Github (x64)
               uses: svenstaro/upload-release-action@v2
               with:
                   repo_token: ${{ secrets.GITHUB_TOKEN }}
-                  file: dist/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.tag-name }}-${{ steps.get-sha.outputs.short-sha }}-x64.exe
+                  file: dist/win32/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.tag-name }}-${{ steps.get-sha.outputs.short-sha }}-x64.exe
                   tag: v${{ steps.get-tag.outputs.tag-name }}
                   asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_x64.exe
                   overwrite: true
@@ -105,7 +98,7 @@ jobs:
               uses: svenstaro/upload-release-action@v2
               with:
                   repo_token: ${{ secrets.GITHUB_TOKEN }}
-                  file: dist/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.tag-name }}-${{ steps.get-sha.outputs.short-sha }}-x86.exe
+                  file: dist/win32/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.tag-name }}-${{ steps.get-sha.outputs.short-sha }}-x86.exe
                   tag: v${{ steps.get-tag.outputs.tag-name }}
                   asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_x86.exe
                   overwrite: true
@@ -128,3 +121,4 @@ jobs:
                   SLACK_TITLE: 'TFS ClI'
                   SLACK_MESSAGE: 'Windows Executable Release Failed'
                   MSG_MINIMAL: actions url
+                  SLACK_FOOTER: Posted automatically using GitHub Actions

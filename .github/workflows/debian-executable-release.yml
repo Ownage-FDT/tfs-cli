@@ -18,71 +18,131 @@ on:
                 required: false
 
 jobs:
-    debian-executable-release:
-        name: Release Debian Executable
+    pack-debian-executable:
+        name: Pack Debian Executable
         runs-on: ubuntu-latest
-        permissions:
-            contents: write
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            AWS_S3_ENDPOINT: ${{ secrets.AWS_S3_ENDPOINT }}
-            TFS_DEB_KEY: ${{ secrets.TFS_DEB_KEY }}
-            GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
         steps:
-            - name: Checkout the Repository
-              uses: actions/checkout@v4
-            - name: Set up Node.js
-              uses: actions/setup-node@v4
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
               with:
                   node-version: lts/*
                   cache: yarn
-            - name: Get Latest SHA
-              id: get-sha
-              run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-            - name: Get Latest Tag
-              id: get-tag
-              run: echo "TAG_NAME=$(git fetch --prune && git describe --tags $(git rev-list --tags --max-count=1) | cut -c 2-)" >> $GITHUB_OUTPUT
             - name: Install Node Dependencies
               run: yarn install --network-timeout 600000
-            - name: Import GPG Key
-              run: echo "$GPG_PRIVATE_KEY" | gpg --import
             - name: Pack Debian Executable
               run: yarn pack:deb
-            - name: Upload Binaries to S3 Release Channel
-              run: yarn upload:deb
-            - name: Upload Binaries to Github Release Channel (arm64)
+            - uses: actions/upload-artifact@v3
+              with:
+                  name: packed-debian-executable
+                  path: dist/deb
+                  retention-days: 3
+
+    sign-debian-executable:
+        name: Sign Debian Executable
+        runs-on: ubuntu-latest
+        needs: [pack-debian-executable]
+        env:
+            GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
+            GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+            GPG_KEY_PASSPHRASE: ${{ secrets.GPG_KEY_PASSPHRASE }}
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/download-artifact@v3
+              with:
+                  name: packed-debian-executable
+                  path: dist/deb
+            - run: cd dist/deb && ./github/scripts/sign-deb.sh
+            - uses: actions/upload-artifact@v3
+              with:
+                  name: signed-debian-executable
+                  path: dist/deb
+                  retention-days: 3
+
+    upload-debian-executable:
+        name: Upload Debian Executable
+        needs: [sign-debian-executable]
+        runs-on: ubuntu-latest
+        env:
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_S3_ENDPOINT: ${{ secrets.AWS_S3_ENDPOINT }}
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: lts/*
+                  cache: yarn
+            - uses: actions/download-artifact@v3
+              with:
+                  name: packed-debian-executable
+                  path: dist/deb
+            - name: List all the downloaded files (for debugging)
+              run: ls -R
+              working-directory: dist/deb
+            - name: Install System Dependencies
+              run: |
+                  sudo apt-get update
+                  sudo apt-get install -y awscli
+            - name: Get Bucket Name
+              id: get-bucket-name
+              run: echo "bucket-name=$(cat package.json | jq -r '.oclif.update.s3.bucket')" >> $GITHUB_OUTPUT
+            - name: Install Node Dependencies
+              run: yarn install --network-timeout 600000
+            - name: Upload Binaries to S3
+              run: |
+                  yarn upload:deb
+                  aws s3 cp --content-type text/plain dist/deb/release.key s3://${{ steps.get-bucket-name.outputs.bucket-name}}/channels/stable/apt/release.key
+
+    upload-debian-executable-github:
+        name: Upload Debian Executable to Github
+        needs: [pack-debian-executable]
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/download-artifact@v3
+              with:
+                  name: packed-debian-executable
+                  path: dist/deb
+            - name: List all the downloaded files (for debugging)
+              run: ls -R
+              working-directory: dist/deb
+            - uses: ./.github/actions/get-latest-sha
+              id: get-sha
+            - uses: ./.github/actions/get-latest-tag
+              id: get-tag
+            - name: Upload Binaries to Github (arm64)
               uses: svenstaro/upload-release-action@v2
               with:
                   repo_token: ${{ secrets.GITHUB_TOKEN }}
                   file: |
-                      dist/deb/${{ inputs.cli_name }}_${{ steps.get-tag.outputs.TAG_NAME }}.${{ steps.get-sha.outputs.SHORT_SHA }}-1_arm64.deb
-                  tag: v${{ steps.get-tag.outputs.TAG_NAME }}
-                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.TAG_NAME }}_arm64.deb
+                      dist/deb/${{ inputs.cli_name }}_${{ steps.get-tag.outputs.tag-name }}.${{ steps.get-sha.outputs.short-sha }}-1_arm64.deb
+                  tag: v${{ steps.get-tag.outputs.tag-name }}
+                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_arm64.deb
                   overwrite: true
-            - name: Upload Binaries to Github Release Channel (armel)
+            - name: Upload Binaries to Github (armel)
               uses: svenstaro/upload-release-action@v2
               with:
                   repo_token: ${{ secrets.GITHUB_TOKEN }}
                   file: |
-                      dist/deb/${{ inputs.cli_name }}_${{ steps.get-tag.outputs.TAG_NAME }}.${{ steps.get-sha.outputs.SHORT_SHA }}-1_armel.deb
-                  tag: v${{ steps.get-tag.outputs.TAG_NAME }}
-                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.TAG_NAME }}_armel.deb
+                      dist/deb/${{ inputs.cli_name }}_${{ steps.get-tag.outputs.tag-name }}.${{ steps.get-sha.outputs.short-sha }}-1_armel.deb
+                  tag: v${{ steps.get-tag.outputs.tag-name }}
+                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_armel.deb
                   overwrite: true
-            - name: Upload Binaries to Github Release Channel (amd64)
+            - name: Upload Binaries to Github (amd64)
               uses: svenstaro/upload-release-action@v2
               with:
                   repo_token: ${{ secrets.GITHUB_TOKEN }}
                   file: |
-                      dist/deb/${{ inputs.cli_name }}_${{ steps.get-tag.outputs.TAG_NAME }}.${{ steps.get-sha.outputs.SHORT_SHA }}-1_amd64.deb
-                  tag: v${{ steps.get-tag.outputs.TAG_NAME }}
-                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.TAG_NAME }}_amd64.deb
+                      dist/deb/${{ inputs.cli_name }}_${{ steps.get-tag.outputs.tag-name }}.${{ steps.get-sha.outputs.short-sha }}-1_amd64.deb
+                  tag: v${{ steps.get-tag.outputs.tag-name }}
+                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_amd64.deb
                   overwrite: true
 
     notify-complete-fail:
         if: ${{ failure() || cancelled() }}
-        needs: [debian-executable-release]
+        needs: [upload-debian-executable, upload-debian-executable-github]
         name: Notify Release Failed
         runs-on: ubuntu-latest
         steps:
@@ -98,3 +158,4 @@ jobs:
                   SLACK_TITLE: 'TFS CLI'
                   SLACK_MESSAGE: 'Debian Executable Release Failed'
                   MSG_MINIMAL: actions url
+                  SLACK_FOOTER: Posted automatically using GitHub Actions
