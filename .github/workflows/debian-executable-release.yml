@@ -8,7 +8,13 @@ on:
                 description: 'The name of the CLI'
                 default: 'tfs'
                 required: false
-
+    workflow_dispatch:
+        inputs:
+            cli_name:
+                type: string
+                description: 'The name of the CLI'
+                default: 'tfs'
+                required: false
 jobs:
     pack-debian-executable:
         name: Pack Debian Executable
@@ -50,7 +56,7 @@ jobs:
             - name: Sign Debian Executable
               run: |
                   cd dist/deb
-                  source .github/scripts/sign-deb
+                  source /home/runner/work/tfs-cli/tfs-cli/.github/scripts/sign-deb
             - uses: actions/upload-artifact@v3
               with:
                   name: signed-debian-executable
