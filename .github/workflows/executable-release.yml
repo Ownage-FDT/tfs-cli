@@ -1,12 +1,10 @@
 name: Platform Executable Release
 
 on:
-    workflow_call:
     workflow_dispatch:
 
 permissions:
-    contents: read
-    packages: write
+    contents: write
 
 jobs:
     windows-executable-release:
