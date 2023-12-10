@@ -87,7 +87,7 @@ jobs:
                   repo_token: ${{ secrets.GITHUB_TOKEN }}
                   file: dist/win32/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.tag-name }}-${{ steps.get-sha.outputs.sha-short }}-x64.exe
                   tag: v${{ steps.get-tag.outputs.tag-name }}
-                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_x64.exe
+                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_win32-x64.exe
                   overwrite: true
             - name: Upload Binaries to Github (x86)
               uses: svenstaro/upload-release-action@v2
@@ -95,7 +95,7 @@ jobs:
                   repo_token: ${{ secrets.GITHUB_TOKEN }}
                   file: dist/win32/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.tag-name }}-${{ steps.get-sha.outputs.sha-short }}-x86.exe
                   tag: v${{ steps.get-tag.outputs.tag-name }}
-                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_x86.exe
+                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_win32-x86.exe
                   overwrite: true
 
     notify-complete-fail:

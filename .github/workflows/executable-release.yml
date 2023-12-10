@@ -2,6 +2,7 @@ name: Platform Executable Release
 
 on:
     workflow_call:
+    workflow_dispatch:
 
 jobs:
     windows-executable-release:

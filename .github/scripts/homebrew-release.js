@@ -98,7 +98,6 @@ async function updateHomebrew() {
 
     await updateTfsFormula(homebrewDir)
 
-    // run in git in cloned Ownage-FDT/homebrew-tfs-cli git directory
     const git = async (args, opts = {}) => {
         await execa('git', ['-C', homebrewDir, ...args], opts)
     }
@@ -107,7 +106,7 @@ async function updateHomebrew() {
     await git(['add', 'Formula'])
     await git(['config', '--local', 'core.pager', 'cat'])
     await git(['diff', '--cached'], { stdio: 'inherit' })
-    await git(['commit', '-m', `tfs v${pjson.version}`])
+    await git(['commit', '-m', `release tfs v${pjson.version}`])
     if (process.env.SKIP_GIT_PUSH === undefined) {
         await git(['push', 'origin', 'main'])
     }

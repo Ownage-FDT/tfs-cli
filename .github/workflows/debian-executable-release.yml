@@ -50,8 +50,7 @@ jobs:
             - name: Sign Debian Executable
               run: |
                   cd dist/deb
-                  chmod +x /home/runner/work/tfs-cli/tfs-cli/.github/scripts/sign-deb
-                  /home/runner/work/tfs-cli/tfs-cli/.github/scripts/sign-deb
+                  source .github/scripts/sign-deb.env
             - uses: actions/upload-artifact@v3
               with:
                   name: signed-debian-executable
@@ -128,7 +127,7 @@ jobs:
                   file: |
                       dist/deb/${{ inputs.cli_name }}_${{ steps.get-tag.outputs.tag-name }}.${{ steps.get-sha.outputs.sha-short }}-1_arm64.deb
                   tag: v${{ steps.get-tag.outputs.tag-name }}
-                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_arm64.deb
+                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_linux-arm64.deb
                   overwrite: true
             - name: Upload Binaries to Github (armel)
               uses: svenstaro/upload-release-action@v2
@@ -137,7 +136,7 @@ jobs:
                   file: |
                       dist/deb/${{ inputs.cli_name }}_${{ steps.get-tag.outputs.tag-name }}.${{ steps.get-sha.outputs.sha-short }}-1_armel.deb
                   tag: v${{ steps.get-tag.outputs.tag-name }}
-                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_armel.deb
+                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_linux-armel.deb
                   overwrite: true
             - name: Upload Binaries to Github (amd64)
               uses: svenstaro/upload-release-action@v2
@@ -146,7 +145,7 @@ jobs:
                   file: |
                       dist/deb/${{ inputs.cli_name }}_${{ steps.get-tag.outputs.tag-name }}.${{ steps.get-sha.outputs.sha-short }}-1_amd64.deb
                   tag: v${{ steps.get-tag.outputs.tag-name }}
-                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_amd64.deb
+                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_linux-amd64.deb
                   overwrite: true
 
     notify-complete-fail:

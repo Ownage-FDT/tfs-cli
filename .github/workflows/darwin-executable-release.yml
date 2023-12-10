@@ -90,7 +90,7 @@ jobs:
                   file: |
                       dist/macos/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.tag-name }}-${{ steps.get-sha.outputs.sha-short }}-arm64.pkg
                   tag: v${{ steps.get-tag.outputs.tag-name }}
-                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_arm64.pkg
+                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_darwin-arm64.pkg
                   overwrite: true
             - name: Upload Binaries to Github (x64)
               uses: svenstaro/upload-release-action@v2
@@ -99,7 +99,7 @@ jobs:
                   file: |
                       dist/macos/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.tag-name }}-${{ steps.get-sha.outputs.sha-short }}-x64.pkg
                   tag: v${{ steps.get-tag.outputs.tag-name }}
-                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_x64.pkg
+                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_darwin-x64.pkg
                   overwrite: true
 
     notify-complete-fail:
