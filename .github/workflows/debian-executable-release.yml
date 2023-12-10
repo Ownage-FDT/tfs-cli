@@ -82,7 +82,7 @@ jobs:
                   cache: yarn
             - uses: actions/download-artifact@v3
               with:
-                  name: packed-debian-executable
+                  name: signed-debian-executable
                   path: dist/deb
             - name: List all the downloaded files (for debugging)
               run: ls -R
@@ -111,14 +111,16 @@ jobs:
             - uses: actions/checkout@v4
             - uses: actions/download-artifact@v3
               with:
-                  name: packed-debian-executable
+                  name: signed-debian-executable
                   path: dist/deb
             - name: List all the downloaded files (for debugging)
               run: ls -R
               working-directory: dist/deb
-            - uses: ./.github/actions/get-latest-sha
+            - name: Get Short SHA
+              uses: ./.github/actions/get-latest-sha
               id: get-sha
-            - uses: ./.github/actions/get-latest-tag
+            - name: Get Latest Tag
+              uses: ./.github/actions/get-latest-tag
               id: get-tag
             - name: Upload Binaries to Github (arm64)
               uses: svenstaro/upload-release-action@v2
