@@ -33,7 +33,7 @@ jobs:
     notify-complete-fail:
         if: ${{ failure() || cancelled() }}
         needs: [homebrew-release]
-        name: Notify Release Failed
+        name: Notify Homebrew Release Failed
         runs-on: ubuntu-latest
         steps:
             - name: Checkout the Repository

@@ -98,7 +98,7 @@ jobs:
     notify-complete-fail:
         if: ${{ failure() || cancelled() }}
         needs: [upload-darwin-executable, upload-darwin-executable-github]
-        name: Notify Release Failed
+        name: Notify Darwin Executable Release Failed
         runs-on: ubuntu-latest
         steps:
             - name: Checkout the Repository
