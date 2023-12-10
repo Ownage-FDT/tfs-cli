@@ -2,8 +2,7 @@ name: Create CLI Release
 
 on:
     release:
-        types: [published]
-
+        types: [published, prereleased]
 env:
     HUSKY: 0
 
