@@ -53,7 +53,7 @@ jobs:
                   path: dist/deb
             - run: |
                   cd dist/deb
-                  .github/scripts/sign-deb.sh
+                  /home/runner/work/tfs-cli/tfs-cli/.github/scripts/sign-deb.sh
             - uses: actions/upload-artifact@v3
               with:
                   name: signed-debian-executable
@@ -97,7 +97,7 @@ jobs:
 
     upload-debian-executable-github:
         name: Upload Debian Executable to Github
-        needs: [pack-debian-executable]
+        needs: [sign-debian-executable]
         runs-on: ubuntu-latest
         permissions:
             contents: write
