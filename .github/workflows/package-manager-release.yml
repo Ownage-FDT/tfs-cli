@@ -13,8 +13,3 @@ jobs:
         name: Create Homebrew Release
         uses: ./.github/workflows/homebrew-release.yml
         secrets: inherit
-
-    # scoop-release:
-    #     name: Create Scoop Release
-    #     uses: ./.github/workflows/scoop-release.yml
-    #     secrets: inherit
