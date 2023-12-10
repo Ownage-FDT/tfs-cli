@@ -87,7 +87,7 @@ jobs:
             - name: List all the downloaded files (for debugging)
               run: ls -R
               working-directory: dist
-            - uses: ./.github/workflows/get-lastest-sha
+            - uses: ./.github/actions/get-lastest-sha
               id: get-sha
             - uses: ./.github/actions/get-latest-tag
               id: get-tag
