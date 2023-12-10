@@ -2,8 +2,7 @@ name: Run Unit Tests
 on:
     push:
         branches-ignore: [main]
-    pull_request:
-    workflow_call:
+    workflow_dispatch:git
 
 jobs:
     test:
