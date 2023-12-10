@@ -10,4 +10,4 @@ echo "Signed Debian Packages Successfully"
 echo "sha256 sums:"
 sha256sum *Release*
 
-echo $GPG_PUBLIC_KEY | base64 --decode > release.key
+echo $GPG_PUBLIC_KEY | base64 --decode > /home/runner/work/tfs-cli/tfs-cli/dist/deb/release.key
