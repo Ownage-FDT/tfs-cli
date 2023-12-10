@@ -51,7 +51,9 @@ jobs:
               with:
                   name: packed-debian-executable
                   path: dist/deb
-            - run: cd dist/deb && ./github/scripts/sign-deb.sh
+            - run: |
+                  cd dist/deb
+                  .github/scripts/sign-deb.sh
             - uses: actions/upload-artifact@v3
               with:
                   name: signed-debian-executable
