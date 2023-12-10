@@ -98,7 +98,8 @@ jobs:
             - name: Upload Binaries to S3
               run: |
                   yarn upload:deb
-                  aws s3 cp --content-type text/plain dist/deb/release.key s3://${{ steps.get-bucket-name.outputs.bucket-name}}/channels/stable/apt/release.key
+                  ls -R
+                  aws s3 cp --content-type text/plain /home/runner/work/tfs-cli/tfs-cli/dist/deb/release.key s3://${{ steps.get-bucket-name.outputs.bucket-name}}/channels/stable/apt/release.key
 
     upload-debian-executable-github:
         name: Upload Debian Executable to Github
