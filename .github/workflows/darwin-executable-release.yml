@@ -56,7 +56,7 @@ jobs:
                   path: dist/macos
             - name: List all the downloaded files (for debugging)
               run: ls -R
-              working-directory: dist/win32
+              working-directory: dist/macos
             - name: Install Node Dependencies
               run: yarn install --network-timeout 600000
             - name: Upload Binaries to S3
@@ -72,11 +72,11 @@ jobs:
             - uses: actions/checkout@v4
             - uses: actions/download-artifact@v3
               with:
-                  name: packed-windows-executable
-                  path: dist/win32
+                  name: packed-darwin-executable
+                  path: dist/macos
             - name: List all the downloaded files (for debugging)
               run: ls -R
-              working-directory: dist/win32
+              working-directory: dist/macos
             - name: Get Latest SHA
               uses: ./.github/actions/get-latest-sha
               id: get-sha
