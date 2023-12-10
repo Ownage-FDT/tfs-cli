@@ -69,3 +69,5 @@ jobs:
                   SLACK_TITLE: 'TFS CLI'
                   SLACK_MESSAGE: 'Tarballs Release Failed'
                   MSG_MINIMAL: actions url
+                  SLACK_FOOTER: Posted automatically using GitHub Actions
+

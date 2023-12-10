@@ -8,60 +8,103 @@ on:
                 description: 'The name of the CLI'
                 default: 'tfs'
                 required: false
-                
+    workflow_dispatch:
+        inputs:
+            cli_name:
+                type: string
+                description: 'The name of the CLI'
+                default: 'tfs'
+                required: false
+
 jobs:
-    release-darwin-executable:
-        name: Release Darwin Executable
+    pack-darwin-executable:
+        name: Pack Darwin Executable
         runs-on: macos-latest
-        permissions:
-            contents: write
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            AWS_S3_ENDPOINT: ${{ secrets.AWS_S3_ENDPOINT }}
         steps:
-            - name: Checkout the Repository
-              uses: actions/checkout@v4
-            - name: Set up Node.js
-              uses: actions/setup-node@v4
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
               with:
                   node-version: lts/*
                   cache: yarn
-            - name: Get Latest SHA
-              id: get-sha
-              run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-            - name: Get Latest Tag
-              id: get-tag
-              run: echo "TAG_NAME=$(git fetch --prune && git describe --tags $(git rev-list --tags --max-count=1) | cut -c 2-)" >> $GITHUB_OUTPUT
             - name: Install Node Dependencies
               run: yarn install --network-timeout 600000
             - name: Pack MacOS Executable
               run: yarn pack:macos
-            - name: Upload Binaries to S3 Release Channel
+            - uses: actions/upload-artifact@v3
+              with:
+                  name: packed-darwin-executable
+                  path: dist/macos
+                  retention-days: 3
+
+    upload-darwin-executable:
+        name: Upload Darwin Executable
+        needs: [pack-darwin-executable]
+        runs-on: ubuntu-latest
+        env:
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_S3_ENDPOINT: ${{ secrets.AWS_S3_ENDPOINT }}
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: lts/*
+                  cache: yarn
+            - uses: actions/download-artifact@v3
+              with:
+                  name: packed-darwin-executable
+                  path: dist/macos
+            - name: List all the downloaded files (for debugging)
+              run: ls -R
+              working-directory: dist/win32
+            - name: Install Node Dependencies
+              run: yarn install --network-timeout 600000
+            - name: Upload Binaries to S3
               run: yarn upload:macos
-            - name: Upload Binaries to Github Release Channel (arm64)
+
+    upload-darwin-executable-github:
+        name: Upload Darwin Executable to Github
+        needs: [pack-darwin-executable]
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/download-artifact@v3
+              with:
+                  name: packed-windows-executable
+                  path: dist/win32
+            - name: List all the downloaded files (for debugging)
+              run: ls -R
+              working-directory: dist/win32
+            - name: Get Latest SHA
+              uses: ./.github/actions/get-latest-sha
+              id: get-sha
+            - name: Get Latest Tag
+              uses: ./.github/actions/get-latest-tag
+              id: get-tag
+            - name: Upload Binaries to Github (arm64)
               uses: svenstaro/upload-release-action@v2
               with:
                   repo_token: ${{ secrets.GITHUB_TOKEN }}
                   file: |
-                      dist/macos/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.TAG_NAME }}-${{ steps.get-sha.outputs.SHORT_SHA }}-arm64.pkg
-                  tag: v${{ steps.get-tag.outputs.TAG_NAME }}
-                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.TAG_NAME }}_arm64.pkg
+                      dist/macos/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.tag-name }}-${{ steps.get-sha.outputs.short-sha }}-arm64.pkg
+                  tag: v${{ steps.get-tag.outputs.tag-name }}
+                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_arm64.pkg
                   overwrite: true
-            - name: Upload Binaries to Github Release Channel (x64)
+            - name: Upload Binaries to Github (x64)
               uses: svenstaro/upload-release-action@v2
               with:
                   repo_token: ${{ secrets.GITHUB_TOKEN }}
                   file: |
-                      dist/macos/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.TAG_NAME }}-${{ steps.get-sha.outputs.SHORT_SHA }}-x64.pkg
-                  tag: v${{ steps.get-tag.outputs.TAG_NAME }}
-                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.TAG_NAME }}_x64.pkg
+                      dist/macos/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.tag-name }}-${{ steps.get-sha.outputs.short-sha }}-x64.pkg
+                  tag: v${{ steps.get-tag.outputs.tag-name }}
+                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_x64.pkg
                   overwrite: true
 
     notify-complete-fail:
         if: ${{ failure() || cancelled() }}
-        needs: [release-darwin-executable]
+        needs: [upload-darwin-executable, upload-darwin-executable-github]
         name: Notify Release Failed
         runs-on: ubuntu-latest
         steps:
@@ -77,3 +120,4 @@ jobs:
                   SLACK_TITLE: 'TFS CLI'
                   SLACK_MESSAGE: 'Darwin Executable Release Failed'
                   MSG_MINIMAL: actions url
+                  SLACK_FOOTER: Posted automatically using GitHub Actions

@@ -8,13 +8,6 @@ on:
                 description: 'The name of the CLI'
                 default: 'tfs'
                 required: false
-    workflow_dispatch:
-        inputs:
-            cli_name:
-                type: string
-                description: 'The name of the CLI'
-                default: 'tfs'
-                required: false
 
 jobs:
     pack-windows-executable:
@@ -61,7 +54,7 @@ jobs:
                   path: dist/win32
             - name: List all the downloaded files (for debugging)
               run: ls -R
-              working-directory: dist
+              working-directory: dist/win32
             - name: Install Node Dependencies
               run: yarn install --network-timeout 600000
             - name: Upload Binaries to S3
@@ -82,9 +75,11 @@ jobs:
             - name: List all the downloaded files (for debugging)
               run: ls -R
               working-directory: dist/win32
-            - uses: ./.github/actions/get-latest-sha
+            - name: Get Latest SHA
+              uses: ./.github/actions/get-latest-sha
               id: get-sha
-            - uses: ./.github/actions/get-latest-tag
+            - name: Get Latest Tag
+              uses: ./.github/actions/get-latest-tag
               id: get-tag
             - name: Upload Binaries to Github (x64)
               uses: svenstaro/upload-release-action@v2

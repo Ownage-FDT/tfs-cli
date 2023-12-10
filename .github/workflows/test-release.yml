@@ -23,13 +23,12 @@ jobs:
     #     uses: ./.github/workflows/tarballs-release.yml
     #     secrets: inherit
 
-    # executatble-release:
-    #     needs: [test-release]
-    #     uses: ./.github/workflows/executable-release.yml
-    #     secrets: inherit
+    executatble-release:
+        needs: [test-release]
+        uses: ./.github/workflows/executable-release.yml
+        secrets: inherit
 
     # promote-s3-releases:
     #     needs: [tarballs-release, executatble-release]
     #     uses: ./.github/workflows/promote-s3-releases.yml
     #     secrets: inherit
-
