@@ -53,8 +53,7 @@ jobs:
                   path: dist/deb
             - run: |
                   cd dist/deb
-                  chmod +x /home/runner/work/tfs-cli/tfs-cli/.github/scripts/sign-deb.sh
-                  /home/runner/work/tfs-cli/tfs-cli/.github/scripts/sign-deb.sh
+                  /home/runner/work/tfs-cli/tfs-cli/.github/scripts/sign-deb
             - uses: actions/upload-artifact@v3
               with:
                   name: signed-debian-executable
