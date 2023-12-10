@@ -16,6 +16,7 @@ set -e -o pipefail
 
 # This will sign files after `oclif pack:deb`, this script should be ran from
 # the `dist/deb` folder
+ls -la
 echo "$GPG_PRIVATE_KEY" | base64 -d | gpg --import --batch --passphrase "$GPG_KEY_PASSPHRASE"
 gpg --digest-algo SHA512 --clearsign --pinentry-mode loopback --passphrase "$GPG_KEY_PASSPHRASE" -u $GPG_KEY_ID -o InRelease Release
 gpg --digest-algo SHA512 -abs --pinentry-mode loopback --passphrase "$GPG_KEY_PASSPHRASE" -u $GPG_KEY_ID -o Release.gpg Release
