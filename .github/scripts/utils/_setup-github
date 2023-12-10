@@ -7,5 +7,5 @@ if [[ "${CI:-}" != "true" ]]; then
   exit
 fi
 
-git config --global user.email "21901749+iamolayemi@users.noreply.github.com"
+git config --global user.email "77931978+iamolayemi@users.noreply.github.com"
 git config --global user.name "iamolayemi"
