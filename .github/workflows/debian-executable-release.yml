@@ -50,7 +50,7 @@ jobs:
             - name: Sign Debian Executable
               run: |
                   cd dist/deb
-                  source .github/scripts/sign-deb.env
+                  source .github/scripts/sign-deb
             - uses: actions/upload-artifact@v3
               with:
                   name: signed-debian-executable
