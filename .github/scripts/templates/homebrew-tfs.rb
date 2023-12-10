@@ -3,7 +3,7 @@
 # Please update the template instead:
 # https://github.com/Ownage-FDT/tfs-cli/blob/main/.github/scripts/templates/homebrew-tfs.rb
 class Tfs < Formula
-    desc "Everything you need to get started with TFS"
+    desc "Share files seamlessly without leaving your terminal"
     homepage "https://trytfs.com"
     url "__CLI_MAC_INTEL_DOWNLOAD_URL__"
     sha256 "__CLI_MAC_INTEL_SHA256__"
