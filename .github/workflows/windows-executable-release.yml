@@ -87,27 +87,27 @@ jobs:
             - name: List all the downloaded files (for debugging)
               run: ls -R
               working-directory: dist
-            - uses: ./.github/workflows/get-lastest-tag.yml
-              id: get-tag
-            - uses: ./.github/workflows/get-latest-sha.yml
+            - uses: ./.github/workflows/get-lastest-sha
               id: get-sha
+            - uses: ./.github/actions/get-latest-tag
+              id: get-tag
             - name: Install Node Dependencies
               run: yarn install --network-timeout 600000
             - name: Upload Binaries to Github (x64)
               uses: svenstaro/upload-release-action@v2
               with:
                   repo_token: ${{ secrets.GITHUB_TOKEN }}
-                  file: dist/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.TAG_NAME }}-${{ steps.get-sha.outputs.SHORT_SHA }}-x64.exe
-                  tag: v${{ steps.get-tag.outputs.TAG_NAME }}
-                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.TAG_NAME }}_x64.exe
+                  file: dist/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.tag-name }}-${{ steps.get-sha.outputs.short-sha }}-x64.exe
+                  tag: v${{ steps.get-tag.outputs.tag-name }}
+                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_x64.exe
                   overwrite: true
             - name: Upload Binaries to Github (x86)
               uses: svenstaro/upload-release-action@v2
               with:
                   repo_token: ${{ secrets.GITHUB_TOKEN }}
-                  file: dist/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.TAG_NAME }}-${{ steps.get-sha.outputs.SHORT_SHA }}-x86.exe
-                  tag: v${{ steps.get-tag.outputs.TAG_NAME }}
-                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.TAG_NAME }}_x86.exe
+                  file: dist/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.tag-name }}-${{ steps.get-sha.outputs.short-sha }}-x86.exe
+                  tag: v${{ steps.get-tag.outputs.tag-name }}
+                  asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_x86.exe
                   overwrite: true
 
     notify-complete-fail:
