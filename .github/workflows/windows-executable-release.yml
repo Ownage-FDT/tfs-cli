@@ -85,7 +85,7 @@ jobs:
               uses: svenstaro/upload-release-action@v2
               with:
                   repo_token: ${{ secrets.GITHUB_TOKEN }}
-                  file: dist/win32/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.tag-name }}-${{ steps.get-sha.outputs.short-sha }}-x64.exe
+                  file: dist/win32/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.tag-name }}-${{ steps.get-sha.outputs.sha-short }}-x64.exe
                   tag: v${{ steps.get-tag.outputs.tag-name }}
                   asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_x64.exe
                   overwrite: true
@@ -93,7 +93,7 @@ jobs:
               uses: svenstaro/upload-release-action@v2
               with:
                   repo_token: ${{ secrets.GITHUB_TOKEN }}
-                  file: dist/win32/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.tag-name }}-${{ steps.get-sha.outputs.short-sha }}-x86.exe
+                  file: dist/win32/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.tag-name }}-${{ steps.get-sha.outputs.sha-short }}-x86.exe
                   tag: v${{ steps.get-tag.outputs.tag-name }}
                   asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_x86.exe
                   overwrite: true

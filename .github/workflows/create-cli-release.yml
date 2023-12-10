@@ -35,15 +35,16 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_TOKEN }}
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-    # npm-release:
-    #     name: NPM Release
-    #     needs: [release]
-    #     uses: ./.github/workflows/npm-release.yml
-
     tarballs-release:
         name: Tarballs Release
         needs: [release]
         uses: ./.github/workflows/tarballs-release.yml
+        secrets: inherit
+
+    package-manager-release:
+        name: Package Manager Release
+        needs: [tarballs-release]
+        uses: ./.github/workflows/package-manager-release.yml
         secrets: inherit
 
     executable-release:
@@ -53,13 +54,14 @@ jobs:
         secrets: inherit
 
     promote-s3-releases:
+        name: Promote S3 Releases
         needs: [tarballs-release, executable-release]
         uses: ./.github/workflows/promote-s3-releases.yml
         secrets: inherit
 
     notify-complete-success:
         if: ${{ success() }}
-        needs: [release, promote-s3-releases]
+        needs: [release, package-manager-release, promote-s3-releases]
         name: Notify Release Success
         runs-on: ubuntu-latest
         steps:

@@ -1,0 +1,21 @@
+name: Package Manager Release
+
+on:
+    workflow_call:
+    workflow_dispatch:
+
+jobs:
+    # npm-release:
+    #     name: Create NPM Release
+    #     uses: ./.github/workflows/npm-release.yml
+    #     secrets: inherit
+
+    homebrew-release:
+        name: Create Homebrew Release
+        uses: ./.github/workflows/homebrew-release.yml
+        secrets: inherit
+
+    # scoop-release:
+    #     name: Create Scoop Release
+    #     uses: ./.github/workflows/scoop-release.yml
+    #     secrets: inherit

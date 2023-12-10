@@ -126,7 +126,7 @@ jobs:
               with:
                   repo_token: ${{ secrets.GITHUB_TOKEN }}
                   file: |
-                      dist/deb/${{ inputs.cli_name }}_${{ steps.get-tag.outputs.tag-name }}.${{ steps.get-sha.outputs.short-sha }}-1_arm64.deb
+                      dist/deb/${{ inputs.cli_name }}_${{ steps.get-tag.outputs.tag-name }}.${{ steps.get-sha.outputs.sha-short }}-1_arm64.deb
                   tag: v${{ steps.get-tag.outputs.tag-name }}
                   asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_arm64.deb
                   overwrite: true
@@ -135,7 +135,7 @@ jobs:
               with:
                   repo_token: ${{ secrets.GITHUB_TOKEN }}
                   file: |
-                      dist/deb/${{ inputs.cli_name }}_${{ steps.get-tag.outputs.tag-name }}.${{ steps.get-sha.outputs.short-sha }}-1_armel.deb
+                      dist/deb/${{ inputs.cli_name }}_${{ steps.get-tag.outputs.tag-name }}.${{ steps.get-sha.outputs.sha-short }}-1_armel.deb
                   tag: v${{ steps.get-tag.outputs.tag-name }}
                   asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_armel.deb
                   overwrite: true
@@ -144,7 +144,7 @@ jobs:
               with:
                   repo_token: ${{ secrets.GITHUB_TOKEN }}
                   file: |
-                      dist/deb/${{ inputs.cli_name }}_${{ steps.get-tag.outputs.tag-name }}.${{ steps.get-sha.outputs.short-sha }}-1_amd64.deb
+                      dist/deb/${{ inputs.cli_name }}_${{ steps.get-tag.outputs.tag-name }}.${{ steps.get-sha.outputs.sha-short }}-1_amd64.deb
                   tag: v${{ steps.get-tag.outputs.tag-name }}
                   asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_amd64.deb
                   overwrite: true

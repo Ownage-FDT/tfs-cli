@@ -1,0 +1,44 @@
+name: Homebrew Release
+
+on:
+    workflow_dispatch:
+    workflow_call:
+
+jobs:
+    homebrew-release:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: lts/*
+                  cache: yarn
+            - name: Install Node Dependencies
+              run: yarn install --network-timeout 600000
+            - name: Get Latest SHA
+              uses: ./.github/actions/get-latest-sha
+              id: get-sha
+            - name: Invoke HomeBrew Release Script
+              run: node .github/scripts/homebrew-release.js
+              env:
+                  GITHUB_SHORT_SHA: ${{ steps.get-sha.outputs.sha-short }}
+
+    notify-complete-fail:
+        if: ${{ failure() || cancelled() }}
+        needs: [homebrew-release]
+        name: Notify Release Failed
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout the Repository
+              uses: actions/checkout@v4
+            - name: Slack Notification
+              uses: rtCamp/action-slack-notify@v2
+              env:
+                  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+                  SLACK_COLOR: '#ff3333'
+                  SLACK_USERNAME: CLI Release Bot
+                  SLACK_ICON_EMOJI: ':ship:'
+                  SLACK_TITLE: 'TFS ClI'
+                  SLACK_MESSAGE: 'Windows Executable Release Failed'
+                  MSG_MINIMAL: actions url
+                  SLACK_FOOTER: Posted automatically using GitHub Actions

@@ -2,13 +2,13 @@ name: Get Latest Sha
 description: Get the latest sha from the repository
 
 outputs:
-    short-sha:
+    sha-short:
         description: The latest sha hash
-        value: ${{ steps.get-latest-sha.outputs.short-sha }}
+        value: ${{ steps.get-latest-sha.outputs.sha-short }}
 
 runs:
     using: "composite"
     steps:
-        - run: echo "short-sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+        - run: echo "sha-short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           shell: bash
           id: get-latest-sha

@@ -88,7 +88,7 @@ jobs:
               with:
                   repo_token: ${{ secrets.GITHUB_TOKEN }}
                   file: |
-                      dist/macos/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.tag-name }}-${{ steps.get-sha.outputs.short-sha }}-arm64.pkg
+                      dist/macos/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.tag-name }}-${{ steps.get-sha.outputs.sha-short }}-arm64.pkg
                   tag: v${{ steps.get-tag.outputs.tag-name }}
                   asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_arm64.pkg
                   overwrite: true
@@ -97,7 +97,7 @@ jobs:
               with:
                   repo_token: ${{ secrets.GITHUB_TOKEN }}
                   file: |
-                      dist/macos/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.tag-name }}-${{ steps.get-sha.outputs.short-sha }}-x64.pkg
+                      dist/macos/${{ inputs.cli_name }}-v${{ steps.get-tag.outputs.tag-name }}-${{ steps.get-sha.outputs.sha-short }}-x64.pkg
                   tag: v${{ steps.get-tag.outputs.tag-name }}
                   asset_name: ${{ inputs.cli_name }}_v${{ steps.get-tag.outputs.tag-name }}_x64.pkg
                   overwrite: true
