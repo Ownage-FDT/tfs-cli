@@ -1,7 +1,8 @@
 name: Create CLI Release
 
 on:
-    workflow_dispatch:
+    release:
+        types: [published]
 
 env:
     HUSKY: 0
@@ -12,34 +13,8 @@ permissions:
     issues: write
 
 jobs:
-    test:
-        name: Run Unit Tests
-        uses: ./.github/workflows/unit-test.yml
-
-    release:
-        name: Create Release
-        runs-on: ubuntu-latest
-        needs: [test]
-        steps:
-            - name: Checkout The Repository
-              uses: actions/checkout@v4
-              with:
-                  persist-credentials: false
-            - name: Setup Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: lts/*
-            - name: Install Node Dependencies
-              run: yarn install --network-timeout 600000
-            - name: Semantic Release
-              run: npx semantic-release
-              env:
-                  GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
-                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
     tarballs-release:
         name: Tarballs Release
-        needs: [release]
         uses: ./.github/workflows/tarballs-release.yml
         secrets: inherit
 
@@ -51,7 +26,6 @@ jobs:
 
     executable-release:
         name: Executable Release
-        needs: [release]
         uses: ./.github/workflows/executable-release.yml
         secrets: inherit
 
@@ -63,7 +37,7 @@ jobs:
 
     notify-complete-success:
         if: ${{ success() }}
-        needs: [release, package-manager-release, promote-s3-releases]
+        needs: [package-manager-release, promote-s3-releases]
         name: Notify Release Success
         runs-on: ubuntu-latest
         steps:
@@ -82,7 +56,7 @@ jobs:
 
     notify-complete-fail:
         if: ${{ failure() || cancelled() }}
-        needs: [release, package-manager-release, promote-s3-releases]
+        needs: [package-manager-release, promote-s3-releases]
         name: Notify Release Failed
         runs-on: ubuntu-latest
         steps:
