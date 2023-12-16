@@ -91,7 +91,7 @@
     "mockfs": "^0.1.5",
     "oclif": "^4",
     "prettier": "^3.1.0",
-    "semantic-release": "^22.0.10",
+    "semantic-release": "^22.0.12",
     "shx": "^0.3.4",
     "sinon": "^17.0.1",
     "ts-node": "^10.9.2",
