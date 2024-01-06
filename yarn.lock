@@ -729,44 +729,10 @@
     read-package-json-fast "^3.0.0"
     which "^4.0.0"
 
-"@oclif/core@^2.15.0":
-  version "2.15.0"
-  resolved "https://registry.npmjs.org/@oclif/core/-/core-2.15.0.tgz"
-  integrity sha512-fNEMG5DzJHhYmI3MgpByTvltBOMyFcnRIUMxbiz2ai8rhaYgaTHMG3Q38HcosfIvtw9nCjxpcQtC8MN8QtVCcA==
-  dependencies:
-    "@types/cli-progress" "^3.11.0"
-    ansi-escapes "^4.3.2"
-    ansi-styles "^4.3.0"
-    cardinal "^2.1.1"
-    chalk "^4.1.2"
-    clean-stack "^3.0.1"
-    cli-progress "^3.12.0"
-    debug "^4.3.4"
-    ejs "^3.1.8"
-    get-package-type "^0.1.0"
-    globby "^11.1.0"
-    hyperlinker "^1.0.0"
-    indent-string "^4.0.0"
-    is-wsl "^2.2.0"
-    js-yaml "^3.14.1"
-    natural-orderby "^2.0.3"
-    object-treeify "^1.1.33"
-    password-prompt "^1.1.2"
-    slice-ansi "^4.0.0"
-    string-width "^4.2.3"
-    strip-ansi "^6.0.1"
-    supports-color "^8.1.1"
-    supports-hyperlinks "^2.2.0"
-    ts-node "^10.9.1"
-    tslib "^2.5.0"
-    widest-line "^3.1.0"
-    wordwrap "^1.0.0"
-    wrap-ansi "^7.0.0"
-
-"@oclif/core@^3.0.4", "@oclif/core@^3.10.8", "@oclif/core@^3.11.0", "@oclif/core@^3.12.0", "@oclif/core@^3.13.1", "@oclif/core@^3.14.1":
-  version "3.14.1"
-  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-3.14.1.tgz#634fc96124068e47b720d62f3b278d818a07495e"
-  integrity sha512-HLFL2s45DFdqYI2CFjVS/CIQ4cQ4yZqH0XqO9nnwcRWYboz2rEW/vLmidjIYGDjh6xA/k5psiAL3O1KEjqSHuQ==
+"@oclif/core@^3.12.0", "@oclif/core@^3.14.1", "@oclif/core@^3.15.0", "@oclif/core@^3.15.1", "@oclif/core@^3.16.0":
+  version "3.16.0"
+  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-3.16.0.tgz#682657cb5e4a3262a47e26e0c8a7bf0343acaf76"
+  integrity sha512-/PIz+udzb59XE8O/bQvqlCtXy6RByEHH0KsrAJNa/ZrqtdsLmeDNJcHdgygFHx+nz+PYMoUzsyzJMau++EDNoQ==
   dependencies:
     ansi-escapes "^4.3.2"
     ansi-styles "^4.3.0"
@@ -785,7 +751,7 @@
     js-yaml "^3.14.1"
     natural-orderby "^2.0.3"
     object-treeify "^1.1.33"
-    password-prompt "^1.1.2"
+    password-prompt "^1.1.3"
     slice-ansi "^4.0.0"
     string-width "^4.2.3"
     strip-ansi "^6.0.1"
@@ -806,35 +772,19 @@
     debug "^4.3.4"
     ejs "^3.1.9"
 
-"@oclif/plugin-help@^5.2.14":
-  version "5.2.20"
-  resolved "https://registry.npmjs.org/@oclif/plugin-help/-/plugin-help-5.2.20.tgz"
-  integrity sha512-u+GXX/KAGL9S10LxAwNUaWdzbEBARJ92ogmM7g3gDVud2HioCmvWQCDohNRVZ9GYV9oKwZ/M8xwd6a1d95rEKQ==
+"@oclif/plugin-help@^6.0.7", "@oclif/plugin-help@^6.0.9":
+  version "6.0.9"
+  resolved "https://registry.yarnpkg.com/@oclif/plugin-help/-/plugin-help-6.0.9.tgz#87bbf624372b9afe5dc183a13f52c929d6b022cf"
+  integrity sha512-O9zHzjsj8G3DWV+Ju4prrBwHUmwT1pcq7AJNxguedMk8jGZhwKWrcQHdZX6kjC+7QbupSzgjcvXvXpYVR1y3ow==
   dependencies:
-    "@oclif/core" "^2.15.0"
+    "@oclif/core" "^3.15.0"
 
-"@oclif/plugin-help@^6.0.7":
-  version "6.0.7"
-  resolved "https://registry.yarnpkg.com/@oclif/plugin-help/-/plugin-help-6.0.7.tgz#0bad86335dbf687d0ba03c98f5e541109f9ac371"
-  integrity sha512-+apYpLuNk6VGNuZZbFdwUlTcFb+FkQnySWR5S5pZYC+yHcT39zgOK06NAheHHhd5KSzroFwQu7RTdHnK6Tzakg==
+"@oclif/plugin-not-found@^3.0.4", "@oclif/plugin-not-found@^3.0.7":
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/@oclif/plugin-not-found/-/plugin-not-found-3.0.7.tgz#7dcdd1406d464f74eb37e9cde73918d5e1139d8d"
+  integrity sha512-AofTUzKVvuU9uQBKMhX3i62aPeoijqtNsRM4rHShS4FyUd1MEhjbI2SmxcNTWjwedRL5F+b9EpjWuswc86fUMg==
   dependencies:
-    "@oclif/core" "^3.11.0"
-
-"@oclif/plugin-not-found@^2.3.32":
-  version "2.4.3"
-  resolved "https://registry.npmjs.org/@oclif/plugin-not-found/-/plugin-not-found-2.4.3.tgz"
-  integrity sha512-nIyaR4y692frwh7wIHZ3fb+2L6XEecQwRDIb4zbEam0TvaVmBQWZoColQyWA84ljFBPZ8XWiQyTz+ixSwdRkqg==
-  dependencies:
-    "@oclif/core" "^2.15.0"
-    chalk "^4"
-    fast-levenshtein "^3.0.0"
-
-"@oclif/plugin-not-found@^3.0.4":
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/@oclif/plugin-not-found/-/plugin-not-found-3.0.4.tgz#450332a029f213413506fe8c11549aa9c59af730"
-  integrity sha512-42Sef7/G81Pr+SesNTbkf4NwytZJkV7CZuFMNZNzqZms+0j1cRLwmkAlnDIcDWJs9jugF13ehdw3/5Xa6WrjQA==
-  dependencies:
-    "@oclif/core" "^3.10.8"
+    "@oclif/core" "^3.15.1"
     chalk "^5.3.0"
     fast-levenshtein "^3.0.0"
 
@@ -861,12 +811,12 @@
   dependencies:
     "@oclif/core" "^3.14.1"
 
-"@oclif/plugin-warn-if-update-available@^3.0.0", "@oclif/plugin-warn-if-update-available@^3.0.5":
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/@oclif/plugin-warn-if-update-available/-/plugin-warn-if-update-available-3.0.5.tgz#bec4842b92d1cb9d58698a3cac49427fc5e76193"
-  integrity sha512-3S60Rsp92m+jfbD4qTuH8uqBO/tpt87L2uQXNpzsHUbyEvoNXwgZv5r6/FLvscOqzHjofVrd/bMmRjELj9EnYQ==
+"@oclif/plugin-warn-if-update-available@^3.0.5", "@oclif/plugin-warn-if-update-available@^3.0.8":
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/@oclif/plugin-warn-if-update-available/-/plugin-warn-if-update-available-3.0.8.tgz#715c7f8896a318805cae08f2994115b8d5e39c20"
+  integrity sha512-CNusBwZHzWdj4E6xVBbR9+DtxjeQZoK2LDYk3CFwBfLd5L8TJ/6IJNer0ZacDRvnCeABeVqMN33Vk7UlmJ7ngQ==
   dependencies:
-    "@oclif/core" "^3.13.1"
+    "@oclif/core" "^3.15.1"
     chalk "^5.3.0"
     debug "^4.1.0"
     http-call "^5.2.2"
@@ -1408,13 +1358,6 @@
   version "4.3.10"
   resolved "https://registry.npmjs.org/@types/chai/-/chai-4.3.10.tgz"
   integrity sha512-of+ICnbqjmFCiixUnqRulbylyXQrPqIGf/B3Jax1wIF3DvSheysQxAWvqHhZiW3IQrycvokcLcFQlveGp+vyNg==
-
-"@types/cli-progress@^3.11.0":
-  version "3.11.5"
-  resolved "https://registry.npmjs.org/@types/cli-progress/-/cli-progress-3.11.5.tgz"
-  integrity sha512-D4PbNRbviKyppS5ivBGyFO29POlySLmA2HyUFE4p5QGazAMM3CwkKWcvTl8gvElSuxRh6FPKL8XmidX873ou4g==
-  dependencies:
-    "@types/node" "*"
 
 "@types/crypto-js@^4.2.1":
   version "4.2.1"
@@ -2311,7 +2254,7 @@ chalk@^2.3.2, chalk@^2.4.1, chalk@^2.4.2:
     escape-string-regexp "^1.0.5"
     supports-color "^5.3.0"
 
-chalk@^4, chalk@^4.0.0, chalk@^4.0.2, chalk@^4.1.0, chalk@^4.1.1, chalk@^4.1.2:
+chalk@^4.0.0, chalk@^4.0.2, chalk@^4.1.0, chalk@^4.1.1, chalk@^4.1.2:
   version "4.1.2"
   resolved "https://registry.npmjs.org/chalk/-/chalk-4.1.2.tgz"
   integrity sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==
@@ -3643,16 +3586,7 @@ fs-extra@9.1.0:
     jsonfile "^6.0.1"
     universalify "^2.0.0"
 
-fs-extra@^11.0.0:
-  version "11.1.1"
-  resolved "https://registry.npmjs.org/fs-extra/-/fs-extra-11.1.1.tgz"
-  integrity sha512-MGIE4HOvQCeUCzmlHs0vXpih4ysz4wg9qiSAu6cd42lVwPbTM1TjV7RusoyQqMmk/95gdQZX72u+YW+c3eEpFQ==
-  dependencies:
-    graceful-fs "^4.2.0"
-    jsonfile "^6.0.1"
-    universalify "^2.0.0"
-
-fs-extra@^11.2.0:
+fs-extra@^11.0.0, fs-extra@^11.2.0:
   version "11.2.0"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-11.2.0.tgz#e70e17dfad64232287d01929399e0ea7c86b0e5b"
   integrity sha512-PmDi3uwK5nFuXh7XDTlVnS17xJS7vW36is2+w3xcv8SVxiB4NyATf4ctkVY5bkSjX0Y4nbvZCq1/EjtEyr9ktw==
@@ -6211,14 +6145,14 @@ object-treeify@^1.1.33:
   integrity sha512-EFVjAYfzWqWsBMRHPMAXLCDIJnpMhdWAqR7xG6M6a2cs6PMFpl/+Z20w9zDW4vkxOFfddegBKq9Rehd0bxWE7A==
 
 oclif@^4:
-  version "4.0.4"
-  resolved "https://registry.yarnpkg.com/oclif/-/oclif-4.0.4.tgz#ee05d5339fa1aad8fb6a303e53f4618feba86a5e"
-  integrity sha512-2rebdu1Ow9/TRolMI7s1IsJmKH7RpwlBzIKZFtE8eFiDmGenX6GEsWaxSEtgMXmzCSSQ1DbCRDv0hwcwVGIJuA==
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/oclif/-/oclif-4.1.3.tgz#07d3a6b16ff7e2e7c3fd06117fd745655c44abce"
+  integrity sha512-9OmzHaOmn58BZZt8S2USh1gW5RFfa69cDfOtXCWUyYrcRdO4wIJ3DPb0xZ3UxHHbPZKsDImuP/A54weFMH2izw==
   dependencies:
-    "@oclif/core" "^3.0.4"
-    "@oclif/plugin-help" "^5.2.14"
-    "@oclif/plugin-not-found" "^2.3.32"
-    "@oclif/plugin-warn-if-update-available" "^3.0.0"
+    "@oclif/core" "^3.16.0"
+    "@oclif/plugin-help" "^6.0.9"
+    "@oclif/plugin-not-found" "^3.0.7"
+    "@oclif/plugin-warn-if-update-available" "^3.0.8"
     async-retry "^1.3.3"
     aws-sdk "^2.1231.0"
     change-case "^4"
@@ -6569,7 +6503,7 @@ pascal-case@^3.1.2:
     no-case "^3.0.4"
     tslib "^2.0.3"
 
-password-prompt@^1.1.2:
+password-prompt@^1.1.3:
   version "1.1.3"
   resolved "https://registry.npmjs.org/password-prompt/-/password-prompt-1.1.3.tgz"
   integrity sha512-HkrjG2aJlvF0t2BMH0e2LB/EHf3Lcq3fNMzy4GYHcQblAvOl+QQji1Lx7WRBMqpVK8p+KR7bCg7oqAMXtdgqyw==
@@ -7908,7 +7842,7 @@ ts-api-utils@^1.0.1:
   resolved "https://registry.npmjs.org/ts-api-utils/-/ts-api-utils-1.0.3.tgz"
   integrity sha512-wNMeqtMz5NtwpT/UZGY5alT+VoKdSsOOP/kqHFcUW1P/VRhH2wJ48+DN2WwUliNbQ976ETwDL0Ifd2VVvgonvg==
 
-ts-node@^10.8.1, ts-node@^10.9.1:
+ts-node@^10.8.1:
   version "10.9.1"
   resolved "https://registry.npmjs.org/ts-node/-/ts-node-10.9.1.tgz"
   integrity sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==
